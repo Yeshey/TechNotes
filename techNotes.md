@@ -4,9 +4,9 @@
 
 - [1. PC](#1-pc)
   - [1.1. Linux](#11-linux)
-  - [Autostart Tasks](#autostart-tasks)
-  - [1.2. Windows](#12-windows)
-  - [1.3. VMs](#13-vms)
+  - [1.2. Autostart Tasks](#12-autostart-tasks)
+  - [1.3. Windows](#13-windows)
+  - [1.4. VMs](#14-vms)
 - [2. Mobile](#2-mobile)
   - [2.1. Android](#21-android)
 - [3. Programs](#3-programs)
@@ -24,23 +24,24 @@
 
 ---
 
-### Autostart Tasks
+### 1.2. Autostart Tasks
 
 - Anacron  
-[More Anacron Info](https://serverfault.com/questions/52335/job-scheduling-using-crontab-what-will-happen-when-computer-is-shutdown-during)
-    - [Anacron jobs as a user](https://askubuntu.com/questions/235089/how-can-i-run-anacron-in-user-mode)
+[More Anacron Info](https://serverfault.com/questions/52335/job-scheduling-using-crontab-what-will-happen-when-computer-is-shutdown-during)  
+Its also a bitch
+  - [Anacron jobs as a user](https://askubuntu.com/questions/235089/how-can-i-run-anacron-in-user-mode)
     - Change default editor when you run `crontab -e`:
+
   ```bash
     export EDITOR=/bin/nano
     export VISUAL=nano
   ```
 
-
-### 1.2. Windows
+### 1.3. Windows
 
 ---
 
-### 1.3. VMs
+### 1.4. VMs
 
 ---
 
