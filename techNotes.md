@@ -69,7 +69,9 @@ Extensions for md:
 #### 3.2.1. Dependencies
 
 - [Automatically create requirements.txt](https://stackoverflow.com/questions/31684375/automatically-create-requirements-txt):  
-`pip3 freeze > requirements.txt`  
+  - `pip install pipreqs`  
+  - Navigate to the project folder  
+  - `pipreqs .\`
 
 - Automatically install dependencies:  
 `pip install -r requirements.txt`
