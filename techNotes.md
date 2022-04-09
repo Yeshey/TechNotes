@@ -14,7 +14,10 @@
   - [1.2. **Windows**](#12-windows)
   - [1.3. **Android**](#13-android)
 - [2. Programs](#2-programs)
-  - [2.1. VSC](#21-vsc)
+  - [2.1. VSC (Visual Studio Code)](#21-vsc-visual-studio-code)
+    - [2.1.1. VSC Extensions](#211-vsc-extensions)
+    - [2.1.2. VSC debugger](#212-vsc-debugger)
+    - [2.1.3. VSC - OSS (Open source Visual Studio `code`)](#213-vsc---oss-open-source-visual-studio-code)
   - [2.2. VirtualBox VMs](#22-virtualbox-vms)
     - [2.2.1. Host Manjaro](#221-host-manjaro)
     - [2.2.2. Guest Manjaro](#222-guest-manjaro)
@@ -98,7 +101,7 @@ Its also a bitch
 
 ##### 1.1.2.3. [Compress](https://unix.stackexchange.com/questions/274428/how-do-i-reduce-the-size-of-a-pdf-file-that-contains-images)
 
-- gs -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -q -o output.pdf file.pdf
+- `gs -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -q -o output.pdf file.pdf`
 
 #### 1.1.3. [Button To Boot into Windows](https://askubuntu.com/questions/42390/one-click-shutdown-ubuntu-and-load-into-alternative-bootup)
 
@@ -134,6 +137,7 @@ Its also a bitch
   - zsh-autosuggestions
 - Commands:
   - Change config: `nano .zshrc`
+  - Apply the changes: `source ~/.zshrc`
 - [my `.zshrc` configuration](https://github.com/Yeshey/Linux_config/blob/main/.zshrc)
 
 ---
@@ -146,14 +150,73 @@ Its also a bitch
 
 ## 2. Programs
 
-### 2.1. VSC
+### 2.1. VSC (Visual Studio Code)
+
+#### 2.1.1. VSC Extensions
+
+- [Auto install them](https://github.com/microsoft/vscode/issues/42994)
+- [Get VSC extensions list](https://stackoverflow.com/questions/35773299/how-can-you-export-the-visual-studio-code-extension-list)
+- my VSC extensions
+
+  - ```txt
+    13xforever.language-x86-64-assembly
+    aaron-bond.better-comments
+    akashrajkn.language-netlogo-code
+    bungcip.better-toml
+    DavidAnson.vscode-markdownlint
+    formulahendry.code-runner
+    GitHub.remotehub
+    icrawl.discord-vscode
+    llvm-vs-code-extensions.vscode-clangd
+    matklad.rust-analyzer
+    mitaki28.vscode-clang
+    ms-dotnettools.csharp
+    ms-python.python
+    ms-python.vscode-pylance
+    ms-toolsai.jupyter
+    ms-toolsai.jupyter-keymap
+    ms-toolsai.jupyter-renderers
+    ms-vscode-remote.remote-ssh
+    ms-vscode-remote.remote-ssh-edit
+    ms-vscode.cmake-tools
+    ms-vscode.cpptools
+    ms-vscode.remote-repositories
+    ms-vsliveshare.vsliveshare
+    ritwickdey.live-sass
+    ritwickdey.LiveServer
+    serayuzgur.crates
+    stevencl.addDocComments
+    thekalinga.bootstrap4-vscode
+    tomoki1207.pdf
+    twxs.cmake
+    vadimcn.vscode-lldb
+    WallabyJs.quokka-vscode
+    yzhang.markdown-all-in-one
+    ```
+
+#### 2.1.2. VSC debugger
+
+1. First make a task work (just compiles the code): Terminal > Configure Default Build Task
+   1. (gcc-10 works well)  
+2. Make necessary changes in tasks.json, then try to run it to test it: Terminal > Run Task…
+   1. (Choose the task you just created)  
+3. Then make the debugger configuration, by going to the debugger panel and selecting “run and debug”  
+   1. (gcc-10)  
+4. And make necessary changes in launcher.json now  
+5. These files are inside a .vscode folder  
+
+#### 2.1.3. VSC - OSS (Open source Visual Studio `code`)
+
+- Make Live share work in Open source VSC (OSS)(in manjaro get from `pamac-manager` (add/remove software)):  
+- Install `code-marketplace` from the AUR.
+- [To share terminals add](https://github.com/MicrosoftDocs/live-share/issues/262) lines to product.json (found its location with `tree -P 'product.json' --prune`)
 
 ### 2.2. VirtualBox VMs  
 
 #### 2.2.1. Host Manjaro
 
 - [Make Virtual Box work in arch with USB devices](https://forum.manjaro.org/t/virtualbox-usb-devices-arent-recognized/57361/2):
-  1. Install it normally through `pamac-manager` (Add/Remove software) 
+  1. Install it normally through `pamac-manager` (Add/Remove software)
   2. Install `virtualbox-ext-oracle` package
   3. Add user to vboxusers: `sudo gpasswd -a $USER vboxusers`
 
