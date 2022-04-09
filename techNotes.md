@@ -9,9 +9,11 @@
       - [1.1.2.1. Unite](#1121-unite)
       - [1.1.2.2. OCR (Manjaro)](#1122-ocr-manjaro)
       - [1.1.2.3. Compress](#1123-compress)
+  - [KDE Plasma](#kde-plasma)
+    - [Latte Dock](#latte-dock)
     - [1.1.3. Button To Boot into Windows](#113-button-to-boot-into-windows)
     - [1.1.4. Ohmy - zsh (instead of bash)](#114-ohmy---zsh-instead-of-bash)
-    - [Use laptop as a second monitor](#use-laptop-as-a-second-monitor)
+    - [1.1.5. Use laptop as a second monitor](#115-use-laptop-as-a-second-monitor)
   - [1.2. **Windows**](#12-windows)
   - [1.3. **Android**](#13-android)
 - [2. Programs](#2-programs)
@@ -104,6 +106,13 @@ Its also a bitch
 
 - `gs -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -q -o output.pdf file.pdf`
 
+### KDE Plasma
+
+#### Latte Dock
+
+- [Copy latte dock from main screen to the other monitor](https://www.reddit.com/r/kde/comments/gmgpz6/how_to_create_an_additional_latte_dock_on_second/):  
+Right Click Dock in main screen > Edit Dock > Right Click it AGAIN > Edit/Add Panels > Duplicate Panel
+
 #### 1.1.3. [Button To Boot into Windows](https://askubuntu.com/questions/42390/one-click-shutdown-ubuntu-and-load-into-alternative-bootup)
 
 - My .desktop file:
@@ -141,12 +150,47 @@ Its also a bitch
   - Apply the changes: `source ~/.zshrc`
 - [my `.zshrc` configuration](https://github.com/Yeshey/Linux_config/blob/main/.zshrc)
 
-#### Use laptop as a second monitor
+#### 1.1.5. Use laptop as a second monitor
 
-- The way to do it should be with [deskreen](https://deskreen.com/lang-en) and sharing a dummy screen to it ([how they're trying to do it here](https://github.com/pavlobu/deskreen/issues/42))
-- Other posts:
-  - [r/linux questions - How can I use my old laptop as second monitor](https://www.reddit.com/r/linuxquestions/comments/qp3p7a/how_can_i_use_my_old_laptop_as_second_monitor/)
-  - [r/linuxquestions - Using VNC to extend the display of desktop into laptop screen.](https://www.reddit.com/r/linuxquestions/comments/gh1307/using_vnc_to_extend_the_display_of_desktop_into/)
+- How I made it work:
+  1. Install [deskreen](https://deskreen.com/lang-en) in the main machine
+  2. [Make a dummy second screen from your linux machine](https://github.com/pavlobu/deskreen/issues/42)
+     1. Depends on the graphical drivers ou're using. Check comments for other solutions. This solution works for the open source drivers.
+     2. [For nvidia drivers](https://github.com/pavlobu/deskreen/issues/42#issuecomment-770766553) use [this method](https://unix.stackexchange.com/questions/559918/how-to-add-virtual-monitor-with-nvidia-proprietary-driver), but attention, when adding that config file, add a comma and the screen (or your main screen will be black, can fix by going with CTRL + ALT + 2-9 to another terminal). For example:
+
+        1. ```txt
+           (base)  yeshey@Manjaro-Laptop  ~  xrandr 
+           DP-0 disconnected (normal left inverted right x axis y axis)
+           DP-1 disconnected (normal left inverted right x axis y axis)
+           HDMI-0 disconnected (normal left inverted right x axis y axis)
+           DP-2 connected primary 1920x1080+0+0 (normal left inverted right x axis y axis) 344mm x 194mm
+             1920x1080     60.03*+
+           DP-3 disconnected (normal left inverted right x axis y axis)
+           DP-4 disconnected (normal left inverted right x axis y axis)
+           ```
+
+        2. so, in the file `nano /etc/X11/xorg.conf.d/30-virtscreen.conf` I'd put:
+
+        3. ```txt
+            Section "Device"
+                Identifier  "nvidiagpu"
+                Driver      "nvidia"
+            EndSection
+
+            Section "Screen"
+                Identifier  "nvidiascreen"
+                Device      "nvidiagpu"
+                Option      "ConnectedMonitor" "LVDS-0,DP-1,DP-2"
+            EndSection
+            ```
+
+  3. Now you have a new screen, can control with `Win + P`, and see it in settings, so broadcast it
+     1. open deskreen > share desktop screen > share the new screen you created
+  4. You can change the resolution of the new screen, but you're bounded by presets, as explained in [the post](https://unix.stackexchange.com/questions/559918/how-to-add-virtual-monitor-with-nvidia-proprietary-driver). The bewst we have is `xrandr --output DP-1 --mode 1600x900`
+
+> - Other posts that helped me get here:
+>   - [r/linux questions - How can I use my old laptop as second monitor](https://www.reddit.com/r/linuxquestions/comments/qp3p7a/how_can_i_use_my_old_laptop_as_second_monitor/)
+>   - [r/linuxquestions - Using VNC to extend the display of desktop into laptop screen.](https://www.reddit.com/r/linuxquestions/comments/gh1307/using_vnc_to_extend_the_display_of_desktop_into/)
 
 ---
 
