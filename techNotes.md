@@ -154,7 +154,7 @@ Its also a bitch
 
 #### 2.1.1. VSC Extensions
 
-- [Auto install them](https://github.com/microsoft/vscode/issues/42994)
+- [Auto install them](https://github.com/microsoft/vscode/issues/42994) (post for windows, see comments for linux)
 - [Get VSC extensions list](https://stackoverflow.com/questions/35773299/how-can-you-export-the-visual-studio-code-extension-list)
 - my VSC extensions
 
