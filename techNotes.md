@@ -209,7 +209,9 @@ Its also a bitch
 
 - Make Live share work in Open source VSC (OSS)(in manjaro get from `pamac-manager` (add/remove software)):  
 - Install `code-marketplace` from the AUR.
-- [To share terminals add](https://github.com/MicrosoftDocs/live-share/issues/262) lines to product.json (found its location with `tree -P 'product.json' --prune`)
+- [To share terminals add lines to product.json](https://github.com/MicrosoftDocs/live-share/issues/262)
+  - ([find files location](https://stackoverflow.com/questions/5905054/how-can-i-recursively-find-all-files-in-current-and-subfolders-based-on-wildcard) with `find . 2>/dev/null -print | grep -i 'product.json'`) (`2>/dev/null` [hides premission errors](https://stackoverflow.com/questions/762348/how-can-i-exclude-all-permission-denied-messages-from-find))
+  - (or `tree -P 'product.json' --prune`)
 
 ### 2.2. VirtualBox VMs  
 
