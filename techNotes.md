@@ -11,6 +11,7 @@
       - [1.1.2.3. Compress](#1123-compress)
     - [1.1.3. Button To Boot into Windows](#113-button-to-boot-into-windows)
     - [1.1.4. Ohmy - zsh (instead of bash)](#114-ohmy---zsh-instead-of-bash)
+    - [Use laptop as a second monitor](#use-laptop-as-a-second-monitor)
   - [1.2. **Windows**](#12-windows)
   - [1.3. **Android**](#13-android)
 - [2. Programs](#2-programs)
@@ -139,6 +140,13 @@ Its also a bitch
   - Change config: `nano .zshrc`
   - Apply the changes: `source ~/.zshrc`
 - [my `.zshrc` configuration](https://github.com/Yeshey/Linux_config/blob/main/.zshrc)
+
+#### Use laptop as a second monitor
+
+- The way to do it should be with [deskreen](https://deskreen.com/lang-en) and sharing a dummy screen to it ([how they're trying to do it here](https://github.com/pavlobu/deskreen/issues/42))
+- Other posts:
+  - [r/linux questions - How can I use my old laptop as second monitor](https://www.reddit.com/r/linuxquestions/comments/qp3p7a/how_can_i_use_my_old_laptop_as_second_monitor/)
+  - [r/linuxquestions - Using VNC to extend the display of desktop into laptop screen.](https://www.reddit.com/r/linuxquestions/comments/gh1307/using_vnc_to_extend_the_display_of_desktop_into/)
 
 ---
 
