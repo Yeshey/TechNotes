@@ -9,11 +9,14 @@
       - [1.1.2.1. Unite](#1121-unite)
       - [1.1.2.2. OCR (Manjaro)](#1122-ocr-manjaro)
       - [1.1.2.3. Compress](#1123-compress)
-  - [KDE Plasma](#kde-plasma)
-    - [Latte Dock](#latte-dock)
-    - [1.1.3. Button To Boot into Windows](#113-button-to-boot-into-windows)
-    - [1.1.4. Ohmy - zsh (instead of bash)](#114-ohmy---zsh-instead-of-bash)
-    - [1.1.5. Use laptop as a second monitor](#115-use-laptop-as-a-second-monitor)
+    - [1.1.3. Latte Dock](#113-latte-dock)
+    - [1.1.4. Notifications](#114-notifications)
+      - [1.1.4.1. Fix notifications error in latte dock](#1141-fix-notifications-error-in-latte-dock)
+      - [1.1.4.2. Notification badges in electron apps (like discord):](#1142-notification-badges-in-electron-apps-like-discord)
+      - [1.1.4.3. Send linux OS notifications through terminal/console/cli](#1143-send-linux-os-notifications-through-terminalconsolecli)
+    - [1.1.5. Button To Boot into Windows](#115-button-to-boot-into-windows)
+    - [1.1.6. Ohmy - zsh (instead of bash)](#116-ohmy---zsh-instead-of-bash)
+    - [1.1.7. Use laptop as a second monitor](#117-use-laptop-as-a-second-monitor)
   - [1.2. **Windows**](#12-windows)
   - [1.3. **Android**](#13-android)
 - [2. Programs](#2-programs)
@@ -106,14 +109,29 @@ Its also a bitch
 
 - `gs -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -q -o output.pdf file.pdf`
 
-### KDE Plasma
-
-#### Latte Dock
+#### 1.1.3. Latte Dock
 
 - [Copy latte dock from main screen to the other monitor](https://www.reddit.com/r/kde/comments/gmgpz6/how_to_create_an_additional_latte_dock_on_second/):  
 Right Click Dock in main screen > Edit Dock > Right Click it AGAIN > Edit/Add Panels > Duplicate Panel
 
-#### 1.1.3. [Button To Boot into Windows](https://askubuntu.com/questions/42390/one-click-shutdown-ubuntu-and-load-into-alternative-bootup)
+#### 1.1.4. Notifications
+
+##### 1.1.4.1. Fix notifications error in latte dock
+
+  > Notifications are currently provided by 'KDE Plasma'  
+
+  check [Latte-Dock: Notifications are currently provided by 'KDE Plasma' - Fix](https://www.youtube.com/watch?v=9d35CMxJkLM)
+  
+##### 1.1.4.2. Notification badges in electron apps (like discord):
+
+  Don't work, we're [waiting](https://github.com/electron/electron/issues/30085).
+  
+##### 1.1.4.3. Send linux OS notifications through terminal/console/cli
+
+  Try: `notify-send "$USER and $HOME"` go ahead!
+  
+
+#### 1.1.5. [Button To Boot into Windows](https://askubuntu.com/questions/42390/one-click-shutdown-ubuntu-and-load-into-alternative-bootup)
 
 - My .desktop file:
   
@@ -139,7 +157,7 @@ Right Click Dock in main screen > Edit Dock > Right Click it AGAIN > Edit/Add Pa
   X-KDE-Username=
   ```
 
-#### 1.1.4. Ohmy - zsh (instead of bash)
+#### 1.1.6. Ohmy - zsh (instead of bash)
 
 [Installation Guide](https://gist.github.com/yovko/becf16eecd3a1f69a4e320a95689249e)
 
@@ -150,7 +168,7 @@ Right Click Dock in main screen > Edit Dock > Right Click it AGAIN > Edit/Add Pa
   - Apply the changes: `source ~/.zshrc`
 - [my `.zshrc` configuration](https://github.com/Yeshey/Linux_config/blob/main/.zshrc)
 
-#### 1.1.5. Use laptop as a second monitor
+#### 1.1.7. Use laptop as a second monitor
 
 - How I made it work:
   1. Install [deskreen](https://deskreen.com/lang-en) in the main machine
