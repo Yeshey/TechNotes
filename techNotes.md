@@ -24,9 +24,13 @@
     - [2.1.1. VSC Extensions](#211-vsc-extensions)
     - [2.1.2. VSC debugger](#212-vsc-debugger)
     - [2.1.3. VSC - OSS (Open source Visual Studio `code`)](#213-vsc---oss-open-source-visual-studio-code)
+  - [2.3. ssh (in lan)](#23-ssh-in-lan)
+    - [2.3.1. Install in Manjaro](#231-install-in-manjaro)
+    - [2.3.1. Access through another PC](#231-access-through-another-pc)
+    - [2.3.1. Access through phone](#231-access-through-phone)
   - [2.2. VirtualBox VMs](#22-virtualbox-vms)
-    - [2.2.1. Host Manjaro](#221-host-manjaro)
-    - [2.2.2. Guest Manjaro](#222-guest-manjaro)
+    - [2.3.2. Host Manjaro](#232-host-manjaro)
+    - [2.3.3. Guest Manjaro](#233-guest-manjaro)
 - [3. Coding Languages](#3-coding-languages)
   - [3.1. MarkDown](#31-markdown)
   - [3.2. Python](#32-python)
@@ -283,16 +287,35 @@ Right Click Dock in main screen > Edit Dock > Right Click it AGAIN > Edit/Add Pa
   - ([find files location](https://stackoverflow.com/questions/5905054/how-can-i-recursively-find-all-files-in-current-and-subfolders-based-on-wildcard) with `find . 2>/dev/null -print | grep -i 'product.json'`) (`2>/dev/null` [hides premission errors](https://stackoverflow.com/questions/762348/how-can-i-exclude-all-permission-denied-messages-from-find))
   - (or `tree -P 'product.json' --prune`)
 
+### 2.3. ssh (in lan)
+
+#### 2.3.1. Install in Manjaro
+
+Will already be able to access after a reboot from any computer.
+
+1. `sudo pacman -S openssh`
+2. `sudo systemctl enable sshd`
+3. `sudo systemctl start sshd`
+
+#### 2.3.1. Access through another PC
+
+1. in your host see the local IP with `ifconfig`
+2. in your other PC in the same LAN do `ssh <UserName>@<Ipv4>` like `ssh yeshey@192.168.0.101`
+
+#### 2.3.1. Access through phone
+
+1. You can try installing *Termius*
+
 ### 2.2. VirtualBox VMs  
 
-#### 2.2.1. Host Manjaro
+#### 2.3.2. Host Manjaro
 
 - [Make Virtual Box work in arch with USB devices](https://forum.manjaro.org/t/virtualbox-usb-devices-arent-recognized/57361/2):
   1. Install it normally through `pamac-manager` (Add/Remove software)
   2. Install `virtualbox-ext-oracle` package
   3. Add user to vboxusers: `sudo gpasswd -a $USER vboxusers`
 
-#### 2.2.2. [Guest Manjaro](https://forum.manjaro.org/t/root-tip-virtualbox-installation-usb-shared-folder/1178)
+#### 2.3.3. [Guest Manjaro](https://forum.manjaro.org/t/root-tip-virtualbox-installation-usb-shared-folder/1178)
 
 1. `sudo pacman -Syu virtualbox-guest-utils`  
 2. `sudo gpasswd -a $USER vboxsf`  
