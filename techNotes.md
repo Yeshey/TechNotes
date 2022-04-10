@@ -14,7 +14,7 @@
       - [1.1.4.1. Fix notifications error in latte dock](#1141-fix-notifications-error-in-latte-dock)
       - [1.1.4.2. Notification badges in electron apps (like discord):](#1142-notification-badges-in-electron-apps-like-discord)
       - [1.1.4.3. Send linux OS notifications through terminal/console/cli](#1143-send-linux-os-notifications-through-terminalconsolecli)
-    - [1.1.5. Button To Boot into Windows](#115-button-to-boot-into-windows)
+    - [1.1.5. Button To Boot into Windows in a dual boot](#115-button-to-boot-into-windows-in-a-dual-boot)
     - [1.1.6. Ohmy - zsh (instead of bash)](#116-ohmy---zsh-instead-of-bash)
     - [1.1.7. Use laptop as a second monitor](#117-use-laptop-as-a-second-monitor)
   - [1.2. **Windows**](#12-windows)
@@ -131,7 +131,7 @@ Right Click Dock in main screen > Edit Dock > Right Click it AGAIN > Edit/Add Pa
   Try: `notify-send "$USER and $HOME"` go ahead!
   
 
-#### 1.1.5. [Button To Boot into Windows](https://askubuntu.com/questions/42390/one-click-shutdown-ubuntu-and-load-into-alternative-bootup)
+#### 1.1.5. [Button To Boot into Windows in a dual boot](https://askubuntu.com/questions/42390/one-click-shutdown-ubuntu-and-load-into-alternative-bootup)
 
 - My .desktop file:
   
