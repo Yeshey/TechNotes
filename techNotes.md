@@ -17,6 +17,7 @@
     - [1.1.5. Button To Boot into Windows in a dual boot](#115-button-to-boot-into-windows-in-a-dual-boot)
     - [1.1.6. Ohmy - zsh (instead of bash)](#116-ohmy---zsh-instead-of-bash)
     - [1.1.7. Use laptop as a second monitor](#117-use-laptop-as-a-second-monitor)
+    - [1.1.8. CLI Search / find words](#118-cli-search--find-words)
   - [1.2. **Windows**](#12-windows)
   - [1.3. **Android**](#13-android)
 - [2. Programs](#2-programs)
@@ -213,6 +214,14 @@ Right Click Dock in main screen > Edit Dock > Right Click it AGAIN > Edit/Add Pa
 > - Other posts that helped me get here:
 >   - [r/linux questions - How can I use my old laptop as second monitor](https://www.reddit.com/r/linuxquestions/comments/qp3p7a/how_can_i_use_my_old_laptop_as_second_monitor/)
 >   - [r/linuxquestions - Using VNC to extend the display of desktop into laptop screen.](https://www.reddit.com/r/linuxquestions/comments/gh1307/using_vnc_to_extend_the_display_of_desktop_into/)
+
+#### 1.1.8. CLI Search / find words
+
+- [Find a files location through its name recursively](https://stackoverflow.com/questions/5905054/how-can-i-recursively-find-all-files-in-current-and-subfolders-based-on-wildcard):
+  - `find . 2>/dev/null -print | grep -i 'product.json' 2>/dev/null` (the *2>/dev/null* [hides premission errors](https://stackoverflow.com/questions/762348/))
+  - `tree -P 'product.json' --prune`
+- [Find all files containing specific text on Linux](https://stackoverflow.com/questions/16956810/how-do-i-find-all-files-containing-specific-text-on-linux):
+  - `grep -rnw '/path/to/somewhere/' -e 'pattern'`
 
 ---
 
