@@ -25,15 +25,22 @@
     - [2.1.1. VSC Extensions](#211-vsc-extensions)
     - [2.1.2. VSC debugger](#212-vsc-debugger)
     - [2.1.3. VSC - OSS (Open source Visual Studio `code`)](#213-vsc---oss-open-source-visual-studio-code)
-  - [2.3. ssh (in lan)](#23-ssh-in-lan)
-    - [2.3.1. Install in Manjaro](#231-install-in-manjaro)
-    - [2.3.1. Access through another PC](#231-access-through-another-pc)
-    - [2.3.1. Access through phone](#231-access-through-phone)
-  - [2.2. VirtualBox VMs](#22-virtualbox-vms)
-    - [2.3.2. Host Manjaro](#232-host-manjaro)
-    - [2.3.3. Guest Manjaro](#233-guest-manjaro)
+    - [2.1.4. VSC - Remote Development (with ssh)](#214-vsc---remote-development-with-ssh)
+  - [2.2. ssh (in lan)](#22-ssh-in-lan)
+    - [2.2.1. Install in Manjaro](#221-install-in-manjaro)
+    - [2.2.2. Access through another PC](#222-access-through-another-pc)
+    - [2.2.3. Access through phone](#223-access-through-phone)
+    - [2.2.4. ssh without password (public & private keys)](#224-ssh-without-password-public--private-keys)
+    - [2.2.5. ssh config file (`~/.ssh/config`)](#225-ssh-config-file-sshconfig)
+    - [2.2.6. Forward GUI (X11 forwarding)](#226-forward-gui-x11-forwarding)
+  - [2.3. VirtualBox VMs](#23-virtualbox-vms)
+    - [2.3.1. Host Manjaro](#231-host-manjaro)
+    - [2.3.2. Guest Manjaro](#232-guest-manjaro)
 - [3. Coding Languages](#3-coding-languages)
   - [3.1. MarkDown](#31-markdown)
+    - [3.1.1. MarkDown CheatSheet](#311-markdown-cheatsheet)
+    - [3.1.2. Extensions for md](#312-extensions-for-md)
+    - [3.1.3. Markdown title into an HTML anchor](#313-markdown-title-into-an-html-anchor)
   - [3.2. Python](#32-python)
     - [3.2.1. Dependencies](#321-dependencies)
 
@@ -221,7 +228,7 @@ Right Click Dock in main screen > Edit Dock > Right Click it AGAIN > Edit/Add Pa
   - `find . 2>/dev/null -print | grep -i 'product.json' 2>/dev/null` (the *2>/dev/null* [hides premission errors](https://stackoverflow.com/questions/762348/))
   - `tree -P 'product.json' --prune`
 - [Find all files containing specific text on Linux](https://stackoverflow.com/questions/16956810/how-do-i-find-all-files-containing-specific-text-on-linux):
-  - `grep -rnw '/path/to/somewhere/' -e 'pattern'`
+  - `grep -rnw './' -e 'pattern'`
 
 ---
 
@@ -296,9 +303,14 @@ Right Click Dock in main screen > Edit Dock > Right Click it AGAIN > Edit/Add Pa
   - ([find files location](https://stackoverflow.com/questions/5905054/how-can-i-recursively-find-all-files-in-current-and-subfolders-based-on-wildcard) with `find . 2>/dev/null -print | grep -i 'product.json'`) (`2>/dev/null` [hides premission errors](https://stackoverflow.com/questions/762348/how-can-i-exclude-all-permission-denied-messages-from-find))
   - (or `tree -P 'product.json' --prune`)
 
-### 2.3. ssh (in lan)
+#### 2.1.4. VSC - Remote Development (with ssh)
 
-#### 2.3.1. Install in Manjaro
+- Install the `Remote Development` extension pack
+- Refer to [section 2.2.4](#224-ssh-without-password-public--private-keys) for ssh configuration
+
+### 2.2. ssh (in lan)
+
+#### 2.2.1. Install in Manjaro
 
 Will already be able to access after a reboot from any computer.
 
@@ -306,25 +318,53 @@ Will already be able to access after a reboot from any computer.
 2. `sudo systemctl enable sshd`
 3. `sudo systemctl start sshd`
 
-#### 2.3.1. Access through another PC
+#### 2.2.2. Access through another PC
 
 1. in your host see the local IP with `ifconfig`
 2. in your other PC in the same LAN do `ssh <UserName>@<Ipv4>` like `ssh yeshey@192.168.0.101`
 
-#### 2.3.1. Access through phone
+#### 2.2.3. Access through phone
 
-1. You can try installing *Termius*
+1. You can try installing *Termius* from the *F-Droid* store
 
-### 2.2. VirtualBox VMs  
+#### 2.2.4. ssh without password (public & private keys)
 
-#### 2.3.2. Host Manjaro
+1. [Best video on setting it up](https://youtu.be/lKXMyln_5q4)
+2. After that you can Ex: `ssh -i ~/.ssh/raspberry_rsa pi@192.168.12.230` without a pass
+3. This way you can also connect to the server with VSC
+
+#### 2.2.5. ssh config file (`~/.ssh/config`)
+
+1. Access the file `~/.ssh/config`
+2. Here is an example of config file:
+   ```bash
+    Host raspberry
+        HostName      192.168.12.230
+        User          pi
+        ForwardX11    yes
+        ForwardX11Trusted    yes
+        IdentityFile  ~/.ssh/raspberry_rsa
+   ```
+   You can have multiple of these blocks for several configurations
+3. Now you can `ssh raspberry` and it will apply all the configurations, manually you'd have to run `ssh -X -Y -i ~/.ssh/raspberry_rsa pi@192.168.12.230`
+
+#### 2.2.6. Forward GUI (X11 forwarding)
+
+1. Note that on the **server-side** you might have to set `X11Forwarding yes` in `/etc/ssh/sshd_config` as explained [here](https://unix.stackexchange.com/questions/12755/how-to-forward-x-over-ssh-to-run-graphics-applications-remotely)
+2. you can add the `-X` or `-Y` options when connecting  
+   `-Y` corresponds to `ForwardX11Trusted yes` in the config file, and is secure forwarding (several features might not work in the gui application)  
+   `-X` corresponds to `ForwardX11 yes` in the config file, and is full forwarding  
+
+### 2.3. VirtualBox VMs  
+
+#### 2.3.1. Host Manjaro
 
 - [Make Virtual Box work in arch with USB devices](https://forum.manjaro.org/t/virtualbox-usb-devices-arent-recognized/57361/2):
   1. Install it normally through `pamac-manager` (Add/Remove software)
   2. Install `virtualbox-ext-oracle` package
   3. Add user to vboxusers: `sudo gpasswd -a $USER vboxusers`
 
-#### 2.3.3. [Guest Manjaro](https://forum.manjaro.org/t/root-tip-virtualbox-installation-usb-shared-folder/1178)
+#### 2.3.2. [Guest Manjaro](https://forum.manjaro.org/t/root-tip-virtualbox-installation-usb-shared-folder/1178)
 
 1. `sudo pacman -Syu virtualbox-guest-utils`  
 2. `sudo gpasswd -a $USER vboxsf`  
@@ -339,11 +379,19 @@ Will already be able to access after a reboot from any computer.
 
 ### 3.1. MarkDown
 
-[MarkDown CheatSheet](https://www.markdownguide.org/cheat-sheet/)  
-Extensions for md:
+#### 3.1.1. [MarkDown CheatSheet](https://www.markdownguide.org/cheat-sheet/)  
+
+#### 3.1.2. Extensions for md
 
 - [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint) for warnings & sugestions
 - [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one) for more features
+
+#### 3.1.3. Markdown title into an HTML anchor
+
+- Refer to [these](https://stackoverflow.com/questions/43273842/what-are-the-rules-of-converting-one-markdown-title-into-an-html-anchor) rules
+- For example, the title `#### 2.2.4. ssh without password (public & private keys)` gets turned to `#224-ssh-without-password-public--private-keys`.  
+So, [this link to section 2.2.4](#224-ssh-without-password-public--private-keys) is formated like so:  
+`[section 2.2.4](#224-ssh-without-password-public--private-keys)`
 
 ---
 
