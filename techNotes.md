@@ -307,6 +307,11 @@ Right Click Dock in main screen > Edit Dock > Right Click it AGAIN > Edit/Add Pa
 
 - Install the `Remote Development` extension pack
 - Refer to [section 2.2.4](#224-ssh-without-password-public--private-keys) for ssh configuration
+- If you want X11 forwarding to your client PC you seemingly need, not one, but booth following options:
+  ```bash
+  ForwardX11          yes
+  ForwardX11Trusted   yes
+  ```
 
 ### 2.2. ssh (in lan)
 
