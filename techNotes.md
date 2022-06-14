@@ -335,7 +335,7 @@ Will already be able to access after a reboot from any computer.
 #### 2.2.4. ssh without password (public & private keys)
 
 1. [Best video on setting it up](https://youtu.be/lKXMyln_5q4)
-2. After that you can Ex: `ssh -i ~/.ssh/raspberry_rsa pi@192.168.12.230` without a pass
+2. After that you can Ex: `ssh -i ~/.ssh/my_identity pi@192.168.12.230` without a pass
 3. This way you can also connect to the server with VSC
 
 #### 2.2.5. ssh config file (`~/.ssh/config`)
@@ -343,15 +343,47 @@ Will already be able to access after a reboot from any computer.
 1. Access the file `~/.ssh/config`
 2. Here is an example of config file:
    ```bash
+    IdentityFile  ~/.ssh/my_identity
+
     Host raspberry
         HostName      192.168.12.230
         User          pi
         ForwardX11    yes
         ForwardX11Trusted    yes
-        IdentityFile  ~/.ssh/raspberry_rsa
    ```
+   You usually only have one IdentityFile and add it to the beginning of the config file like so  
    You can have multiple of these blocks for several configurations
-3. Now you can `ssh raspberry` and it will apply all the configurations, manually you'd have to run `ssh -X -Y -i ~/.ssh/raspberry_rsa pi@192.168.12.230`
+3. Now you can `ssh raspberry` and it will apply all the configurations, manually you'd have to run `ssh -X -Y -i ~/.ssh/my_identity pi@192.168.12.230`
+- You can also do this with ssh agents (might be a way to bypass password when your keys have pass)
+   - The agent is run with `eval $(ssh-agent)` & key added with `ssh-add ~/.ssh/my_identity`
+   1. But this isn't persistent after reboots, better is too
+      1. Add this to `~/.bashrc` (or `~/.zshrc` if using zsh)
+
+      ```bash
+      #Starting SSH authentication agent, so we don't need to run < eval $(ssh-agent) >, run ssh-add before starting to work
+      SSH_ENV="$HOME/.ssh/agent-environment"
+
+      function start_agent {
+          echo "Initialising new SSH agent..."
+          /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+          echo succeeded
+          chmod 600 "${SSH_ENV}"
+          . "${SSH_ENV}" > /dev/null
+          #/usr/bin/ssh-add;
+      }
+      # Source SSH settings, if applicable
+      if [ -f "${SSH_ENV}" ]; then
+          . "${SSH_ENV}" > /dev/null
+          #ps ${SSH_AGENT_PID} doesn't work under cywgin
+          ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+              start_agent;
+          }
+      else
+          start_agent;
+      fi
+      ```
+
+      2. Add `IdentityFile ~/.ssh/my_identity` to the top of `~/.ssh/config` to tell what your key is.
 
 #### 2.2.6. Forward GUI (X11 forwarding)
 
