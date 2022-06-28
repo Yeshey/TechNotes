@@ -12,12 +12,18 @@
     - [1.1.3. Latte Dock](#113-latte-dock)
     - [1.1.4. Notifications](#114-notifications)
       - [1.1.4.1. Fix notifications error in latte dock](#1141-fix-notifications-error-in-latte-dock)
-      - [1.1.4.2. Notification badges in electron apps (like discord):](#1142-notification-badges-in-electron-apps-like-discord)
+      - [1.1.4.2. Notification badges in electron apps (like discord)](#1142-notification-badges-in-electron-apps-like-discord)
       - [1.1.4.3. Send linux OS notifications through terminal/console/cli](#1143-send-linux-os-notifications-through-terminalconsolecli)
     - [1.1.5. Button To Boot into Windows in a dual boot](#115-button-to-boot-into-windows-in-a-dual-boot)
     - [1.1.6. Ohmy - zsh (instead of bash)](#116-ohmy---zsh-instead-of-bash)
     - [1.1.7. Use laptop as a second monitor](#117-use-laptop-as-a-second-monitor)
     - [1.1.8. CLI Search / find words](#118-cli-search--find-words)
+    - [1.1.9. Hotspot](#119-hotspot)
+      - [1.1.9.1. linux-wifi-hotspot](#1191-linux-wifi-hotspot)
+    - [1.1.10. Image Manipulation](#1110-image-manipulation)
+      - [1.1.10.1. Changing Metadata](#11101-changing-metadata)
+        - [1.1.10.1.1. Changing DateTime](#111011-changing-datetime)
+      - [1.1.10.2. Overlaying DateTime On top of image](#11102-overlaying-datetime-on-top-of-image)
   - [1.2. **Windows**](#12-windows)
   - [1.3. **Android**](#13-android)
 - [2. Programs](#2-programs)
@@ -43,6 +49,9 @@
     - [3.1.3. Markdown title into an HTML anchor](#313-markdown-title-into-an-html-anchor)
   - [3.2. Python](#32-python)
     - [3.2.1. Dependencies](#321-dependencies)
+- [4. Others](#4-others)
+  - [4.1. Camera (EOS 1100D)](#41-camera-eos-1100d)
+    - [4.1.1. Timelapse](#411-timelapse)
 
 ## 1. OSs
 
@@ -134,7 +143,7 @@ Right Click Dock in main screen > Edit Dock > Right Click it AGAIN > Edit/Add Pa
 
   check [Latte-Dock: Notifications are currently provided by 'KDE Plasma' - Fix](https://www.youtube.com/watch?v=9d35CMxJkLM)
   
-##### 1.1.4.2. Notification badges in electron apps (like discord):
+##### 1.1.4.2. Notification badges in electron apps (like discord)
 
   Don't work, we're [waiting](https://github.com/electron/electron/issues/30085).
   
@@ -142,7 +151,6 @@ Right Click Dock in main screen > Edit Dock > Right Click it AGAIN > Edit/Add Pa
 
   Try: `notify-send "$USER and $HOME"` go ahead!
   
-
 #### 1.1.5. [Button To Boot into Windows in a dual boot](https://askubuntu.com/questions/42390/one-click-shutdown-ubuntu-and-load-into-alternative-bootup)
 
 - My .desktop file:
@@ -230,6 +238,72 @@ Right Click Dock in main screen > Edit Dock > Right Click it AGAIN > Edit/Add Pa
 - [Find all files containing specific text on Linux](https://stackoverflow.com/questions/16956810/how-do-i-find-all-files-containing-specific-text-on-linux):
   - `grep -rnw './' -e 'pattern'`
 
+#### 1.1.9. Hotspot
+
+For reliable hotspot in arch install:  
+
+##### 1.1.9.1. [linux-wifi-hotspot](https://github.com/lakinduakash/linux-wifi-hotspot)
+
+- Launch gui with `wihotspot`
+- Run on startup with `systemctl enable create_ap`
+
+#### 1.1.10. Image Manipulation
+
+##### 1.1.10.1. Changing Metadata
+
+###### 1.1.10.1.1. [Changing DateTime](https://unix.stackexchange.com/questions/140427/change-time-date-in-or-from-exif-data)
+
+- You can check an image metadata with `file IMG.jpg`
+- Change datetime property to add 44min and 34 seconds to all images: `jhead -ta+0:44:34 *.JPG`
+
+##### 1.1.10.2. Overlaying DateTime On top of image
+
+- Check comments for more references
+- [Code mostly taken from here](https://superuser.com/questions/649033/add-timestamp-to-image-from-linux-command-line)
+- [See this for documentation on how to Overlay info on images with imagemagick](https://legacy.imagemagick.org/Usage/annotating/)
+
+```bash
+#!/usr/bin/env bash
+
+terminater(){
+    echo
+    echo " Exiting normally"
+    exit  # Exits normally
+}
+
+# How to use imagemagick annotate:
+#https://legacy.imagemagick.org/Usage/annotating/
+
+# Taken from https://superuser.com/questions/649033/add-timestamp-to-image-from-linux-command-line
+
+## This command will find all image files, if you are using other
+## extensions, you can add them: -o "*.foo"
+find . -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.tif" -o \
+ -iname "*.tiff" -o -iname "*.png" | 
+
+while IFS= read -r img; do
+    name=$(basename "$img")
+    path=$(dirname "$img")
+    ext="${name/#*./}"; 
+
+    ## Check whether this file has exif data
+    if exiv2 "$img" 2>&1 | grep timestamp >/dev/null 
+    ## If it does, read it and add the water mark   
+    then
+    echo "Processing $img...";
+    convert "$img" \
+            -rotate -90 `# we have to rotate and back bc magick is drink` \
+            -stroke '#000C' -strokewidth 20 `# Increases the font to the outside and inside, to have the black outline` \
+            -gravity NorthWest -pointsize 250 `# pointsize is the font size` \
+            -annotate +70+70 %[exif:DateTimeOriginal] `# +70+70 is the pixels distance from the corner` \
+            `# Then we draw everything again so we have the black outline` \
+            -stroke  none   -fill white    -gravity NorthWest -pointsize 250 -annotate +70+70 %[exif:DateTimeOriginal] \
+            -rotate 90 `# drunk magick` \
+            "$path/../timelapseBatch2Labeled/${name/%.*/_time.$ext}" || terminater;
+    fi 
+done
+```
+
 ---
 
 ### 1.2. **Windows**
@@ -302,12 +376,14 @@ Right Click Dock in main screen > Edit Dock > Right Click it AGAIN > Edit/Add Pa
 - [To share terminals add lines to product.json](https://github.com/MicrosoftDocs/live-share/issues/262)
   - ([find files location](https://stackoverflow.com/questions/5905054/how-can-i-recursively-find-all-files-in-current-and-subfolders-based-on-wildcard) with `find . 2>/dev/null -print | grep -i 'product.json'`) (`2>/dev/null` [hides premission errors](https://stackoverflow.com/questions/762348/how-can-i-exclude-all-permission-denied-messages-from-find))
   - (or `tree -P 'product.json' --prune`)
+  - If the share button isn't doing anything you might have to `yay -S icu69` saw in [here](https://github.com/MicrosoftDocs/live-share/issues/4650)
 
 #### 2.1.4. VSC - Remote Development (with ssh)
 
 - Install the `Remote Development` extension pack
 - Refer to [section 2.2.4](#224-ssh-without-password-public--private-keys) for ssh configuration
 - If you want X11 forwarding to your client PC you seemingly need, not one, but booth following options:
+
   ```bash
   ForwardX11          yes
   ForwardX11Trusted   yes
@@ -342,6 +418,7 @@ Will already be able to access after a reboot from any computer.
 
 1. Access the file `~/.ssh/config`
 2. Here is an example of config file:
+
    ```bash
     IdentityFile  ~/.ssh/my_identity
 
@@ -351,11 +428,13 @@ Will already be able to access after a reboot from any computer.
         ForwardX11    yes
         ForwardX11Trusted    yes
    ```
+
    You usually only have one IdentityFile and add it to the beginning of the config file like so  
    You can have multiple of these blocks for several configurations
 3. Now you can `ssh raspberry` and it will apply all the configurations, manually you'd have to run `ssh -X -Y -i ~/.ssh/my_identity pi@192.168.12.230`
+
 - You can also do this with ssh agents (might be a way to bypass password when your keys have pass)
-   - The agent is run with `eval $(ssh-agent)` & key added with `ssh-add ~/.ssh/my_identity`
+  - The agent is run with `eval $(ssh-agent)` & key added with `ssh-add ~/.ssh/my_identity`
    1. But this isn't persistent after reboots, better is too
       1. Add this to `~/.bashrc` (or `~/.zshrc` if using zsh)
 
@@ -443,3 +522,19 @@ So, [this link to section 2.2.4](#224-ssh-without-password-public--private-keys)
 
 - Automatically install dependencies:  
 `pip install -r requirements.txt`
+
+## 4. Others
+
+### 4.1. Camera (EOS 1100D)
+
+#### 4.1.1. Timelapse
+
+- Connected to computer:
+  1. [Install EOS Utility](https://hk.canon/en/support/0200584002)
+  2. Take photos in intervals by connecting the camera to the PC
+  3. [Use EOS Utility](https://www.youtube.com/watch?v=lkQO0V9j0ac)
+- Installing Magic lantern software in Camera
+  1. [Make sure it has firmware 1.0.5](https://drivers.softpedia.com/get/SCANNER-Digital-CAMERA-WEBCAM/CANON/Canon-EOS-1100D-DSLR-Firmware-105.shtml)  
+  2. [Tutorial on how to install Magic Lantern](https://www.youtube.com/watch?v=6s7_ZO6ELUs), see [here](https://www.youtube.com/watch?v=33Q17zd-0nE) to know where to put the files in the SD card
+  3. [Tutorial on timelapse with magic Lantern](https://www.youtube.com/watch?v=1mB_hv3b05Y)
+- Turn off autofocuse on a button in front on the lens that you can switch between AF(auto focuse) and MF (manual focuse)
