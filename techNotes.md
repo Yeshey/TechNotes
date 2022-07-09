@@ -32,6 +32,7 @@
     - [2.1.2. VSC debugger](#212-vsc-debugger)
     - [2.1.3. VSC - OSS (Open source Visual Studio `code`)](#213-vsc---oss-open-source-visual-studio-code)
     - [2.1.4. VSC - Remote Development (with ssh)](#214-vsc---remote-development-with-ssh)
+    - [2.1.5. Fix Live share in Manjaro](#215-fix-live-share-in-manjaro)
   - [2.2. ssh (in lan)](#22-ssh-in-lan)
     - [2.2.1. Install in Manjaro](#221-install-in-manjaro)
     - [2.2.2. Access through another PC](#222-access-through-another-pc)
@@ -299,7 +300,7 @@ while IFS= read -r img; do
             `# Then we draw everything again so we have the black outline` \
             -stroke  none   -fill white    -gravity NorthWest -pointsize 250 -annotate +70+70 %[exif:DateTimeOriginal] \
             -rotate 90 `# drunk magick` \
-            "$path/../timelapseBatch2Labeled/${name/%.*/_time.$ext}" || terminater;
+            "$path/${name/%.*/_time.$ext}" || terminater;
     fi 
 done
 ```
@@ -388,6 +389,8 @@ done
   ForwardX11          yes
   ForwardX11Trusted   yes
   ```
+
+#### 2.1.5. [Fix Live share in Manjaro](https://github.com/MicrosoftDocs/live-share/issues/4650)
 
 ### 2.2. ssh (in lan)
 
