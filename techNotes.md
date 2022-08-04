@@ -548,6 +548,83 @@ So, [this link to section 2.2.4](#224-ssh-without-password-public--private-keys)
 
 #### 4.2.1. Android
 
-- YouTube Vanced
+- Hacker's Keyboard (anysoft keyboard? Find better)
+- Explorers:
+  - YouTube Vanced / Vanced Manager
+  - NewPipe
+  - LBRY
+  - F-Droid
+  - PlayStore
+Browsers:
+  - Vivaldi Browser
+  - Tor Brwoser
+- Self Improve:
+  - Duolingo
+  - Anki
+  - Daylio
+- Utilities:
+  - vlc
+  - Blackplayer
+  - andOTP
+  - Google Keep
+  - Free PC Games
+  - Mini Scanner
+  - Google Calendar
+  - Bitwarden
+  - Syncthing
+  - Sleep Android
+  - FX file explorer
+  - Lens
+  - DroidCam
+  - [Google Translate](https://translate.google.com) (as a link)
 - Games:
-  - Charades ( group game)
+  - Charades (group game)
+  - Ludo King (4 people game)
+  - Micro Battles (1/2/3) (2 people)
+  - 4 in a row (2 people)
+  - Chess Clock (to play irl chess)
+  - Clash Royale
+  - InfiniRoom
+- Social Media:
+  - Discord
+  - Twitter
+  - Messenger
+  - Signal
+  - Whatsapp
+  - Instagram
+  - Telegram
+  - SnapChat
+  - Tinder / Bumble / OKCupid
+  - MS Teams
+- Movin:
+  - TAP Portugal
+  - CP Portugal
+  - Bolt
+  - Uber
+  - Geocashing
+  - Miles (car sharing)
+- Money:
+  - Caixadirecta
+  - MB WAY
+  - PayPal
+  - Revolut
+  - Exodus
+  - Too Good To Go
+- MTG:
+  - MTG Carbon
+  - MTG Companion
+- Discounts:
+  - Cartao Continente
+  - Burger King
+  - MC Donalds
+- Techy:
+  - Termux
+  - Sync.ME
+- Manga / Anime:
+  - [Solo Leveling](https://www.mangago.me/read-manga/solo_leveling/?rmgU)
+  - https://www.mangago.me/
+  - https://mangakakalot.com/
+- Others
+  - Soundcorset Tuner & Metronome
+  - Github
+  - DiskUsage
