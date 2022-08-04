@@ -594,6 +594,7 @@ Browsers:
   - Instagram
   - Telegram
   - SnapChat
+  - [Facebook](https://www.facebook.com) as a link
   - Tinder / Bumble / OKCupid
   - MS Teams
 - Movin:
