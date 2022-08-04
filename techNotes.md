@@ -53,6 +53,8 @@
 - [4. Others](#4-others)
   - [4.1. Camera (EOS 1100D)](#41-camera-eos-1100d)
     - [4.1.1. Timelapse](#411-timelapse)
+  - [4.2. Programs to Install](#42-programs-to-install)
+    - [4.2.1. Android](#421-android)
 
 ## 1. OSs
 
@@ -541,3 +543,11 @@ So, [this link to section 2.2.4](#224-ssh-without-password-public--private-keys)
   2. [Tutorial on how to install Magic Lantern](https://www.youtube.com/watch?v=6s7_ZO6ELUs), see [here](https://www.youtube.com/watch?v=33Q17zd-0nE) to know where to put the files in the SD card
   3. [Tutorial on timelapse with magic Lantern](https://www.youtube.com/watch?v=1mB_hv3b05Y)
 - Turn off autofocuse on a button in front on the lens that you can switch between AF(auto focuse) and MF (manual focuse)
+
+### 4.2. Programs to Install
+
+#### 4.2.1. Android
+
+- YouTube Vanced
+- Games:
+  - Charades ( group game)
