@@ -572,6 +572,7 @@ Browsers:
   - Google Calendar
   - Bitwarden
   - Syncthing
+  - Shazam
   - Sleep Android
   - FX file explorer
   - Lens
