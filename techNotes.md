@@ -315,6 +315,11 @@ done
 
 ### 1.3. **Android**
 
+#### Root (A70)
+
+- [This guy knows his shit](https://forum.xda-developers.com/t/recovery-unofficial-root-twrp-for-galaxy-a70.3955984/)
+- [With some help from this guide](https://magiskapp.com/root-samsung-galaxy-a70s-using-magisk/)
+
 ## 2. Programs
 
 ### 2.1. VSC (Visual Studio Code)
@@ -630,6 +635,7 @@ Browsers:
   - Soundcorset Tuner & Metronome
   - Github
   - DiskUsage
+  - Home Workout
 
 #### 4.2.2. Surface (Windows)
 
