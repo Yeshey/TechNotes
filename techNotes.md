@@ -650,6 +650,7 @@ Browsers:
 - Inkscape
 - GIMP
 - SyncTrazor
+- AnyDesk
 - Tor Browser
 - Vivaldi Browser
 - GitHub Desktop
