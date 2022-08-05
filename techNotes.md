@@ -630,3 +630,32 @@ Browsers:
   - Soundcorset Tuner & Metronome
   - Github
   - DiskUsage
+
+#### 4.2.2. Surface (Windows)
+
+- Notepad++
+- 7zip
+- Visual Studio Code
+- VLC Media Player
+- OBS Studio
+- Anki
+- Python
+- ffmpeg
+- WinDirStat
+- Stremio
+- Discord
+- VBCable, the Virtual Audio Cable
+- Oracle Virtual Box
+- Blender
+- Inkscape
+- GIMP
+- SyncTrazor
+- Tor Browser
+- Vivaldi Browser
+- GitHub Desktop
+- 4k Video Downloader
+- Microsoft Office
+- Git
+- Java
+- Barrier (to control from linux too)
+- (OpenVPN)
