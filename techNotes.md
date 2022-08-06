@@ -24,8 +24,11 @@
       - [1.1.10.1. Changing Metadata](#11101-changing-metadata)
         - [1.1.10.1.1. Changing DateTime](#111011-changing-datetime)
       - [1.1.10.2. Overlaying DateTime On top of image](#11102-overlaying-datetime-on-top-of-image)
+    - [1.1.11. Tested in Other Linuxs](#1111-tested-in-other-linuxs)
+      - [1.1.11.1. Add more resolution options (Linux Mint)](#11111-add-more-resolution-options-linux-mint)
   - [1.2. **Windows**](#12-windows)
   - [1.3. **Android**](#13-android)
+    - [1.3.1. Root (A70)](#131-root-a70)
 - [2. Programs](#2-programs)
   - [2.1. VSC (Visual Studio Code)](#21-vsc-visual-studio-code)
     - [2.1.1. VSC Extensions](#211-vsc-extensions)
@@ -55,6 +58,7 @@
     - [4.1.1. Timelapse](#411-timelapse)
   - [4.2. Programs to Install](#42-programs-to-install)
     - [4.2.1. Android](#421-android)
+    - [4.2.2. Surface (Windows)](#422-surface-windows)
 
 ## 1. OSs
 
@@ -307,6 +311,42 @@ while IFS= read -r img; do
 done
 ```
 
+#### 1.1.11. Tested in Other Linuxs
+
+##### 1.1.11.1. Add more resolution options (Linux Mint)  
+
+(this might not work if you have a NVIDIA card with propriatery drivers)
+
+- [In linux Minit you have the `~/.profile` file](https://forums.linuxmint.com/viewtopic.php?t=291078), where you can run `xrandr` commands for each user  
+  [But here's how to do it for the whole system:](https://forums.linuxmint.com/viewtopic.php?p=1709995#p1709995)
+  - Mint reads everything inside `/etc/lightdm/lightdm.conf.d` on boot, you can add a file there that points to a script of yours to execute the `xrandr` commands.  
+  1. Create a new file like `sudo nano /etc/lightdm/lightdm.conf.d/71-linuxmint.conf` and add the following:
+
+      ```bash
+      [SeatDefaults]
+      user-session=cinnamon
+      display-setup-script=/usr/bin/LGmonitor.bsh
+      ```
+
+  2. Create the script at `sudo nano /usr/bin/LGmonitor.bsh`  
+     And add the `xrandr` commands:
+
+      ```bash
+      xrandr --newmode "1440x900_60.00"  106.50  1440 1528 1672 1904  900 903 909 934 -hsync +vsync
+      xrandr --addmode VGA-1 1440x900_60.00 
+
+      xrandr --newmode "1280x800_60.00"   83.50  1280 1352 1480 1680  800 803 809 831 -hsync +vsync
+      xrandr --addmode VGA-1 1280x800_60.00
+
+      xrandr --newmode "1920x1080_60.00"  172.80  1920 2040 2248 2576  1080 1081 1084 1118  -HSync +Vsync
+      xrandr --addmode VGA-1 "1920x1080_60.00"
+      ```
+
+      (note that instead of VGA-1 you might have to put something else like DP-2, you should be able to check it in your display application where you change the resolution)
+  3. Make the script executable:  
+     `sudo chmod +x /usr/bin/LGmonitor.bsh`
+  4. You are now able to change the resolution in all users from your display application.
+
 ---
 
 ### 1.2. **Windows**
@@ -315,7 +355,7 @@ done
 
 ### 1.3. **Android**
 
-#### Root (A70)
+#### 1.3.1. Root (A70)
 
 - [This guy knows his shit](https://forum.xda-developers.com/t/recovery-unofficial-root-twrp-for-galaxy-a70.3955984/)
 - [With some help from this guide](https://magiskapp.com/root-samsung-galaxy-a70s-using-magisk/)
