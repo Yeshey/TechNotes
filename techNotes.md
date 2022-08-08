@@ -253,6 +253,7 @@ For reliable hotspot in arch install:
 
 - Launch gui with `wihotspot`
 - Run on startup with `systemctl enable create_ap`
+- Disable Running on startup with `systemctl disable create_ap`
 
 #### 1.1.10. Image Manipulation
 
