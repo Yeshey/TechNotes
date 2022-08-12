@@ -24,8 +24,10 @@
       - [1.1.10.1. Changing Metadata](#11101-changing-metadata)
         - [1.1.10.1.1. Changing DateTime](#111011-changing-datetime)
       - [1.1.10.2. Overlaying DateTime On top of image](#11102-overlaying-datetime-on-top-of-image)
-    - [1.1.11. Tested in Other Linuxs](#1111-tested-in-other-linuxs)
-      - [1.1.11.1. Add more resolution options (Linux Mint)](#11111-add-more-resolution-options-linux-mint)
+    - [1.1.11. File Systems](#1111-file-systems)
+      - [1.1.11.1. BTRFS](#11111-btrfs)
+    - [1.1.12. Tested in Other Linuxs](#1112-tested-in-other-linuxs)
+      - [1.1.12.1. Add more resolution options (Linux Mint)](#11121-add-more-resolution-options-linux-mint)
   - [1.2. **Windows**](#12-windows)
   - [1.3. **Android**](#13-android)
     - [1.3.1. Root (A70)](#131-root-a70)
@@ -312,9 +314,15 @@ while IFS= read -r img; do
 done
 ```
 
-#### 1.1.11. Tested in Other Linuxs
+#### 1.1.11. File Systems
 
-##### 1.1.11.1. Add more resolution options (Linux Mint)  
+##### 1.1.11.1. BTRFS
+
+Supports spanning multiple drives with one file system without LVM!!
+
+#### 1.1.12. Tested in Other Linuxs
+
+##### 1.1.12.1. Add more resolution options (Linux Mint)  
 
 (this might not work if you have a NVIDIA card with propriatery drivers)
 
