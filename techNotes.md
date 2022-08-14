@@ -53,6 +53,7 @@
     - [3.1.1. MarkDown CheatSheet](#311-markdown-cheatsheet)
     - [3.1.2. Extensions for md](#312-extensions-for-md)
     - [3.1.3. Markdown title into an HTML anchor](#313-markdown-title-into-an-html-anchor)
+  - [3.1. LaTeX](#31-latex)
   - [3.2. Python](#32-python)
     - [3.2.1. Dependencies](#321-dependencies)
 - [4. Others](#4-others)
@@ -269,6 +270,15 @@ For reliable hotspot in arch install:
 ##### 1.1.10.2. Overlaying DateTime On top of image
 
 - Check comments for more references
+- Note: you can also use `mogrify` included in the package instead of `convert` to replace the images in place, example:
+
+  - ```bash
+      mogrify -resize 390 *.jpeg # resizes so the width is 390
+      mogrify -gravity South -chop 0x267 *.jpeg # crops bottom 267 rows of pixels
+      mogrify -gravity North -chop 0x206 *.jpeg # crops top 267 rows of pixels
+    ```
+
+- Change one character of all files in folder `find ./ -depth -name '*' -execdir bash -c 'mv -- "$1" "${1/f/w}"' bash {} \;` changes `f` to `w`
 - [Code mostly taken from here](https://superuser.com/questions/649033/add-timestamp-to-image-from-linux-command-line)
 - [See this for documentation on how to Overlay info on images with imagemagick](https://legacy.imagemagick.org/Usage/annotating/)
 
@@ -569,6 +579,268 @@ So, [this link to section 2.2.4](#224-ssh-without-password-public--private-keys)
 `[section 2.2.4](#224-ssh-without-password-public--private-keys)`
 
 ---
+
+### 3.1. LaTeX
+
+- [Learn LaTeX in overleaf](https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes)
+- Use [overleaf](https://www.overleaf.com) for simultanious work
+- [Discord Server link about latex](https://discord.com/channels/584139918822080543/994917160709275738)
+- [OverLeaf's IEEE official IEEE templates](https://www.overleaf.com/gallery/tagged/ieee-official)
+- Also have [LatexTemplates.com](https://latextemplates.com)
+- OverLeaf's template:
+
+  ```tex
+  \documentclass{article}
+  \usepackage[utf8]{inputenc}
+
+  \title{Embedded Machine Learning Report}
+  \author{yesheysangpo}
+  \date{August 2022}
+
+  \begin{document}
+
+  \maketitle
+
+  \section{Introduction}
+
+  \end{document}
+  ```
+
+- My main.tex Template Report:
+  
+  ```tex
+  \documentclass[10pt]{article}
+  % -------------------------------------------------------------------
+  % Pacotes básicos
+  \usepackage[english]{babel}										% Idioma a ser usado
+                                                                  % Trocar "english" para "brazil" para artigos escritos em língua portuguesa 
+  \usepackage[utf8]{inputenc}										% Escrita de caracteres acentuados e cedilhas - 1
+  \usepackage[T1]{fontenc}										% Escrita de caracteres acentuados + outros detalhes técnicos fundamentais
+  % -------------------------------------------------------------------
+  % Pacotes matemáticos
+  \usepackage{amsmath,amsfonts,amssymb,amsthm,cancel,siunitx,
+  calculator,calc,mathtools,empheq,latexsym}
+  % -------------------------------------------------------------------
+  % Pacotes para inserção de figuras e subfiguras
+  \usepackage{subfig,epsfig,tikz,float}		            % Packages de figuras. 
+  % -------------------------------------------------------------------
+  % Pacotes para inserção de tabelas
+  \usepackage{booktabs,multicol,multirow,tabularx,array}          % Packages para tabela
+  % -------------------------------------------------------------------
+  \usepackage{float}
+  \usepackage{biblatex}
+  \usepackage[colorlinks=true, allcolors=blue]{hyperref}
+  \usepackage{lipsum}
+
+  % trying to How can one keep a \section from being at the end of a page?
+  % \usepackage[nobottomtitles*]{titlesec}
+
+  % -------------------------------------------------------------------
+  % Definition of lengths
+  \setlength{\parskip}{5pt}
+  \textwidth 13.5cm
+  \textheight 19.5cm
+  \columnsep .5cm
+  % -------------------------------------------------------------------
+  % Title of the Article
+  \title{\renewcommand{\baselinestretch}{1.17}\normalsize\bf%
+  \uppercase{Embedded American Sign Letters Recognition in  Raspberry Pi}
+  }
+  % -------------------------------------------------------------------
+  % Authors
+  \author{%
+  João Almeida\\
+  Joao.SilvadeAlmeida@haw-hamburg.de
+  }
+  % -------------------------------------------------------------------
+
+  % Begin Document
+
+  \begin{document}
+
+  \date{}
+
+  \maketitle
+
+  \vspace{-0.5cm}
+
+  \begin{center}
+  {\footnotesize 
+  HAW Hamburg, Dept. for Computer Science \\
+  }
+  \end{center}
+
+  % -------------------------------------------------------------------
+  % Abstract
+  \bigskip
+  \noindent
+  \begin{abstract}
+    Training of a object detection model with TensorFlow for deployment on an Embedded Raspberry Pi system for recognition of American sign language letters from the camera's image.
+  %	\lipsum[2-4]
+  \end{abstract}
+
+  \medskip
+  \noindent
+  {\small{\bf Keywords}{:} 
+  computer vision, tensorflow, classification, raspberry pi, python, object detection, machine learning, opencv
+  }
+
+  \baselineskip=\normalbaselineskip
+
+  \pagebreak
+  \tableofcontents
+  \pagebreak
+  % -------------------------------------------------------------------
+
+  \section{Introduction}\label{sec:1}
+
+    \lipsum[1-1]
+
+    \pagebreak
+
+  \section{Approach and Architecture}\label{sec:2}
+
+    \lipsum[65-66]
+
+  \section{Training and Test Data-set}\label{sec:3}
+
+    \lipsum[65-66]
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[scale=0.4]{example-image-c}
+      \caption{Goal of the image preprocessing.}\label{fig:preprocessing-goal}
+    \end{figure}
+
+    \subsection{Color Space Conversion}
+
+      \lipsum[65]
+
+    \subsection{Gaussian Blur}
+
+      \lipsum[65] $\frac{1}{25}$
+
+      \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.6]{example-image-b}
+        \caption{Application of the Gaussian blur.}\label{fig:gaussian-blur}
+      \end{figure}
+
+    \subsection{Canny Edge Detection}
+
+      \lipsum[65] $\frac{\pi}{180}$
+
+      \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.15]{example-image-a}
+        \caption{Example application of the Canny Edge detection technique.}\label{fig:canny-edge}
+      \end{figure}
+
+    \subsection{Clustering}
+
+      \lipsum[65]
+
+  \section{Deployment in the Raspberry Pi}\label{sec:4}
+
+    \lipsum[75]
+
+  \subsection{Architecture}
+
+    \lipsum[10-11]
+
+    \begin{table}[H]
+      \centering
+      \begin{tabular}{||c c c c||} 
+        \hline
+        N & Layer & N Filters/Units & Pool/Kernel Size \\ [0.5ex] 
+        \hline\hline
+        1 & Conv2D & 32 & 5 x 5\\ 
+        \hline
+        2 & MaxPooling2D & - & 2 x 2 \\
+        \hline
+        3 & Conv2D & 64 & 5 x 5 \\
+        \hline
+        4 & MaxPooling2D & - & 2 x 2 \\
+        \hline
+        5 & Dropout & - & - \\ [1ex] 
+        \hline
+        6 & Flatten & - & - \\ [1ex] 
+        \hline
+        7 & Dense & 128 & - \\ [1ex] 
+        \hline
+        8 & Dropout & - & - \\ [1ex] 
+        \hline
+        9 & Dense & 64 & - \\ [1ex] 
+        \hline
+        10 & Dense & 13 & - \\ [1ex] 
+        \hline
+      \end{tabular}
+      \caption{\label{tab:cnn-architecture}CNN layer architecture.}
+    \end{table}
+
+    \pagebreak
+
+    \subsection{Dataset}
+
+      To escape text: $\textit{image\_dataset\_from\_directory}$.
+
+      Citation \cite{1}
+
+      \begin{figure}[H]
+        \centering
+        \begin{minipage}[b]{0.25\textwidth}
+          \includegraphics[width=\textwidth]{example-image-a}
+          \caption{Multiple dataset image examples.}
+        \end{minipage}
+        \hfill
+        \begin{minipage}[b]{0.65\textwidth}
+          \includegraphics[width=\textwidth]{example-image-b}
+          \caption{Image distribution in the dataset.}
+        \end{minipage}
+      \end{figure}
+
+
+    \subsection{Training and Validation}
+
+      \lipsum[65-66]
+
+      \pagebreak
+
+  \section{Practical Study}
+
+    \lipsum[65]
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[scale=1]{example-image-a}
+      \caption{Usage of the application.}\label{fig:usage}
+    \end{figure}
+
+    \pagebreak
+
+  \section{Conclusions}\label{sec:5}
+
+    \lipsum[1-2]
+
+  \newpage
+
+  % There is a better way to do the bibliography for sure
+  \begin{thebibliography}{9}
+    \bibitem{1}
+    \href{https://en.wikipedia.org/wiki/Convolutional_neural_network}{Wikipedia. Convolutional Neural Network. (Access date: 04.03.2022) [Online]}
+    
+    \bibitem{2}
+    \href{https://viso.ai/edge-ai/tensorflow-lite/}{Viso.ai. TensorFlow-Lite. (Access date: 04.03.2022) [Online]}
+    
+    \bibitem{3}
+    \href{https://keras.io/guides/sequential_model/}{Keras.io. Sequential Model. (Access date: 04.03.2022) [Online]}
+    
+    \bibitem{4}
+    \href{https://towardsdatascience.com/board-game-image-recognition-using-neural-networks-116fc876dafa}{TowardsDataScience. Board Game Image Recognition. (Access date: 04.03.2022) [Online]}
+  \end{thebibliography}
+
+  \end{document}
+  ```
 
 ### 3.2. Python
 
