@@ -30,7 +30,8 @@
       - [1.1.12.1. Add more resolution options (Linux Mint)](#11121-add-more-resolution-options-linux-mint)
   - [1.2. **Windows**](#12-windows)
   - [1.3. **Android**](#13-android)
-    - [1.3.1. Root (A70)](#131-root-a70)
+    - [1.3.1. Root with Magisk (A70)](#131-root-with-magisk-a70)
+    - [1.3.2. Hide root from apps without MagiskHide](#132-hide-root-from-apps-without-magiskhide)
 - [2. Programs](#2-programs)
   - [2.1. VSC (Visual Studio Code)](#21-vsc-visual-studio-code)
     - [2.1.1. VSC Extensions](#211-vsc-extensions)
@@ -53,9 +54,9 @@
     - [3.1.1. MarkDown CheatSheet](#311-markdown-cheatsheet)
     - [3.1.2. Extensions for md](#312-extensions-for-md)
     - [3.1.3. Markdown title into an HTML anchor](#313-markdown-title-into-an-html-anchor)
-  - [3.1. LaTeX](#31-latex)
-  - [3.2. Python](#32-python)
-    - [3.2.1. Dependencies](#321-dependencies)
+  - [3.2. LaTeX](#32-latex)
+  - [3.3. Python](#33-python)
+    - [3.3.1. Dependencies](#331-dependencies)
 - [4. Others](#4-others)
   - [4.1. Camera (EOS 1100D)](#41-camera-eos-1100d)
     - [4.1.1. Timelapse](#411-timelapse)
@@ -374,10 +375,14 @@ Supports spanning multiple drives with one file system without LVM!!
 
 ### 1.3. **Android**
 
-#### 1.3.1. Root (A70)
+#### 1.3.1. Root with Magisk (A70)
 
 - [This guy knows his shit](https://forum.xda-developers.com/t/recovery-unofficial-root-twrp-for-galaxy-a70.3955984/)
 - [With some help from this guide](https://magiskapp.com/root-samsung-galaxy-a70s-using-magisk/)
+
+#### 1.3.2. Hide root from apps without MagiskHide
+
+- YOu need to pass safety net, wich is google's method to detect root on android devices. [Follow this guide](https://www.droidwin.com/how-to-pass-safetynet-on-rooted-android-12/)
 
 ## 2. Programs
 
@@ -580,7 +585,7 @@ So, [this link to section 2.2.4](#224-ssh-without-password-public--private-keys)
 
 ---
 
-### 3.1. LaTeX
+### 3.2. LaTeX
 
 - [Learn LaTeX in overleaf](https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes)
 - Use [overleaf](https://www.overleaf.com) for simultanious work
@@ -842,9 +847,9 @@ So, [this link to section 2.2.4](#224-ssh-without-password-public--private-keys)
   \end{document}
   ```
 
-### 3.2. Python
+### 3.3. Python
 
-#### 3.2.1. Dependencies
+#### 3.3.1. Dependencies
 
 - [Automatically create requirements.txt](https://stackoverflow.com/questions/31684375/automatically-create-requirements-txt):  
   - `pip install pipreqs`  
