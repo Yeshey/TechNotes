@@ -28,6 +28,7 @@
       - [1.1.11.1. BTRFS](#11111-btrfs)
     - [1.1.12. Tested in Other Linuxs](#1112-tested-in-other-linuxs)
       - [1.1.12.1. Add more resolution options (Linux Mint)](#11121-add-more-resolution-options-linux-mint)
+    - [1.1.13. rsync](#1113-rsync)
   - [1.2. **Windows**](#12-windows)
   - [1.3. **Android**](#13-android)
     - [1.3.1. Root with Magisk (A70)](#131-root-with-magisk-a70)
@@ -366,6 +367,11 @@ Supports spanning multiple drives with one file system without LVM!!
   3. Make the script executable:  
      `sudo chmod +x /usr/bin/LGmonitor.bsh`
   4. You are now able to change the resolution in all users from your display application.
+
+#### 1.1.13. rsync
+
+- [Command to copy ***Everything***](https://askubuntu.com/questions/117014/what-is-the-easiest-way-to-merge-and-home):
+  - `sudo rsync -avz --hard-links --numeric-ids /mnt/oldhome/ /mnt/root/home`
 
 ---
 
@@ -985,10 +991,15 @@ Browsers:
 - AnyDesk
 - Tor Browser
 - Vivaldi Browser
-- GitHub Desktop
 - 4k Video Downloader
 - Microsoft Office
 - Git
+- GitHub Desktop
 - Java
 - Barrier (to control from linux too)
 - (OpenVPN)
+- qBittorrent
+
+  - More, For PC:
+- AOMEI Partition Assistent
+- Lenovo Vantage
