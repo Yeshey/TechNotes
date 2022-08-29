@@ -1003,3 +1003,4 @@ Browsers:
   - More, For PC:
 - AOMEI Partition Assistent
 - Lenovo Vantage
+- GeForce Experience (for Nvidia drivers)
