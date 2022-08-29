@@ -30,6 +30,7 @@
       - [1.1.12.1. Add more resolution options (Linux Mint)](#11121-add-more-resolution-options-linux-mint)
     - [1.1.13. rsync](#1113-rsync)
   - [1.2. **Windows**](#12-windows)
+    - [1.2.1. Recover /efi/boot for Windows](#121-recover-efiboot-for-windows)
   - [1.3. **Android**](#13-android)
     - [1.3.1. Root with Magisk (A70)](#131-root-with-magisk-a70)
     - [1.3.2. Hide root from apps without MagiskHide](#132-hide-root-from-apps-without-magiskhide)
@@ -64,6 +65,7 @@
   - [4.2. Programs to Install](#42-programs-to-install)
     - [4.2.1. Android](#421-android)
     - [4.2.2. Surface (Windows)](#422-surface-windows)
+      - [4.2.2.1. Installing only some apps of Office](#4221-installing-only-some-apps-of-office)
 
 ## 1. OSs
 
@@ -371,11 +373,24 @@ Supports spanning multiple drives with one file system without LVM!!
 #### 1.1.13. rsync
 
 - [Command to copy ***Everything***](https://askubuntu.com/questions/117014/what-is-the-easiest-way-to-merge-and-home):
-  - `sudo rsync -avz --hard-links --numeric-ids /mnt/oldhome/ /mnt/root/home`
+  - `sudo rsync -avz --hard-links --info=progress2 --numeric-ids /mnt/oldhome/ /mnt/root/home`
 
 ---
 
 ### 1.2. **Windows**
+
+#### 1.2.1. Recover /efi/boot for Windows
+
+On a dual boot system if you can't boot into windows anymore, do this:
+
+- [Follow this](https://www.youtube.com/watch?v=l_I4K2-Rr_Y) to be able to boot back into Windows
+- now grub must have disappeared, so, chroot or boot through bios into [manjaro with `manjaro-chroot -a`](https://wiki.manjaro.org/index.php/GRUB/Restore_the_GRUB_Bootloader) and fix grub
+  - \# `grub-install`
+  - \# `update-grub`
+- Now grub should appear again
+- [if it doesn't detect windows, try this](https://askubuntu.com/questions/197868/grub-does-not-detect-windows)
+- In Windows you might have now a choose operating system question on boot, if so, [follow these instructions from here](https://www.windowsdigitals.com/how-to-remove-choose-an-operating-system-screen-windows-10/)
+  - If it doesn't let you, try to run `chkdsk /f /r` [as explained here](https://www.youtube.com/watch?v=FejmrhtxauU)
 
 ---
 
@@ -1004,3 +1019,32 @@ Browsers:
 - AOMEI Partition Assistent
 - Lenovo Vantage
 - GeForce Experience (for Nvidia drivers)
+
+##### 4.2.2.1. Installing only some apps of Office
+
+You need to do some hacky stuff to get this done.
+
+- [Follow this video](https://www.youtube.com/watch?v=1g0fHoojWuE)
+- This is the resulting configuration file to install word and excel with your business account:
+
+  ```xml
+  <Configuration ID="0f7a1395-691d-452b-bf60-305f88fdc99b">
+    <Add OfficeClientEdition="64" Channel="Current">
+      <Product ID="O365BusinessRetail">
+        <Language ID="en-gb" />
+        <ExcludeApp ID="Access" />
+        <ExcludeApp ID="Groove" />
+        <ExcludeApp ID="Lync" />
+        <ExcludeApp ID="OneDrive" />
+        <ExcludeApp ID="OneNote" />
+        <ExcludeApp ID="Outlook" />
+        <ExcludeApp ID="PowerPoint" />
+        <ExcludeApp ID="Publisher" />
+        <ExcludeApp ID="Teams" />
+      </Product>
+    </Add>
+    <Updates Enabled="TRUE" />
+    <RemoveMSI />
+    <Display Level="Full" AcceptEULA="TRUE" />
+  </Configuration>
+  ```
