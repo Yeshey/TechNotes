@@ -930,7 +930,8 @@ Browsers:
   - Lens
   - DroidCam
   - [Google Translate](https://translate.google.com) (as a link)
-- Games:
+- Entertainment:
+  - Tachiyomi (install from F-droid | manga reader)
   - Charades (group game)
   - Ludo King (4 people game)
   - Micro Battles (1/2/3) (2 people)
