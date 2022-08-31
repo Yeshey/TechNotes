@@ -900,38 +900,9 @@ So, [this link to section 2.2.4](#224-ssh-without-password-public--private-keys)
 
 #### 4.2.1. Android
 
-- Hacker's Keyboard (anysoft keyboard? Find better)
-- Explorers:
-  - YouTube Vanced / Vanced Manager
-  - NewPipe
-  - LBRY
-  - F-Droid
-  - PlayStore
-Browsers:
-  - Vivaldi Browser
-  - Tor Brwoser
-- Self Improve:
-  - Duolingo
-  - Anki
-  - Daylio
-- Utilities:
-  - vlc
-  - Blackplayer
-  - andOTP
-  - Google Keep
-  - Free PC Games
-  - Mini Scanner
-  - Google Calendar
-  - Bitwarden
-  - Syncthing
-  - Shazam
-  - Sleep Android
-  - FX file explorer
-  - Lens
-  - DroidCam
-  - [Google Translate](https://translate.google.com) (as a link)
 - Entertainment:
   - Tachiyomi (install from F-droid | manga reader)
+  - (Old Manga sites: [Solo Leveling](https://www.mangago.me/read-manga/solo_leveling/?rmgU), https://www.mangago.me/, https://mangakakalot.com/)
   - Charades (group game)
   - Ludo King (4 people game)
   - Micro Battles (1/2/3) (2 people)
@@ -939,7 +910,7 @@ Browsers:
   - Chess Clock (to play irl chess)
   - Clash Royale
   - InfiniRoom
-- Social Media:
+- Social:
   - Discord
   - Twitter
   - Messenger
@@ -950,14 +921,49 @@ Browsers:
   - SnapChat
   - [Facebook](https://www.facebook.com) as a link
   - Tinder / Bumble / OKCupid
+- Social & Work
   - MS Teams
-- Movin:
-  - TAP Portugal
-  - CP Portugal
-  - Bolt
-  - Uber
-  - Geocashing
-  - Miles (car sharing)
+  - Gmail
+  - Outlook (Browser shortcut)
+- Explorers:
+  - YouTube Vanced / Vanced Manager
+  - NewPipe
+  - LBRY
+  - F-Droid
+  - PlayStore
+  - Maps
+  - Vivaldi Browser
+  - Tor Brwoser
+- Utilities:
+  - Google Keep
+  - Google Docs
+  - Mini Scanner
+  - Google Calendar
+  - Shazam
+  - Sleep Android
+  - Lens
+  - DroidCam
+  - [Google Translate](https://translate.google.com) (as a link)
+- Tech Utils:
+  - Bitwarden
+  - andOTP
+  - FX file explorer
+  - F-Droid 
+  - Syncthing
+  - DiskUsage
+  - Github (Browser version)
+- Sys/Geek:
+  - Termux
+  - Sync.ME
+  - Hacker's Keyboard (anysoft keyboard? Find better)
+  - Vanced Manager
+  - Shortcut to whatsappp garbadge (/storage/emulated/0/Android/media/com.whatsapp/WhatsApp/Media)
+  - Magisk
+- Media:
+  - vlc
+  - Blackplayer
+  - Gallery
+  - (Spotify, Netflix, Radio, Photos)
 - Money:
   - Caixadirecta
   - MB WAY
@@ -965,25 +971,29 @@ Browsers:
   - Revolut
   - Exodus
   - Too Good To Go
-- MTG:
-  - MTG Carbon
-  - MTG Companion
-- Discounts:
+- ✈️🚌🍔🏠🌴:
+  - TAP Portugal
+  - CP Portugal
+  - Bolt
+  - Uber
+  - Geocashing
+  - Miles (car sharing)
+  - Moovit
+- Self Improve:
+  - Duolingo
+  - Anki
+  - Daylio
+  - Home Workout
+- Discounts/🎁:
   - Cartao Continente
   - Burger King
   - MC Donalds
-- Techy:
-  - Termux
-  - Sync.ME
-- Manga / Anime:
-  - [Solo Leveling](https://www.mangago.me/read-manga/solo_leveling/?rmgU)
-  - https://www.mangago.me/
-  - https://mangakakalot.com/
+- Gamezy:
+  - MTG Carbon
+  - MTG Companion
+  - Free PC Games
 - Others
   - Soundcorset Tuner & Metronome
-  - Github
-  - DiskUsage
-  - Home Workout
 
 #### 4.2.2. Surface (Windows)
 
