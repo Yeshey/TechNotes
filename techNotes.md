@@ -29,6 +29,9 @@
     - [1.1.12. Tested in Other Linuxs](#1112-tested-in-other-linuxs)
       - [1.1.12.1. Add more resolution options (Linux Mint)](#11121-add-more-resolution-options-linux-mint)
     - [1.1.13. rsync](#1113-rsync)
+    - [1.1.14. Reconfiguring System from scratch](#1114-reconfiguring-system-from-scratch)
+        - [1.1.14.0.1. KDE Plasma](#111401-kde-plasma)
+        - [1.1.14.0.2. Grub](#111402-grub)
   - [1.2. **Windows**](#12-windows)
     - [1.2.1. Recover /efi/boot for Windows](#121-recover-efiboot-for-windows)
   - [1.3. **Android**](#13-android)
@@ -374,6 +377,50 @@ Supports spanning multiple drives with one file system without LVM!!
 
 - [Command to copy ***Everything***](https://askubuntu.com/questions/117014/what-is-the-easiest-way-to-merge-and-home):
   - `sudo rsync -avz --hard-links --info=progress2 --numeric-ids /mnt/oldhome/ /mnt/root/home`
+
+#### 1.1.14. Reconfiguring System from scratch
+
+###### 1.1.14.0.1. KDE Plasma
+
+- Shortcuts:
+  - ALT-Space opens the search box for plasma, very handy
+  - `spectacle -brc`  |  Takes screenshot of part of screen and saves to clipboard
+- Desktop Configuration:
+  - Try to load most of it from the PlasmaConfigSaverBkup.tar.gz file in this repo, install the dependencies `scrot` & `kdialog` for the Plasma Config Saver widget to work.
+- [Make the Windows_Key/Meta open the Application launcher](https://askubuntu.com/questions/246886/how-do-i-open-the-application-launcher-on-kde-with-just-the-meta-windows-key)
+- If Apps are to big, like vivaldi taking too much space, go to Settings > Fonts > Force font DPI, I have it at `96`
+
+###### 1.1.14.0.2. Grub
+
+- [Adding reboot and poweroff grub entries](https://daulton.ca/2018/08/reboot-and-shutdown-options-grub/)
+  - Edit `nano /etc/grub.d/40_custom`
+  - Add:
+
+    ```conf
+    menuentry "Reboot" {
+        reboot
+    }
+
+    menuentry "Shut Down" {
+        halt
+    }
+
+    # menuentry 'Windows' {
+    #    savedefault
+    #    load_video
+    #    insmod part_gpt
+    #    insmod fat
+    #    search --no-floppy --fs-uuid --set=root FA05-EB82
+    #    chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+    # }
+    ```
+
+  - `update-grub`
+
+#### 1.1.15. NixOS
+
+- [Mount Internal drive automattically](https://unix.stackexchange.com/questions/533265/how-to-mount-internal-drives-as-a-normal-user-in-nixos)
+- Give up on plasma configuration
 
 ---
 
@@ -979,6 +1026,7 @@ So, [this link to section 2.2.4](#224-ssh-without-password-public--private-keys)
   - Geocashing
   - Miles (car sharing)
   - Moovit
+  - Waze (For driving)
 - Self Improve:
   - Duolingo
   - Anki
