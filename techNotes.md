@@ -380,7 +380,7 @@ Supports spanning multiple drives with one file system without LVM!!
 
 #### 1.1.14. Reconfiguring System from scratch
 
-###### 1.1.14.0.1. KDE Plasma
+##### 1.1.14.0.1. KDE Plasma
 
 - Shortcuts:
   - ALT-Space opens the search box for plasma, very handy
@@ -390,7 +390,7 @@ Supports spanning multiple drives with one file system without LVM!!
 - [Make the Windows_Key/Meta open the Application launcher](https://askubuntu.com/questions/246886/how-do-i-open-the-application-launcher-on-kde-with-just-the-meta-windows-key)
 - If Apps are to big, like vivaldi taking too much space, go to Settings > Fonts > Force font DPI, I have it at `96`
 
-###### 1.1.14.0.2. Grub
+##### 1.1.14.0.2. Grub
 
 - [Adding reboot and poweroff grub entries](https://daulton.ca/2018/08/reboot-and-shutdown-options-grub/)
   - Edit `nano /etc/grub.d/40_custom`
