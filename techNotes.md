@@ -17,7 +17,9 @@
     - [1.1.5. Button To Boot into Windows in a dual boot](#115-button-to-boot-into-windows-in-a-dual-boot)
     - [1.1.6. Ohmy - zsh (instead of bash)](#116-ohmy---zsh-instead-of-bash)
     - [1.1.7. Use laptop as a second monitor](#117-use-laptop-as-a-second-monitor)
-    - [1.1.8. CLI Search / find words](#118-cli-search--find-words)
+    - [1.1.8. CLI Tricks](#118-cli-tricks)
+      - [Journalctl find logs](#journalctl-find-logs)
+      - [1.1.8. CLI Search / find words](#118-cli-search--find-words)
     - [1.1.9. Hotspot](#119-hotspot)
       - [1.1.9.1. linux-wifi-hotspot](#1191-linux-wifi-hotspot)
     - [1.1.10. Image Manipulation](#1110-image-manipulation)
@@ -30,10 +32,12 @@
       - [1.1.12.1. Add more resolution options (Linux Mint)](#11121-add-more-resolution-options-linux-mint)
     - [1.1.13. rsync](#1113-rsync)
     - [1.1.14. Reconfiguring System from scratch](#1114-reconfiguring-system-from-scratch)
-        - [1.1.14.0.1. KDE Plasma](#111401-kde-plasma)
-        - [1.1.14.0.2. Grub](#111402-grub)
+      - [1.1.14.0.1. KDE Plasma](#111401-kde-plasma)
+      - [1.1.14.0.2. Grub](#111402-grub)
+    - [1.1.15. NixOS](#1115-nixos)
   - [1.2. **Windows**](#12-windows)
     - [1.2.1. Recover /efi/boot for Windows](#121-recover-efiboot-for-windows)
+    - [Move the msr partition & other partition problems](#move-the-msr-partition--other-partition-problems)
   - [1.3. **Android**](#13-android)
     - [1.3.1. Root with Magisk (A70)](#131-root-with-magisk-a70)
     - [1.3.2. Hide root from apps without MagiskHide](#132-hide-root-from-apps-without-magiskhide)
@@ -247,7 +251,13 @@ Right Click Dock in main screen > Edit Dock > Right Click it AGAIN > Edit/Add Pa
 >   - [r/linux questions - How can I use my old laptop as second monitor](https://www.reddit.com/r/linuxquestions/comments/qp3p7a/how_can_i_use_my_old_laptop_as_second_monitor/)
 >   - [r/linuxquestions - Using VNC to extend the display of desktop into laptop screen.](https://www.reddit.com/r/linuxquestions/comments/gh1307/using_vnc_to_extend_the_display_of_desktop_into/)
 
-#### 1.1.8. CLI Search / find words
+#### 1.1.8. CLI Tricks
+
+##### Journalctl find logs
+
+- `journalctl --since "1 hour ago" > /home/yeshey/journal.txt`
+
+##### 1.1.8. CLI Search / find words
 
 - [Find a files location through its name recursively](https://stackoverflow.com/questions/5905054/how-can-i-recursively-find-all-files-in-current-and-subfolders-based-on-wildcard):
   - `find . 2>/dev/null -print | grep -i 'product.json' 2>/dev/null` (the *2>/dev/null* [hides premission errors](https://stackoverflow.com/questions/762348/))
@@ -416,9 +426,19 @@ Supports spanning multiple drives with one file system without LVM!!
     ```
 
   - `update-grub`
+- Adding Grub entry to boot into CLI
+  - [Source 1 (Ubuntu)](https://askubuntu.com/questions/1029339/add-grub-menu-item-to-boot-into-terminal)
+  - [Source 2 (Manjaro)](https://archived.forum.manjaro.org/t/how-to-boot-linux-to-command-line-mode-instead-of-gui-solved/30854)
+  - Relevant file system places are :`/etc/grub.d/`(save your configuration in 40_custom), `/boot/grub/` grub.cfg is where your configuration gets generated to.
+    - If you have no more entries, to show grub anyways, edit `sudo nano /etc/default/grub`:
+      - Edit `TIMEOUT=10`
+      - Edit `GRUB_TIMEOUT_STYLE=menu`
+      - Run `update-grub`
+    - To set a certain grub entry as default you can change the line `GRUB_DEFAULT=saved` to a number
 
 #### 1.1.15. NixOS
 
+- [Installing directly KDE desktop didn't work for me](https://discourse.nixos.org/t/gui-not-starting-after-upgrade-to-22-05/19534)
 - [Mount Internal drive automattically](https://unix.stackexchange.com/questions/533265/how-to-mount-internal-drives-as-a-normal-user-in-nixos)
 - Give up on plasma configuration
 - [Can't control the brightness of external monitors because of NVIDIA driver](https://discourse.nixos.org/t/brightness-control-of-external-monitors-with-ddcci-backlight/8639/9?u=yeshey), using and `xrandr -q | grep " connected"` for it now `xrandr --output HDMI-0 --brightness 0.5`
@@ -439,6 +459,12 @@ On a dual boot system if you can't boot into windows anymore, do this:
 - [if it doesn't detect windows, try this](https://askubuntu.com/questions/197868/grub-does-not-detect-windows)
 - In Windows you might have now a choose operating system question on boot, if so, [follow these instructions from here](https://www.windowsdigitals.com/how-to-remove-choose-an-operating-system-screen-windows-10/)
   - If it doesn't let you, try to run `chkdsk /f /r` [as explained here](https://www.youtube.com/watch?v=FejmrhtxauU)
+
+#### Move the msr partition & other partition problems
+
+- You can move the msr (reported as the Microsoft reserved partition in gparted) without breaking your PCs boot capacity [by following this](https://superuser.com/questions/1532044/e2fsck-error-when-trying-to-move-windows-msr-partition-with-gparted)
+- All other windows partitions you can move and resize with the AOMEI Partition Assistent (only untested scenario is to move the EFI paprtition, witch I don't advise especially in dual boot, but growing it is fine)
+- If you have multiple recovery partitions [check this](https://superuser.com/questions/1210470/multiple-recovery-partitions-in-windows-10) to see witch one your system is using and delete the other
 
 ---
 
@@ -622,13 +648,35 @@ Will already be able to access after a reboot from any computer.
   1. Install it normally through `pamac-manager` (Add/Remove software)
   2. Install `virtualbox-ext-oracle` package
   3. Add user to vboxusers: `sudo gpasswd -a $USER vboxusers`
-
+  s
+  
 #### 2.3.2. [Guest Manjaro](https://forum.manjaro.org/t/root-tip-virtualbox-installation-usb-shared-folder/1178)
 
 1. `sudo pacman -Syu virtualbox-guest-utils`  
 2. `sudo gpasswd -a $USER vboxsf`  
 3. `sudo systemctl enable --now vboxservice`
 4. `reboot`
+
+#### [SSH into Guest Manjaro](https://averagelinuxuser.com/ssh-into-virtualbox/)
+
+1. [Install OpenSSH:](https://tuxfixer.com/configure-ssh-service-in-manjaro-linux/)
+    1. `sudo pacman -S openssh`
+    2. `sudo systemctl enable sshd.service`
+    3. `sudo systemctl start sshd.service`
+2. Go to VM settings > Network > Adapter 1 > Advanced > Port Forwarding and set:
+    1. Name: ssh (or whatever you like)
+    2. Protocol: TCP
+    3. Host Port: 2222 (or any other port you like)
+    4. Guest port: 22
+3. Then connect from the host OS with `ssh -p 2222 yeshey@localhost`
+   Or add to `C:\Users\yeshe\.ssh\config`: (or by pressing F1 and selecting `Remote-SSH: Open SSH configuration File...`)
+
+   ```txt
+   Host vm
+    HostName localhost
+    User yeshey
+    Port 2222
+   ```
 
 ---
 
