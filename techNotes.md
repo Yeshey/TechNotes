@@ -1156,3 +1156,7 @@ You need to do some hacky stuff to get this done.
     <Display Level="Full" AcceptEULA="TRUE" />
   </Configuration>
   ```
+
+#### 4.2.3. Linux
+
+- PDF Arranger
