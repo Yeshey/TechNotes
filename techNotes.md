@@ -442,6 +442,7 @@ Supports spanning multiple drives with one file system without LVM!!
 - [Mount Internal drive automattically](https://unix.stackexchange.com/questions/533265/how-to-mount-internal-drives-as-a-normal-user-in-nixos)
 - Give up on plasma configuration
 - [Can't control the brightness of external monitors because of NVIDIA driver](https://discourse.nixos.org/t/brightness-control-of-external-monitors-with-ddcci-backlight/8639/9?u=yeshey), using and `xrandr -q | grep " connected"` for it now `xrandr --output HDMI-0 --brightness 0.5`
+- The Stuck on reboot or poweroff problem? [This solves](https://unix.stackexchange.com/questions/577987/graceful-shutdown-with-suspend-job-hanging-in-syscall)
 
 ---
 
