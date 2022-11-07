@@ -18,8 +18,8 @@
     - [1.1.6. Ohmy - zsh (instead of bash)](#116-ohmy---zsh-instead-of-bash)
     - [1.1.7. Use laptop as a second monitor](#117-use-laptop-as-a-second-monitor)
     - [1.1.8. CLI Tricks](#118-cli-tricks)
-      - [Journalctl find logs](#journalctl-find-logs)
-      - [1.1.8. CLI Search / find words](#118-cli-search--find-words)
+      - [1.1.8.1. Journalctl find logs](#1181-journalctl-find-logs)
+      - [1.1.8.2. CLI Search / find words](#1182-cli-search--find-words)
     - [1.1.9. Hotspot](#119-hotspot)
       - [1.1.9.1. linux-wifi-hotspot](#1191-linux-wifi-hotspot)
     - [1.1.10. Image Manipulation](#1110-image-manipulation)
@@ -32,12 +32,17 @@
       - [1.1.12.1. Add more resolution options (Linux Mint)](#11121-add-more-resolution-options-linux-mint)
     - [1.1.13. rsync](#1113-rsync)
     - [1.1.14. Reconfiguring System from scratch](#1114-reconfiguring-system-from-scratch)
-      - [1.1.14.0.1. KDE Plasma](#111401-kde-plasma)
-      - [1.1.14.0.2. Grub](#111402-grub)
-    - [1.1.15. NixOS](#1115-nixos)
+      - [1.1.14.1. KDE Plasma](#11141-kde-plasma)
+      - [1.1.14.2. Grub](#11142-grub)
+    - [1.1.15. Partitioning](#1115-partitioning)
+      - [1.1.15.1. Multiple Directories on same partition](#11151-multiple-directories-on-same-partition)
+    - [1.1.16. NixOS](#1116-nixos)
+      - [1.1.16.1. Remote Builds](#11161-remote-builds)
+      - [1.1.16.2. Partitioning in nixOS](#11162-partitioning-in-nixos)
+        - [1.1.16.2.1. Multiple Directories on same partition in nixOS](#111621-multiple-directories-on-same-partition-in-nixos)
   - [1.2. **Windows**](#12-windows)
     - [1.2.1. Recover /efi/boot for Windows](#121-recover-efiboot-for-windows)
-    - [Move the msr partition & other partition problems](#move-the-msr-partition--other-partition-problems)
+    - [1.2.2. Move the msr partition & other partition problems](#122-move-the-msr-partition--other-partition-problems)
   - [1.3. **Android**](#13-android)
     - [1.3.1. Root with Magisk (A70)](#131-root-with-magisk-a70)
     - [1.3.2. Hide root from apps without MagiskHide](#132-hide-root-from-apps-without-magiskhide)
@@ -58,6 +63,7 @@
   - [2.3. VirtualBox VMs](#23-virtualbox-vms)
     - [2.3.1. Host Manjaro](#231-host-manjaro)
     - [2.3.2. Guest Manjaro](#232-guest-manjaro)
+    - [2.3.3. SSH into Guest Manjaro](#233-ssh-into-guest-manjaro)
 - [3. Coding Languages](#3-coding-languages)
   - [3.1. MarkDown](#31-markdown)
     - [3.1.1. MarkDown CheatSheet](#311-markdown-cheatsheet)
@@ -73,6 +79,7 @@
     - [4.2.1. Android](#421-android)
     - [4.2.2. Surface (Windows)](#422-surface-windows)
       - [4.2.2.1. Installing only some apps of Office](#4221-installing-only-some-apps-of-office)
+    - [4.2.3. Linux](#423-linux)
 
 ## 1. OSs
 
@@ -253,11 +260,11 @@ Right Click Dock in main screen > Edit Dock > Right Click it AGAIN > Edit/Add Pa
 
 #### 1.1.8. CLI Tricks
 
-##### Journalctl find logs
+##### 1.1.8.1. Journalctl find logs
 
 - `journalctl --since "1 hour ago" > /home/yeshey/journal.txt`
 
-##### 1.1.8. CLI Search / find words
+##### 1.1.8.2. CLI Search / find words
 
 - [Find a files location through its name recursively](https://stackoverflow.com/questions/5905054/how-can-i-recursively-find-all-files-in-current-and-subfolders-based-on-wildcard):
   - `find . 2>/dev/null -print | grep -i 'product.json' 2>/dev/null` (the *2>/dev/null* [hides premission errors](https://stackoverflow.com/questions/762348/))
@@ -390,7 +397,7 @@ Supports spanning multiple drives with one file system without LVM!!
 
 #### 1.1.14. Reconfiguring System from scratch
 
-##### 1.1.14.0.1. KDE Plasma
+##### 1.1.14.1. KDE Plasma
 
 - Shortcuts:
   - ALT-Space opens the search box for plasma, very handy
@@ -400,7 +407,7 @@ Supports spanning multiple drives with one file system without LVM!!
 - [Make the Windows_Key/Meta open the Application launcher](https://askubuntu.com/questions/246886/how-do-i-open-the-application-launcher-on-kde-with-just-the-meta-windows-key)
 - If Apps are to big, like vivaldi taking too much space, go to Settings > Fonts > Force font DPI, I have it at `96`
 
-##### 1.1.14.0.2. Grub
+##### 1.1.14.2. Grub
 
 - [Adding reboot and poweroff grub entries](https://daulton.ca/2018/08/reboot-and-shutdown-options-grub/)
   - Edit `nano /etc/grub.d/40_custom`
@@ -436,13 +443,75 @@ Supports spanning multiple drives with one file system without LVM!!
       - Run `update-grub`
     - To set a certain grub entry as default you can change the line `GRUB_DEFAULT=saved` to a number
 
-#### 1.1.15. NixOS
+#### 1.1.15. Partitioning
+
+- When limited space in ssd, and a devide is needed between ssd and hdd, [read this](https://nickbair.net/2010/10/30/a-good-ssdhdd-partitioning-scheme/).
+- Swap can be also divided, you can have 5Gb in one partition and 5 in another and set their priorities.
+
+##### 1.1.15.1. Multiple Directories on same partition
+
+[You can achieve this in one of 2 ways:](https://unix.stackexchange.com/questions/47222/how-to-mount-multiple-directories-on-the-same-partition)
+
+- Use symlinks. Then create symlinks from `/home` to `/hd/home`, etc.
+  - Make sure you use [relative symlink paths](https://unix.stackexchange.com/questions/10370/make-a-symbolic-link-to-a-relative-pathname) if you go this way
+- Instead of symlinks, use bind mounts. Syntax is `mount --bind /hd/home /home`. You can (should) also put that in fstab, using 'bind' as the fstype.
+
+Symlinks seem to be better according to [this](https://unix.stackexchange.com/questions/49623/are-there-any-drawbacks-from-using-mount-bind-as-a-substitute-for-symbolic-lin) answer.
+
+#### 1.1.16. NixOS
 
 - [Installing directly KDE desktop didn't work for me](https://discourse.nixos.org/t/gui-not-starting-after-upgrade-to-22-05/19534)
 - [Mount Internal drive automattically](https://unix.stackexchange.com/questions/533265/how-to-mount-internal-drives-as-a-normal-user-in-nixos)
 - Give up on plasma configuration
 - [Can't control the brightness of external monitors because of NVIDIA driver](https://discourse.nixos.org/t/brightness-control-of-external-monitors-with-ddcci-backlight/8639/9?u=yeshey), using and `xrandr -q | grep " connected"` for it now `xrandr --output HDMI-0 --brightness 0.5`
 - The Stuck on reboot or poweroff problem? [This solves](https://unix.stackexchange.com/questions/577987/graceful-shutdown-with-suspend-job-hanging-in-syscall)
+
+##### 1.1.16.1. [Remote Builds](https://eno.space/blog/2021/08/nixos-on-underpowered-devices)
+
+This might not apply between PCs of different architectures.
+You might need to add `services.openssh.permitRootLogin = "yes";` in both cases
+
+- From weak PC: `sudo nixos-rebuild --flake .#surface --build-host root@192.168.1.102 switch`
+- From powerful PC: `sudo nixos-rebuild --flake .#surface --target-host root@192.168.1.115 --build-host localhost switch`
+
+##### 1.1.16.2. Partitioning in nixOS
+
+- Note that in nixOS it's a good idea to have the /nix/store in a partition like btrfs due to the large number of inodes used by symlinks, to make sure it doesn't run out of inodes before it runs out of space.
+- You can add multiple swap files in nixOS and set their priority in a ext4 partition [like this](https://rycwo.dev/archive/nixos-series-002-swapfiles/)
+
+###### 1.1.16.2.1. Multiple Directories on same partition in nixOS
+
+- nixOS `/nix/store` [can't be symlinked](https://discourse.nixos.org/t/getting-around-no-symlink-policy/19712/3), instead, mount with --binds
+
+  1. Edit `/etc/nixos/configuration.nix` to mount the partition in the extra disk on boot, make sure to add `neededForBoot` as the bind mounts will need this mount to be executed first.
+
+    ```nix
+    fileSystems."/mnt/btrfsMicroSD" =
+      { device = "/dev/disk/by-label/btrfsMicroSD";
+        fsType = "btrfs";
+        neededForBoot = true;
+      };
+    ```
+
+  2. `sudo nixos-rebuild switch`
+  3. Add the configuration to mount the selected folders from the mounted drive into their places:
+
+  ```nix
+  fileSystems."/nix" =
+    { device = "/mnt/btrfsMicroSD/nix"; 
+      fsType = "none";
+      options = [ "bind" ];
+    };
+  ```
+
+  4. `sudo nixos-rebuild boot` to make sure the configuration doesn't break your system right away.
+  5. `sudo mv -f` the folder into the new drive, (you could also reboot and do this from a live USB)  
+  `sudo mv -f /nix /mnt/ext4MicroSD/`  
+  ( or [copy it](https://cs-syd.eu/posts/2019-09-14-nix-on-seperate-device), but doesn't seem to quite work `sudo rsync --recursive --links --info=progress2 /nix /mnt/ext4MicroSD/`)
+      - Note that doing this for `/var` might give `Operation not permitted` even with root. Run `sudo chattr -i var/empty/` and remove now for it to work `sudo rm -vrf var`
+  6. Now Reboot and you should be good to go.
+
+- Another way to takle this would be with LVM or btrfs subvolumes or multiple disks support...
 
 ---
 
@@ -461,7 +530,7 @@ On a dual boot system if you can't boot into windows anymore, do this:
 - In Windows you might have now a choose operating system question on boot, if so, [follow these instructions from here](https://www.windowsdigitals.com/how-to-remove-choose-an-operating-system-screen-windows-10/)
   - If it doesn't let you, try to run `chkdsk /f /r` [as explained here](https://www.youtube.com/watch?v=FejmrhtxauU)
 
-#### Move the msr partition & other partition problems
+#### 1.2.2. Move the msr partition & other partition problems
 
 - You can move the msr (reported as the Microsoft reserved partition in gparted) without breaking your PCs boot capacity [by following this](https://superuser.com/questions/1532044/e2fsck-error-when-trying-to-move-windows-msr-partition-with-gparted)
 - All other windows partitions you can move and resize with the AOMEI Partition Assistent (only untested scenario is to move the EFI paprtition, witch I don't advise especially in dual boot, but growing it is fine)
@@ -658,7 +727,7 @@ Will already be able to access after a reboot from any computer.
 3. `sudo systemctl enable --now vboxservice`
 4. `reboot`
 
-#### [SSH into Guest Manjaro](https://averagelinuxuser.com/ssh-into-virtualbox/)
+#### 2.3.3. [SSH into Guest Manjaro](https://averagelinuxuser.com/ssh-into-virtualbox/)
 
 1. [Install OpenSSH:](https://tuxfixer.com/configure-ssh-service-in-manjaro-linux/)
     1. `sudo pacman -S openssh`
