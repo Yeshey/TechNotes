@@ -37,14 +37,14 @@
     - [1.1.15. Partitioning](#1115-partitioning)
       - [1.1.15.1. Multiple Directories on same partition](#11151-multiple-directories-on-same-partition)
     - [1.1.16. NixOS](#1116-nixos)
-      - [1.1.15.1. LVM Setup](#11151-lvm-setup)
-        - [1.1.15.1.1. LVM Cache](#111511-lvm-cache)
-      - [1.1.16.1. Remote Builds](#11161-remote-builds)
-      - [1.1.16.2. Partitioning in nixOS](#11162-partitioning-in-nixos)
-        - [1.1.16.2.1. Multiple Directories on same partition in nixOS](#111621-multiple-directories-on-same-partition-in-nixos)
+      - [1.1.16.1. LVM Setup](#11161-lvm-setup)
+        - [1.1.16.1.1. LVM Cache](#111611-lvm-cache)
+      - [1.1.16.2. Remote Builds](#11162-remote-builds)
+      - [1.1.16.3. Partitioning in nixOS](#11163-partitioning-in-nixos)
+        - [1.1.16.3.1. Multiple Directories on same partition in nixOS](#111631-multiple-directories-on-same-partition-in-nixos)
   - [1.2. **Windows**](#12-windows)
     - [1.2.1. Recover /efi/boot for Windows](#121-recover-efiboot-for-windows)
-    - [1.2.2. Move the msr partition & other partition problems](#122-move-the-msr-partition--other-partition-problems)
+    - [1.2.2. Move the msr partition \& other partition problems](#122-move-the-msr-partition--other-partition-problems)
   - [1.3. **Android**](#13-android)
     - [1.3.1. Root with Magisk (A70)](#131-root-with-magisk-a70)
     - [1.3.2. Hide root from apps without MagiskHide](#132-hide-root-from-apps-without-magiskhide)
@@ -59,7 +59,7 @@
     - [2.2.1. Install in Manjaro](#221-install-in-manjaro)
     - [2.2.2. Access through another PC](#222-access-through-another-pc)
     - [2.2.3. Access through phone](#223-access-through-phone)
-    - [2.2.4. ssh without password (public & private keys)](#224-ssh-without-password-public--private-keys)
+    - [2.2.4. ssh without password (public \& private keys)](#224-ssh-without-password-public--private-keys)
     - [2.2.5. ssh config file (`~/.ssh/config`)](#225-ssh-config-file-sshconfig)
     - [2.2.6. Forward GUI (X11 forwarding)](#226-forward-gui-x11-forwarding)
   - [2.3. VMs](#23-vms)
@@ -470,12 +470,12 @@ Symlinks seem to be better according to [this](https://unix.stackexchange.com/qu
 - [Can't control the brightness of external monitors because of NVIDIA driver](https://discourse.nixos.org/t/brightness-control-of-external-monitors-with-ddcci-backlight/8639/9?u=yeshey), using and `xrandr -q | grep " connected"` for it now `xrandr --output HDMI-0 --brightness 0.5`
 - The Stuck on reboot or poweroff problem? [This solves](https://unix.stackexchange.com/questions/577987/graceful-shutdown-with-suspend-job-hanging-in-syscall)
 
-##### 1.1.15.1. LVM Setup
+##### 1.1.16.1. LVM Setup
 
 - [Understand](https://askubuntu.com/questions/219881/how-can-i-create-one-logical-volume-over-two-disks-using-lvm) the hierarchy.
 - Create the Physical Volumes with Gparted! Then combining them in a Volume Group and making logical volumes has to be with CLI
 
-###### 1.1.15.1.1. LVM Cache
+###### 1.1.16.1.1. LVM Cache
 
 Serves to have both fast and slow drives and have performance like the fast drive.
 
@@ -513,7 +513,8 @@ Serves to have both fast and slow drives and have performance like the fast driv
 
 - Then if you want to install nixOS through the GUI in LVM (Calamares installer), you need the efi partition outside of the VG and to have the partitions inside the volume group already formatted.  
 You need to select them [without formatting](https://youtu.be/PJilemDeYdo?t=587)  
-##### 1.1.16.1. [Remote Builds](https://eno.space/blog/2021/08/nixos-on-underpowered-devices)
+
+##### 1.1.16.2. [Remote Builds](https://eno.space/blog/2021/08/nixos-on-underpowered-devices)
 
 This might not apply between PCs of different architectures.
 You might need to add `services.openssh.permitRootLogin = "yes";` in both cases
@@ -521,12 +522,12 @@ You might need to add `services.openssh.permitRootLogin = "yes";` in both cases
 - From weak PC: `sudo nixos-rebuild --flake .#surface --build-host root@192.168.1.102 switch`
 - From powerful PC: `sudo nixos-rebuild --flake .#surface --target-host root@192.168.1.115 --build-host localhost switch`
 
-##### 1.1.16.2. Partitioning in nixOS
+##### 1.1.16.3. Partitioning in nixOS
 
 - Note that in nixOS it's a good idea to have the /nix/store in a partition like btrfs due to the large number of inodes used by symlinks, to make sure it doesn't run out of inodes before it runs out of space.
 - You can add multiple swap files in nixOS and set their priority in a ext4 partition [like this](https://rycwo.dev/archive/nixos-series-002-swapfiles/)
 
-###### 1.1.16.2.1. Multiple Directories on same partition in nixOS
+###### 1.1.16.3.1. Multiple Directories on same partition in nixOS
 
 - nixOS `/nix/store` [can't be symlinked](https://discourse.nixos.org/t/getting-around-no-symlink-policy/19712/3), instead, mount with --binds
 
