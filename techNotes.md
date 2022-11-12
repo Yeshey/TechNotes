@@ -18,8 +18,8 @@
     - [1.1.6. Ohmy - zsh (instead of bash)](#116-ohmy---zsh-instead-of-bash)
     - [1.1.7. Use laptop as a second monitor](#117-use-laptop-as-a-second-monitor)
     - [1.1.8. CLI Tricks](#118-cli-tricks)
-      - [Journalctl find logs](#journalctl-find-logs)
-      - [1.1.8. CLI Search / find words](#118-cli-search--find-words)
+      - [1.1.8.1. Journalctl find logs](#1181-journalctl-find-logs)
+      - [1.1.8.2. CLI Search / find words](#1182-cli-search--find-words)
     - [1.1.9. Hotspot](#119-hotspot)
       - [1.1.9.1. linux-wifi-hotspot](#1191-linux-wifi-hotspot)
     - [1.1.10. Image Manipulation](#1110-image-manipulation)
@@ -32,12 +32,14 @@
       - [1.1.12.1. Add more resolution options (Linux Mint)](#11121-add-more-resolution-options-linux-mint)
     - [1.1.13. rsync](#1113-rsync)
     - [1.1.14. Reconfiguring System from scratch](#1114-reconfiguring-system-from-scratch)
-      - [1.1.14.0.1. KDE Plasma](#111401-kde-plasma)
-      - [1.1.14.0.2. Grub](#111402-grub)
+      - [1.1.14.1. KDE Plasma](#11141-kde-plasma)
+      - [1.1.14.2. Grub](#11142-grub)
     - [1.1.15. NixOS](#1115-nixos)
+      - [1.1.15.1. LVM Setup](#11151-lvm-setup)
+        - [1.1.15.1.1. LVM Cache](#111511-lvm-cache)
   - [1.2. **Windows**](#12-windows)
     - [1.2.1. Recover /efi/boot for Windows](#121-recover-efiboot-for-windows)
-    - [Move the msr partition & other partition problems](#move-the-msr-partition--other-partition-problems)
+    - [1.2.2. Move the msr partition \& other partition problems](#122-move-the-msr-partition--other-partition-problems)
   - [1.3. **Android**](#13-android)
     - [1.3.1. Root with Magisk (A70)](#131-root-with-magisk-a70)
     - [1.3.2. Hide root from apps without MagiskHide](#132-hide-root-from-apps-without-magiskhide)
@@ -52,12 +54,15 @@
     - [2.2.1. Install in Manjaro](#221-install-in-manjaro)
     - [2.2.2. Access through another PC](#222-access-through-another-pc)
     - [2.2.3. Access through phone](#223-access-through-phone)
-    - [2.2.4. ssh without password (public & private keys)](#224-ssh-without-password-public--private-keys)
+    - [2.2.4. ssh without password (public \& private keys)](#224-ssh-without-password-public--private-keys)
     - [2.2.5. ssh config file (`~/.ssh/config`)](#225-ssh-config-file-sshconfig)
     - [2.2.6. Forward GUI (X11 forwarding)](#226-forward-gui-x11-forwarding)
-  - [2.3. VirtualBox VMs](#23-virtualbox-vms)
-    - [2.3.1. Host Manjaro](#231-host-manjaro)
-    - [2.3.2. Guest Manjaro](#232-guest-manjaro)
+  - [2.3. VMs](#23-vms)
+    - [2.3.1. VirtualBox](#231-virtualbox)
+      - [2.3.1.1. Host Manjaro](#2311-host-manjaro)
+    - [2.3.2. Virtual Machine Manager (comes with KDE)](#232-virtual-machine-manager-comes-with-kde)
+    - [2.3.3. Guest Manjaro](#233-guest-manjaro)
+    - [2.3.4. SSH into Guest Manjaro](#234-ssh-into-guest-manjaro)
 - [3. Coding Languages](#3-coding-languages)
   - [3.1. MarkDown](#31-markdown)
     - [3.1.1. MarkDown CheatSheet](#311-markdown-cheatsheet)
@@ -73,6 +78,7 @@
     - [4.2.1. Android](#421-android)
     - [4.2.2. Surface (Windows)](#422-surface-windows)
       - [4.2.2.1. Installing only some apps of Office](#4221-installing-only-some-apps-of-office)
+    - [4.2.3. Linux](#423-linux)
 
 ## 1. OSs
 
@@ -253,11 +259,11 @@ Right Click Dock in main screen > Edit Dock > Right Click it AGAIN > Edit/Add Pa
 
 #### 1.1.8. CLI Tricks
 
-##### Journalctl find logs
+##### 1.1.8.1. Journalctl find logs
 
 - `journalctl --since "1 hour ago" > /home/yeshey/journal.txt`
 
-##### 1.1.8. CLI Search / find words
+##### 1.1.8.2. CLI Search / find words
 
 - [Find a files location through its name recursively](https://stackoverflow.com/questions/5905054/how-can-i-recursively-find-all-files-in-current-and-subfolders-based-on-wildcard):
   - `find . 2>/dev/null -print | grep -i 'product.json' 2>/dev/null` (the *2>/dev/null* [hides premission errors](https://stackoverflow.com/questions/762348/))
@@ -390,7 +396,7 @@ Supports spanning multiple drives with one file system without LVM!!
 
 #### 1.1.14. Reconfiguring System from scratch
 
-##### 1.1.14.0.1. KDE Plasma
+##### 1.1.14.1. KDE Plasma
 
 - Shortcuts:
   - ALT-Space opens the search box for plasma, very handy
@@ -400,7 +406,7 @@ Supports spanning multiple drives with one file system without LVM!!
 - [Make the Windows_Key/Meta open the Application launcher](https://askubuntu.com/questions/246886/how-do-i-open-the-application-launcher-on-kde-with-just-the-meta-windows-key)
 - If Apps are to big, like vivaldi taking too much space, go to Settings > Fonts > Force font DPI, I have it at `96`
 
-##### 1.1.14.0.2. Grub
+##### 1.1.14.2. Grub
 
 - [Adding reboot and poweroff grub entries](https://daulton.ca/2018/08/reboot-and-shutdown-options-grub/)
   - Edit `nano /etc/grub.d/40_custom`
@@ -444,6 +450,50 @@ Supports spanning multiple drives with one file system without LVM!!
 - [Can't control the brightness of external monitors because of NVIDIA driver](https://discourse.nixos.org/t/brightness-control-of-external-monitors-with-ddcci-backlight/8639/9?u=yeshey), using and `xrandr -q | grep " connected"` for it now `xrandr --output HDMI-0 --brightness 0.5`
 - The Stuck on reboot or poweroff problem? [This solves](https://unix.stackexchange.com/questions/577987/graceful-shutdown-with-suspend-job-hanging-in-syscall)
 
+##### 1.1.15.1. LVM Setup
+
+- [Understand](https://askubuntu.com/questions/219881/how-can-i-create-one-logical-volume-over-two-disks-using-lvm) the hierarchy.
+- Create the Physical Volumes with Gparted! Then combining them in a Volume Group and making logical volumes has to be with CLI
+
+###### 1.1.15.1.1. LVM Cache
+
+Serves to have both fast and slow drives and have performance like the fast drive.
+
+- [Note that in nixOS](https://github.com/NixOS/nixpkgs/issues/15516), to boot into a system with cache you need to add something like
+
+  ```nix
+  # get rid of scary warning about missing cache_check
+  services.lvm.boot.thin.enable = true;
+
+  # if you don't have enough kernel modules, you'll get this error message:
+  # cache: Error creating cache's policy
+  boot.initrd.kernelModules = [ "dm-cache" "dm-cache-smq" "dm-cache-mq" "dm-cache-cleaner" ];
+  boot.kernelModules = [ "kvm-amd" "dm-cache" "dm-cache-smq" "dm-persistent-data" "dm-bio-prison" "dm-clone" "dm-crypt" "dm-writecache" "dm-mirror" "dm-snapshot"];
+  ```
+
+  to the nixOS configuration.
+
+- [Best tutorial](https://gist.github.com/gabrieljcs/805c183753046dcc6131) from Github.
+- [Red Hat more in depth tutorial](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/logical_volume_manager_administration/lvm_cache_volume_creation)
+- \+ Some usefull commands:
+
+  ```bash
+  lvremove /dev/VG/root # deletes a Logical volume
+  vgcreate VG /dev/sde1 /dev/sdf1 # creates a Volume Group named VG from the 2 Physical Volumes
+  # For viewing:
+  lsblk 
+  pvs 
+  vgs
+  lvs
+  ```
+
+- After creating LV, you need to also format them to what you need:  
+  `mkfs.ext4 /dev/VG/root` ([nixOS wiki](https://nixos.wiki/wiki/LVM))  
+  `mkswap /dev/VolGroup00/LogVol02` ([Red Hat Swap in LVM](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/4/html/system_administration_guide/adding_swap_space-creating_an_lvm2_logical_volume_for_swap))
+
+- Then if you want to install nixOS through the GUI in LVM (Calamares installer), you need the efi partition outside of the VG and to have the partitions inside the volume group already formatted.  
+You need to select them [without formatting](https://youtu.be/PJilemDeYdo?t=587)  
+
 ---
 
 ### 1.2. **Windows**
@@ -461,7 +511,7 @@ On a dual boot system if you can't boot into windows anymore, do this:
 - In Windows you might have now a choose operating system question on boot, if so, [follow these instructions from here](https://www.windowsdigitals.com/how-to-remove-choose-an-operating-system-screen-windows-10/)
   - If it doesn't let you, try to run `chkdsk /f /r` [as explained here](https://www.youtube.com/watch?v=FejmrhtxauU)
 
-#### Move the msr partition & other partition problems
+#### 1.2.2. Move the msr partition & other partition problems
 
 - You can move the msr (reported as the Microsoft reserved partition in gparted) without breaking your PCs boot capacity [by following this](https://superuser.com/questions/1532044/e2fsck-error-when-trying-to-move-windows-msr-partition-with-gparted)
 - All other windows partitions you can move and resize with the AOMEI Partition Assistent (only untested scenario is to move the EFI paprtition, witch I don't advise especially in dual boot, but growing it is fine)
@@ -641,24 +691,30 @@ Will already be able to access after a reboot from any computer.
    `-Y` corresponds to `ForwardX11Trusted yes` in the config file, and is secure forwarding (several features might not work in the gui application)  
    `-X` corresponds to `ForwardX11 yes` in the config file, and is full forwarding  
 
-### 2.3. VirtualBox VMs  
+### 2.3. VMs  
 
-#### 2.3.1. Host Manjaro
+#### 2.3.1. VirtualBox 
+
+##### 2.3.1.1. Host Manjaro
 
 - [Make Virtual Box work in arch with USB devices](https://forum.manjaro.org/t/virtualbox-usb-devices-arent-recognized/57361/2):
   1. Install it normally through `pamac-manager` (Add/Remove software)
   2. Install `virtualbox-ext-oracle` package
   3. Add user to vboxusers: `sudo gpasswd -a $USER vboxusers`
-  s
+
+#### 2.3.2. Virtual Machine Manager (comes with KDE)
+
+- [When you install a new VM, it will install with legacy BIOS boot per default, I recomend setting UEFI, specially if you're going to be messing with partitions](https://ostechnix.com/enable-uefi-support-for-kvm-virtual-machines-in-linux/)
+- [For Clipboard sharing](https://www.youtube.com/watch?v=h5IJMJYEj8I), install in the guest system `spice-vdagent`. Or add `services.spice.vdagentd.enable = true;` in nixOS;
   
-#### 2.3.2. [Guest Manjaro](https://forum.manjaro.org/t/root-tip-virtualbox-installation-usb-shared-folder/1178)
+#### 2.3.3. [Guest Manjaro](https://forum.manjaro.org/t/root-tip-virtualbox-installation-usb-shared-folder/1178)
 
 1. `sudo pacman -Syu virtualbox-guest-utils`  
 2. `sudo gpasswd -a $USER vboxsf`  
 3. `sudo systemctl enable --now vboxservice`
 4. `reboot`
 
-#### [SSH into Guest Manjaro](https://averagelinuxuser.com/ssh-into-virtualbox/)
+#### 2.3.4. [SSH into Guest Manjaro](https://averagelinuxuser.com/ssh-into-virtualbox/)
 
 1. [Install OpenSSH:](https://tuxfixer.com/configure-ssh-service-in-manjaro-linux/)
     1. `sudo pacman -S openssh`
