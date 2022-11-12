@@ -34,12 +34,17 @@
     - [1.1.14. Reconfiguring System from scratch](#1114-reconfiguring-system-from-scratch)
       - [1.1.14.1. KDE Plasma](#11141-kde-plasma)
       - [1.1.14.2. Grub](#11142-grub)
-    - [1.1.15. NixOS](#1115-nixos)
+    - [1.1.15. Partitioning](#1115-partitioning)
+      - [1.1.15.1. Multiple Directories on same partition](#11151-multiple-directories-on-same-partition)
+    - [1.1.16. NixOS](#1116-nixos)
       - [1.1.15.1. LVM Setup](#11151-lvm-setup)
         - [1.1.15.1.1. LVM Cache](#111511-lvm-cache)
+      - [1.1.16.1. Remote Builds](#11161-remote-builds)
+      - [1.1.16.2. Partitioning in nixOS](#11162-partitioning-in-nixos)
+        - [1.1.16.2.1. Multiple Directories on same partition in nixOS](#111621-multiple-directories-on-same-partition-in-nixos)
   - [1.2. **Windows**](#12-windows)
     - [1.2.1. Recover /efi/boot for Windows](#121-recover-efiboot-for-windows)
-    - [1.2.2. Move the msr partition \& other partition problems](#122-move-the-msr-partition--other-partition-problems)
+    - [1.2.2. Move the msr partition & other partition problems](#122-move-the-msr-partition--other-partition-problems)
   - [1.3. **Android**](#13-android)
     - [1.3.1. Root with Magisk (A70)](#131-root-with-magisk-a70)
     - [1.3.2. Hide root from apps without MagiskHide](#132-hide-root-from-apps-without-magiskhide)
@@ -54,7 +59,7 @@
     - [2.2.1. Install in Manjaro](#221-install-in-manjaro)
     - [2.2.2. Access through another PC](#222-access-through-another-pc)
     - [2.2.3. Access through phone](#223-access-through-phone)
-    - [2.2.4. ssh without password (public \& private keys)](#224-ssh-without-password-public--private-keys)
+    - [2.2.4. ssh without password (public & private keys)](#224-ssh-without-password-public--private-keys)
     - [2.2.5. ssh config file (`~/.ssh/config`)](#225-ssh-config-file-sshconfig)
     - [2.2.6. Forward GUI (X11 forwarding)](#226-forward-gui-x11-forwarding)
   - [2.3. VMs](#23-vms)
@@ -442,7 +447,22 @@ Supports spanning multiple drives with one file system without LVM!!
       - Run `update-grub`
     - To set a certain grub entry as default you can change the line `GRUB_DEFAULT=saved` to a number
 
-#### 1.1.15. NixOS
+#### 1.1.15. Partitioning
+
+- When limited space in ssd, and a devide is needed between ssd and hdd, [read this](https://nickbair.net/2010/10/30/a-good-ssdhdd-partitioning-scheme/).
+- Swap can be also divided, you can have 5Gb in one partition and 5 in another and set their priorities.
+
+##### 1.1.15.1. Multiple Directories on same partition
+
+[You can achieve this in one of 2 ways:](https://unix.stackexchange.com/questions/47222/how-to-mount-multiple-directories-on-the-same-partition)
+
+- Use symlinks. Then create symlinks from `/home` to `/hd/home`, etc.
+  - Make sure you use [relative symlink paths](https://unix.stackexchange.com/questions/10370/make-a-symbolic-link-to-a-relative-pathname) if you go this way
+- Instead of symlinks, use bind mounts. Syntax is `mount --bind /hd/home /home`. You can (should) also put that in fstab, using 'bind' as the fstype.
+
+Symlinks seem to be better according to [this](https://unix.stackexchange.com/questions/49623/are-there-any-drawbacks-from-using-mount-bind-as-a-substitute-for-symbolic-lin) answer.
+
+#### 1.1.16. NixOS
 
 - [Installing directly KDE desktop didn't work for me](https://discourse.nixos.org/t/gui-not-starting-after-upgrade-to-22-05/19534)
 - [Mount Internal drive automattically](https://unix.stackexchange.com/questions/533265/how-to-mount-internal-drives-as-a-normal-user-in-nixos)
@@ -493,6 +513,52 @@ Serves to have both fast and slow drives and have performance like the fast driv
 
 - Then if you want to install nixOS through the GUI in LVM (Calamares installer), you need the efi partition outside of the VG and to have the partitions inside the volume group already formatted.  
 You need to select them [without formatting](https://youtu.be/PJilemDeYdo?t=587)  
+##### 1.1.16.1. [Remote Builds](https://eno.space/blog/2021/08/nixos-on-underpowered-devices)
+
+This might not apply between PCs of different architectures.
+You might need to add `services.openssh.permitRootLogin = "yes";` in both cases
+
+- From weak PC: `sudo nixos-rebuild --flake .#surface --build-host root@192.168.1.102 switch`
+- From powerful PC: `sudo nixos-rebuild --flake .#surface --target-host root@192.168.1.115 --build-host localhost switch`
+
+##### 1.1.16.2. Partitioning in nixOS
+
+- Note that in nixOS it's a good idea to have the /nix/store in a partition like btrfs due to the large number of inodes used by symlinks, to make sure it doesn't run out of inodes before it runs out of space.
+- You can add multiple swap files in nixOS and set their priority in a ext4 partition [like this](https://rycwo.dev/archive/nixos-series-002-swapfiles/)
+
+###### 1.1.16.2.1. Multiple Directories on same partition in nixOS
+
+- nixOS `/nix/store` [can't be symlinked](https://discourse.nixos.org/t/getting-around-no-symlink-policy/19712/3), instead, mount with --binds
+
+  1. Edit `/etc/nixos/configuration.nix` to mount the partition in the extra disk on boot, make sure to add `neededForBoot` as the bind mounts will need this mount to be executed first.
+
+    ```nix
+    fileSystems."/mnt/btrfsMicroSD" =
+      { device = "/dev/disk/by-label/btrfsMicroSD";
+        fsType = "btrfs";
+        neededForBoot = true;
+      };
+    ```
+
+  2. `sudo nixos-rebuild switch`
+  3. Add the configuration to mount the selected folders from the mounted drive into their places:
+
+  ```nix
+  fileSystems."/nix" =
+    { device = "/mnt/btrfsMicroSD/nix"; 
+      fsType = "none";
+      options = [ "bind" ];
+    };
+  ```
+
+  4. `sudo nixos-rebuild boot` to make sure the configuration doesn't break your system right away.
+  5. `sudo mv -f` the folder into the new drive, (you could also reboot and do this from a live USB)  
+  `sudo mv -f /nix /mnt/ext4MicroSD/`  
+  ( or [copy it](https://cs-syd.eu/posts/2019-09-14-nix-on-seperate-device), but doesn't seem to quite work `sudo rsync --recursive --links --info=progress2 /nix /mnt/ext4MicroSD/`)
+      - Note that doing this for `/var` might give `Operation not permitted` even with root. Run `sudo chattr -i var/empty/` and remove now for it to work `sudo rm -vrf var`
+  6. Now Reboot and you should be good to go.
+
+- Another way to takle this would be with LVM or btrfs subvolumes or multiple disks support...
 
 ---
 
