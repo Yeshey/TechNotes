@@ -39,9 +39,10 @@
     - [1.1.16. NixOS](#1116-nixos)
       - [1.1.16.1. LVM Setup](#11161-lvm-setup)
         - [1.1.16.1.1. LVM Cache](#111611-lvm-cache)
-      - [1.1.16.2. Remote Builds](#11162-remote-builds)
-      - [1.1.16.3. Partitioning in nixOS](#11163-partitioning-in-nixos)
-        - [1.1.16.3.1. Multiple Directories on same partition in nixOS](#111631-multiple-directories-on-same-partition-in-nixos)
+      - [1.1.16.2. Update Channels](#11162-update-channels)
+      - [1.1.16.3. Remote Builds](#11163-remote-builds)
+      - [1.1.16.4. Partitioning in nixOS](#11164-partitioning-in-nixos)
+        - [1.1.16.4.1. Multiple Directories on same partition in nixOS](#111641-multiple-directories-on-same-partition-in-nixos)
   - [1.2. **Windows**](#12-windows)
     - [1.2.1. Recover /efi/boot for Windows](#121-recover-efiboot-for-windows)
     - [1.2.2. Move the msr partition \& other partition problems](#122-move-the-msr-partition--other-partition-problems)
@@ -514,7 +515,12 @@ Serves to have both fast and slow drives and have performance like the fast driv
 - Then if you want to install nixOS through the GUI in LVM (Calamares installer), you need the efi partition outside of the VG and to have the partitions inside the volume group already formatted.  
 You need to select them [without formatting](https://youtu.be/PJilemDeYdo?t=587)  
 
-##### 1.1.16.2. [Remote Builds](https://eno.space/blog/2021/08/nixos-on-underpowered-devices)
+##### 1.1.16.2. Update Channels
+
+- `nix-channel --update`
+- To update for a flake, [check this](https://discourse.nixos.org/t/why-nixos-rebuild-wont-use-my-updated-nixpkgs-flake/9578/5)
+
+##### 1.1.16.3. [Remote Builds](https://eno.space/blog/2021/08/nixos-on-underpowered-devices)
 
 This might not apply between PCs of different architectures.
 You might need to add `services.openssh.permitRootLogin = "yes";` in both cases
@@ -522,12 +528,12 @@ You might need to add `services.openssh.permitRootLogin = "yes";` in both cases
 - From weak PC: `sudo nixos-rebuild --flake .#surface --build-host root@192.168.1.102 switch`
 - From powerful PC: `sudo nixos-rebuild --flake .#surface --target-host root@192.168.1.115 --build-host localhost switch`
 
-##### 1.1.16.3. Partitioning in nixOS
+##### 1.1.16.4. Partitioning in nixOS
 
 - Note that in nixOS it's a good idea to have the /nix/store in a partition like btrfs due to the large number of inodes used by symlinks, to make sure it doesn't run out of inodes before it runs out of space.
 - You can add multiple swap files in nixOS and set their priority in a ext4 partition [like this](https://rycwo.dev/archive/nixos-series-002-swapfiles/)
 
-###### 1.1.16.3.1. Multiple Directories on same partition in nixOS
+###### 1.1.16.4.1. Multiple Directories on same partition in nixOS
 
 - nixOS `/nix/store` [can't be symlinked](https://discourse.nixos.org/t/getting-around-no-symlink-policy/19712/3), instead, mount with --binds
 
