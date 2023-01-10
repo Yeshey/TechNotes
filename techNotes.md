@@ -492,7 +492,7 @@ Serves to have both fast and slow drives and have performance like the fast driv
   boot.kernelModules = [ "kvm-amd" "dm-cache" "dm-cache-smq" "dm-persistent-data" "dm-bio-prison" "dm-clone" "dm-crypt" "dm-writecache" "dm-mirror" "dm-snapshot"];
   ```
 
-  to the nixOS configuration.
+  to the nixOS configuration and run `sudo nixos-rebuild switch`.
 
 - [Best tutorial](https://gist.github.com/gabrieljcs/805c183753046dcc6131) from Github.
 - [Red Hat more in depth tutorial](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/logical_volume_manager_administration/lvm_cache_volume_creation)
