@@ -501,11 +501,14 @@ Serves to have both fast and slow drives and have performance like the fast driv
   ```bash
   lvremove /dev/VG/root # deletes a Logical volume
   vgcreate VG /dev/sde1 /dev/sdf1 # creates a Volume Group named VG from the 2 Physical Volumes
+  lvcreate -n root -l 100%FREE VG /dev/sdb1 # Creates a LV called root with all remaining space of PV
+  mkfs.ext4 /dev/VG/root # Makes the the LV created into a ext4 filesystem
   # For viewing:
   lsblk 
   pvs 
   vgs
   lvs
+
   ```
 
 - After creating LV, you need to also format them to what you need:  
