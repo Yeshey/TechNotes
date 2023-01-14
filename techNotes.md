@@ -37,12 +37,13 @@
     - [1.1.15. Partitioning](#1115-partitioning)
       - [1.1.15.1. Multiple Directories on same partition](#11151-multiple-directories-on-same-partition)
     - [1.1.16. NixOS](#1116-nixos)
-      - [1.1.16.1. LVM Setup](#11161-lvm-setup)
-        - [1.1.16.1.1. LVM Cache](#111611-lvm-cache)
-      - [1.1.16.2. Update Channels](#11162-update-channels)
-      - [1.1.16.3. Remote Builds](#11163-remote-builds)
-      - [1.1.16.4. Partitioning in nixOS](#11164-partitioning-in-nixos)
-        - [1.1.16.4.1. Multiple Directories on same partition in nixOS](#111641-multiple-directories-on-same-partition-in-nixos)
+      - [1.1.16.1. Chroot into nixOS btrfs system](#11161-chroot-into-nixos-btrfs-system)
+      - [1.1.16.2. LVM Setup](#11162-lvm-setup)
+        - [1.1.16.2.1. LVM Cache](#111621-lvm-cache)
+      - [1.1.16.3. Update Channels](#11163-update-channels)
+      - [1.1.16.4. Remote Builds](#11164-remote-builds)
+      - [1.1.16.5. Partitioning in nixOS](#11165-partitioning-in-nixos)
+        - [1.1.16.5.1. Multiple Directories on same partition in nixOS](#111651-multiple-directories-on-same-partition-in-nixos)
   - [1.2. **Windows**](#12-windows)
     - [1.2.1. Recover /efi/boot for Windows](#121-recover-efiboot-for-windows)
     - [1.2.2. Move the msr partition \& other partition problems](#122-move-the-msr-partition--other-partition-problems)
@@ -471,12 +472,26 @@ Symlinks seem to be better according to [this](https://unix.stackexchange.com/qu
 - [Can't control the brightness of external monitors because of NVIDIA driver](https://discourse.nixos.org/t/brightness-control-of-external-monitors-with-ddcci-backlight/8639/9?u=yeshey), using and `xrandr -q | grep " connected"` for it now `xrandr --output HDMI-0 --brightness 0.5`
 - The Stuck on reboot or poweroff problem? [This solves](https://unix.stackexchange.com/questions/577987/graceful-shutdown-with-suspend-job-hanging-in-syscall)
 
-##### 1.1.16.1. LVM Setup
+##### 1.1.16.1. Chroot into nixOS btrfs system
+
+```bash
+sudo mkdir /mnt/tmp
+sudo mount /dev/nvme0n1p6 /mnt/tmp -o subvol=@
+sudo mount -o umask=0077,shortname=winnt /dev/nvme0n1p1 /mnt/tmp/boot/efi
+sudo mount -B /dev /mnt/tmp/dev
+sudo mount -B /proc /mnt/tmp/proc
+sudo mount -B /sys /mnt/tmp/sys
+sudo mount -o bind,ro /etc/resolv.conf /mnt/tmp/etc/resolv.conf # for internet access
+sudo chroot /mnt/tmp /nix/var/nix/profiles/system/activate
+sudo chroot /mnt/tmp /run/current-system/sw/bin/bash
+```
+
+##### 1.1.16.2. LVM Setup
 
 - [Understand](https://askubuntu.com/questions/219881/how-can-i-create-one-logical-volume-over-two-disks-using-lvm) the hierarchy.
 - Create the Physical Volumes with Gparted! Then combining them in a Volume Group and making logical volumes has to be with CLI
 
-###### 1.1.16.1.1. LVM Cache
+###### 1.1.16.2.1. LVM Cache
 
 Serves to have both fast and slow drives and have performance like the fast drive.
 
@@ -490,6 +505,8 @@ Serves to have both fast and slow drives and have performance like the fast driv
   # cache: Error creating cache's policy
   boot.initrd.kernelModules = [ "dm-cache" "dm-cache-smq" "dm-cache-mq" "dm-cache-cleaner" ];
   boot.kernelModules = [ "kvm-amd" "dm-cache" "dm-cache-smq" "dm-persistent-data" "dm-bio-prison" "dm-clone" "dm-crypt" "dm-writecache" "dm-mirror" "dm-snapshot"];
+
+  networking.resolvconf.dnsExtensionMechanism = false; # fixes internet connectivity problems with some sites (https://discourse.nixos.org/t/domain-name-resolve-problem/885/2)
   ```
 
   to the nixOS configuration and run `sudo nixos-rebuild switch`.
@@ -518,12 +535,14 @@ Serves to have both fast and slow drives and have performance like the fast driv
 - Then if you want to install nixOS through the GUI in LVM (Calamares installer), you need the efi partition outside of the VG and to have the partitions inside the volume group already formatted.  
 You need to select them [without formatting](https://youtu.be/PJilemDeYdo?t=587)  
 
-##### 1.1.16.2. Update Channels
+- I actually had to create all the meta swap cache and root LVs and mkfs.ext4 and mkswap and install, go to the installed nixOS, add the kernel modules in the configuration, run sudo nixos-rebuild switch, and only after go back to the LiveCD and make the cache.
+
+##### 1.1.16.3. Update Channels
 
 - `nix-channel --update`
 - To update for a flake, [check this](https://discourse.nixos.org/t/why-nixos-rebuild-wont-use-my-updated-nixpkgs-flake/9578/5)
 
-##### 1.1.16.3. [Remote Builds](https://eno.space/blog/2021/08/nixos-on-underpowered-devices)
+##### 1.1.16.4. [Remote Builds](https://eno.space/blog/2021/08/nixos-on-underpowered-devices)
 
 This might not apply between PCs of different architectures.
 You might need to add `services.openssh.permitRootLogin = "yes";` in both cases
@@ -531,12 +550,12 @@ You might need to add `services.openssh.permitRootLogin = "yes";` in both cases
 - From weak PC: `sudo nixos-rebuild --flake .#surface --build-host root@192.168.1.102 switch`
 - From powerful PC: `sudo nixos-rebuild --flake .#surface --target-host root@192.168.1.115 --build-host localhost switch`
 
-##### 1.1.16.4. Partitioning in nixOS
+##### 1.1.16.5. Partitioning in nixOS
 
 - Note that in nixOS it's a good idea to have the /nix/store in a partition like btrfs due to the large number of inodes used by symlinks, to make sure it doesn't run out of inodes before it runs out of space.
 - You can add multiple swap files in nixOS and set their priority in a ext4 partition [like this](https://rycwo.dev/archive/nixos-series-002-swapfiles/)
 
-###### 1.1.16.4.1. Multiple Directories on same partition in nixOS
+###### 1.1.16.5.1. Multiple Directories on same partition in nixOS
 
 - nixOS `/nix/store` [can't be symlinked](https://discourse.nixos.org/t/getting-around-no-symlink-policy/19712/3), instead, mount with --binds
 
