@@ -472,7 +472,7 @@ Symlinks seem to be better according to [this](https://unix.stackexchange.com/qu
 - [Can't control the brightness of external monitors because of NVIDIA driver](https://discourse.nixos.org/t/brightness-control-of-external-monitors-with-ddcci-backlight/8639/9?u=yeshey), using and `xrandr -q | grep " connected"` for it now `xrandr --output HDMI-0 --brightness 0.5`
 - The Stuck on reboot or poweroff problem? [This solves](https://unix.stackexchange.com/questions/577987/graceful-shutdown-with-suspend-job-hanging-in-syscall)
 
-##### 1.1.16.1. Chroot into nixOS btrfs system
+##### 1.1.16.1. [Chroot into nixOS btrfs system](https://nixos.wiki/wiki/Change_root)
 
 ```bash
 sudo mkdir /mnt/tmp
