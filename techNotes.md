@@ -542,7 +542,7 @@ You need to select them [without formatting](https://youtu.be/PJilemDeYdo?t=587)
 ##### 1.1.16.3. Update Channels
 
 - `nix-channel --update`
-- To update for a flake, [check this](https://discourse.nixos.org/t/why-nixos-rebuild-wont-use-my-updated-nixpkgs-flake/9578/5)
+- To update for a flake, [check this](https://discourse.nixos.org/t/why-nixos-rebuild-wont-use-my-updated-nixpkgs-flake/9578/5) `nix flake update --commit-lock-file`
 
 ##### 1.1.16.4. [Remote Builds](https://eno.space/blog/2021/08/nixos-on-underpowered-devices)
 
