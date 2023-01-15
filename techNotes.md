@@ -130,8 +130,7 @@ Its also a bitch
   BookmarkLevel: 1
   BookmarkPageNumber: %d
   "
-The Securities and Exchange Commission
- 
+
   rm -f "$bookmarks_file" "$out_file"
 
   declare -a files=(*.pdf)
