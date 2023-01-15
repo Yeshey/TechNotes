@@ -130,7 +130,8 @@ Its also a bitch
   BookmarkLevel: 1
   BookmarkPageNumber: %d
   "
-
+The Securities and Exchange Commission
+ 
   rm -f "$bookmarks_file" "$out_file"
 
   declare -a files=(*.pdf)
@@ -490,6 +491,8 @@ Serves to have both fast and slow drives and have performance like the fast driv
   # cache: Error creating cache's policy
   boot.initrd.kernelModules = [ "dm-cache" "dm-cache-smq" "dm-cache-mq" "dm-cache-cleaner" ];
   boot.kernelModules = [ "kvm-amd" "dm-cache" "dm-cache-smq" "dm-persistent-data" "dm-bio-prison" "dm-clone" "dm-crypt" "dm-writecache" "dm-mirror" "dm-snapshot"];
+
+  networking.resolvconf.dnsExtensionMechanism = false; # fixes internet connectivity problems with some sites (https://discourse.nixos.org/t/domain-name-resolve-problem/885/2)
   ```
 
   to the nixOS configuration and run `sudo nixos-rebuild switch`.
@@ -517,6 +520,8 @@ Serves to have both fast and slow drives and have performance like the fast driv
 
 - Then if you want to install nixOS through the GUI in LVM (Calamares installer), you need the efi partition outside of the VG and to have the partitions inside the volume group already formatted.  
 You need to select them [without formatting](https://youtu.be/PJilemDeYdo?t=587)  
+
+- I actually had to create all the meta swap cache and root LVs and mkfs.ext4 and mkswap and install, go to the installed nixOS, add the kernel modules in the configuration, run sudo nixos-rebuild switch, and only after go back to the LiveCD and make the cache.
 
 ##### 1.1.16.2. Update Channels
 
