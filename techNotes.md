@@ -475,16 +475,18 @@ Symlinks seem to be better according to [this](https://unix.stackexchange.com/qu
 ##### 1.1.16.1. [Chroot into nixOS btrfs system](https://nixos.wiki/wiki/Change_root)
 
 ```bash
-sudo mkdir /mnt/tmp
-sudo mount /dev/nvme0n1p6 /mnt/tmp -o subvol=@
-sudo mount -o umask=0077,shortname=winnt /dev/nvme0n1p1 /mnt/tmp/boot/efi
-sudo mount -B /dev /mnt/tmp/dev
-sudo mount -B /proc /mnt/tmp/proc
-sudo mount -B /sys /mnt/tmp/sys
-sudo mount -o bind,ro /etc/resolv.conf /mnt/tmp/etc/resolv.conf # for internet access
-sudo chroot /mnt/tmp /nix/var/nix/profiles/system/activate
-sudo chroot /mnt/tmp /run/current-system/sw/bin/bash
+sudo mount /dev/nvme0n1p6 /mnt -o subvol=@
+sudo mount -o umask=0077,shortname=winnt /dev/nvme0n1p1 /mnt/boot 
+sudo nixos-enter --root /mnt
+
+# Remember you can also:
+sudo nixos-generate-config --root /mnt # regenerate config
+sudo nixos-install --root /mnt # see below
 ```
+
+- When running `sudo nixos-install --root /mnt`, it will leave everything as is in the `/mnt` and use the `/mnt/etc/nixos/...` configuration. You can do this as an alternative to `nixos-rebuild` inside the chroot environment if it doesn't work.   
+You will also have to set the user password again when you boot into the system:
+  - `passwd yeshey`
 
 ##### 1.1.16.2. LVM Setup
 
