@@ -152,6 +152,9 @@ Its also a bitch
       pdftk - update_info "$bookmarks_file" output "$out_file"
   ```
 
+  3. in nixOS, you can run it with something like:  
+     `chmod +x ./script.sh && nix-shell -p pdftk --command "sh ./script.sh"`
+
 ##### 1.1.2.2. OCR (Manjaro)
 
 [see the language acronyms](https://tesseract-ocr.github.io/tessdoc/Data-Files-in-different-versions.html)
@@ -165,6 +168,7 @@ Its also a bitch
 ##### 1.1.2.3. [Compress](https://unix.stackexchange.com/questions/274428/how-do-i-reduce-the-size-of-a-pdf-file-that-contains-images)
 
 - `gs -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -q -o output.pdf file.pdf`
+- nixOS: `nix-shell -p ghostscript --command "gs -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -q -o output.pdf file.pdf"`
 
 #### 1.1.3. Latte Dock
 
