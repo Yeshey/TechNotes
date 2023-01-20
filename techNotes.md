@@ -36,14 +36,16 @@
       - [1.1.14.2. Grub](#11142-grub)
     - [1.1.15. Partitioning](#1115-partitioning)
       - [1.1.15.1. Multiple Directories on same partition](#11151-multiple-directories-on-same-partition)
-    - [1.1.16. NixOS](#1116-nixos)
-      - [1.1.16.1. Chroot into nixOS btrfs system](#11161-chroot-into-nixos-btrfs-system)
-      - [1.1.16.2. LVM Setup](#11162-lvm-setup)
-        - [1.1.16.2.1. LVM Cache](#111621-lvm-cache)
-      - [1.1.16.3. Update Channels](#11163-update-channels)
-      - [1.1.16.4. Remote Builds](#11164-remote-builds)
-      - [1.1.16.5. Partitioning in nixOS](#11165-partitioning-in-nixos)
-        - [1.1.16.5.1. Multiple Directories on same partition in nixOS](#111651-multiple-directories-on-same-partition-in-nixos)
+    - [1.1.16. Desktop Shortcuts](#1116-desktop-shortcuts)
+      - [1.1.16.1. Shortcuts to a website (webapps / web app)](#11161-shortcuts-to-a-website-webapps--web-app)
+    - [1.1.17. NixOS](#1117-nixos)
+      - [1.1.17.1. Chroot into nixOS btrfs system](#11171-chroot-into-nixos-btrfs-system)
+      - [1.1.17.2. LVM Setup](#11172-lvm-setup)
+        - [1.1.17.2.1. LVM Cache](#111721-lvm-cache)
+      - [1.1.17.3. Update Channels](#11173-update-channels)
+      - [1.1.17.4. Remote Builds](#11174-remote-builds)
+      - [1.1.17.5. Partitioning in nixOS](#11175-partitioning-in-nixos)
+        - [1.1.17.5.1. Multiple Directories on same partition in nixOS](#111751-multiple-directories-on-same-partition-in-nixos)
   - [1.2. **Windows**](#12-windows)
     - [1.2.1. Recover /efi/boot for Windows](#121-recover-efiboot-for-windows)
     - [1.2.2. Move the msr partition \& other partition problems](#122-move-the-msr-partition--other-partition-problems)
@@ -464,7 +466,48 @@ Supports spanning multiple drives with one file system without LVM!!
 
 Symlinks seem to be better according to [this](https://unix.stackexchange.com/questions/49623/are-there-any-drawbacks-from-using-mount-bind-as-a-substitute-for-symbolic-lin) answer.
 
-#### 1.1.16. NixOS
+#### 1.1.16. Desktop Shortcuts
+
+Local Shortcuts are here:
+- `/home/yeshey/.local/share/applications`
+
+##### 1.1.16.1. Shortcuts to a website (webapps / web app)
+
+- You can use a web app manager, there is [ice](https://github.com/peppermintos/ice) by the peppermint team, and [Webapp Manager](https://github.com/linuxmint/webapp-manager) based on ice by mint (none available in nixOS rn)
+- Manually:
+  - Any Chromium Based Browser: Options > More Tools > Create Shortcut... (note that this will make an app in the browser that will be launched, if you want to use it with nixOS and home-manager you can't create that app, see the code below)
+  - In Vivaldi its different, [see this](https://www.reddit.com/r/vivaldibrowser/comments/fuspx5/how_do_i_create_web_app_shortcuts/)
+  - For firefox use one of the Web App Managers... You need a special firefox profile
+
+- In NixOS:  
+  You can use Home-manager to automatically make a shortcut like so:   
+
+  ```nix
+    # Syncthing shortcut, based on webapp manager created shortcut (https://github.com/linuxmint/webapp-manager)
+    home.file.".local/share/applications/vivaldi-syncthing.desktop".source = builtins.toFile "vivaldi-syncthing.desktop" ''
+  [Desktop Entry]
+  Version=1.0
+  Name=Syncthing
+  Comment=Web App
+  Exec=vivaldi --app="http://127.0.0.1:8384#" --class=WebApp-Syncthingvivaldi5519 --user-data-dir=/home/yeshey/.local/share/ice/profiles/Syncthingvivaldi5519
+  Terminal=false
+  X-MultipleArgs=false
+  Type=Application
+  Icon=webapp-manager
+  Categories=GTK;WebApps;
+  MimeType=text/html;text/xml;application/xhtml_xml;
+  StartupWMClass=WebApp-Syncthingvivaldi5519
+  StartupNotify=true
+  X-WebApp-Browser=Vivaldi
+  X-WebApp-URL=http://127.0.0.1:8384#
+  X-WebApp-CustomParameters=
+  X-WebApp-Navbar=false
+  X-WebApp-PrivateWindow=false
+  X-WebApp-Isolated=true
+    '';
+  ```
+
+#### 1.1.17. NixOS
 
 - [Installing directly KDE desktop didn't work for me](https://discourse.nixos.org/t/gui-not-starting-after-upgrade-to-22-05/19534)
 - [Mount Internal drive automattically](https://unix.stackexchange.com/questions/533265/how-to-mount-internal-drives-as-a-normal-user-in-nixos)
@@ -472,7 +515,7 @@ Symlinks seem to be better according to [this](https://unix.stackexchange.com/qu
 - [Can't control the brightness of external monitors because of NVIDIA driver](https://discourse.nixos.org/t/brightness-control-of-external-monitors-with-ddcci-backlight/8639/9?u=yeshey), using and `xrandr -q | grep " connected"` for it now `xrandr --output HDMI-0 --brightness 0.5`
 - The Stuck on reboot or poweroff problem? [This solves](https://unix.stackexchange.com/questions/577987/graceful-shutdown-with-suspend-job-hanging-in-syscall)
 
-##### 1.1.16.1. [Chroot into nixOS btrfs system](https://nixos.wiki/wiki/Change_root)
+##### 1.1.17.1. [Chroot into nixOS btrfs system](https://nixos.wiki/wiki/Change_root)
 
 ```bash
 sudo mount /dev/nvme0n1p6 /mnt -o subvol=@
@@ -488,12 +531,12 @@ sudo nixos-install --root /mnt # see below
 You will also have to set the user password again when you boot into the system:
   - `passwd yeshey`
 
-##### 1.1.16.2. LVM Setup
+##### 1.1.17.2. LVM Setup
 
 - [Understand](https://askubuntu.com/questions/219881/how-can-i-create-one-logical-volume-over-two-disks-using-lvm) the hierarchy.
 - Create the Physical Volumes with Gparted! Then combining them in a Volume Group and making logical volumes has to be with CLI
 
-###### 1.1.16.2.1. LVM Cache
+###### 1.1.17.2.1. LVM Cache
 
 Serves to have both fast and slow drives and have performance like the fast drive.
 
@@ -539,12 +582,12 @@ You need to select them [without formatting](https://youtu.be/PJilemDeYdo?t=587)
 
 - I actually had to create all the meta swap cache and root LVs and mkfs.ext4 and mkswap and install, go to the installed nixOS, add the kernel modules in the configuration, run sudo nixos-rebuild switch, and only after go back to the LiveCD and make the cache.
 
-##### 1.1.16.3. Update Channels
+##### 1.1.17.3. Update Channels
 
 - `nix-channel --update`
 - To update for a flake, [check this](https://discourse.nixos.org/t/why-nixos-rebuild-wont-use-my-updated-nixpkgs-flake/9578/5) `sudo nix flake update --commit-lock-file`
 
-##### 1.1.16.4. [Remote Builds](https://eno.space/blog/2021/08/nixos-on-underpowered-devices)
+##### 1.1.17.4. [Remote Builds](https://eno.space/blog/2021/08/nixos-on-underpowered-devices)
 
 This might not apply between PCs of different architectures.
 You might need to add `services.openssh.permitRootLogin = "yes";` in both cases
@@ -552,12 +595,12 @@ You might need to add `services.openssh.permitRootLogin = "yes";` in both cases
 - From weak PC: `sudo nixos-rebuild --flake .#surface --build-host root@192.168.1.102 switch`
 - From powerful PC: `sudo nixos-rebuild --flake .#surface --target-host root@192.168.1.115 --build-host localhost switch`
 
-##### 1.1.16.5. Partitioning in nixOS
+##### 1.1.17.5. Partitioning in nixOS
 
 - Note that in nixOS it's a good idea to have the /nix/store in a partition like btrfs due to the large number of inodes used by symlinks, to make sure it doesn't run out of inodes before it runs out of space.
 - You can add multiple swap files in nixOS and set their priority in a ext4 partition [like this](https://rycwo.dev/archive/nixos-series-002-swapfiles/)
 
-###### 1.1.16.5.1. Multiple Directories on same partition in nixOS
+###### 1.1.17.5.1. Multiple Directories on same partition in nixOS
 
 - nixOS `/nix/store` [can't be symlinked](https://discourse.nixos.org/t/getting-around-no-symlink-policy/19712/3), instead, mount with --binds
 
