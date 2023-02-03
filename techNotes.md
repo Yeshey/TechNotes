@@ -743,8 +743,8 @@ On a dual boot system if you can't boot into windows anymore, do this:
 #### 2.1.4. VSC - Remote Development (with ssh)
 
 - Install the `Remote Development` extension pack
-- Refer to [section 2.2.4](#224-ssh-without-password-public--private-keys) for ssh configuration
-- If you want X11 forwarding to your client PC you seemingly need, not one, but booth following options:
+- Refer to [ssh without password section](#224-ssh-without-password-public--private-keys) for ssh configuration
+- If you want X11 forwarding to your client PC you seemingly need, not one, but booth following options(see [forward gui X11 ssh section](#226-forward-gui-x11-forwarding) for more details):
 
   ```bash
   ForwardX11          yes
