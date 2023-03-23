@@ -2,92 +2,69 @@
 
 <h2> Table Of Contents
 
-- [1. OSs](#1-oss)
-  - [1.1. **Linux** (Manjaro)](#11-linux-manjaro)
-    - [1.1.1. Autostart Tasks](#111-autostart-tasks)
-    - [1.1.2. PDFs](#112-pdfs)
-      - [1.1.2.1. Unite](#1121-unite)
-      - [1.1.2.2. OCR (Manjaro)](#1122-ocr-manjaro)
-      - [1.1.2.3. Compress](#1123-compress)
-    - [1.1.3. Latte Dock](#113-latte-dock)
-    - [1.1.4. Notifications](#114-notifications)
-      - [1.1.4.1. Fix notifications error in latte dock](#1141-fix-notifications-error-in-latte-dock)
-      - [1.1.4.2. Notification badges in electron apps (like discord)](#1142-notification-badges-in-electron-apps-like-discord)
-      - [1.1.4.3. Send linux OS notifications through terminal/console/cli](#1143-send-linux-os-notifications-through-terminalconsolecli)
-    - [1.1.5. Button To Boot into Windows in a dual boot](#115-button-to-boot-into-windows-in-a-dual-boot)
-    - [1.1.6. Ohmy - zsh (instead of bash)](#116-ohmy---zsh-instead-of-bash)
-    - [1.1.7. Use laptop as a second monitor](#117-use-laptop-as-a-second-monitor)
-    - [1.1.8. CLI Tricks](#118-cli-tricks)
-      - [1.1.8.1. Journalctl find logs](#1181-journalctl-find-logs)
-      - [1.1.8.2. CLI Search / find words](#1182-cli-search--find-words)
-    - [1.1.9. Hotspot](#119-hotspot)
-      - [1.1.9.1. linux-wifi-hotspot](#1191-linux-wifi-hotspot)
-    - [1.1.10. Image Manipulation](#1110-image-manipulation)
-      - [1.1.10.1. Changing Metadata](#11101-changing-metadata)
-        - [1.1.10.1.1. Changing DateTime](#111011-changing-datetime)
-      - [1.1.10.2. Overlaying DateTime On top of image](#11102-overlaying-datetime-on-top-of-image)
-    - [1.1.11. File Systems](#1111-file-systems)
-      - [1.1.11.1. BTRFS](#11111-btrfs)
-    - [1.1.12. Tested in Other Linuxs](#1112-tested-in-other-linuxs)
-      - [1.1.12.1. Add more resolution options (Linux Mint)](#11121-add-more-resolution-options-linux-mint)
-    - [1.1.13. rsync](#1113-rsync)
-    - [1.1.14. Reconfiguring System from scratch](#1114-reconfiguring-system-from-scratch)
-      - [1.1.14.1. KDE Plasma](#11141-kde-plasma)
-      - [1.1.14.2. Grub](#11142-grub)
-    - [1.1.15. Partitioning](#1115-partitioning)
-      - [1.1.15.1. Multiple Directories on same partition](#11151-multiple-directories-on-same-partition)
-    - [1.1.16. Desktop Shortcuts](#1116-desktop-shortcuts)
-      - [1.1.16.1. Shortcuts to a website (webapps / web app)](#11161-shortcuts-to-a-website-webapps--web-app)
-    - [1.1.17. NixOS](#1117-nixos)
-      - [1.1.17.1. Chroot into nixOS btrfs system](#11171-chroot-into-nixos-btrfs-system)
-      - [1.1.17.2. LVM Setup](#11172-lvm-setup)
-        - [1.1.17.2.1. LVM Cache](#111721-lvm-cache)
-      - [1.1.17.3. Update Channels](#11173-update-channels)
-      - [1.1.17.4. Remote Builds](#11174-remote-builds)
-      - [1.1.17.5. Partitioning in nixOS](#11175-partitioning-in-nixos)
-        - [1.1.17.5.1. Multiple Directories on same partition in nixOS](#111751-multiple-directories-on-same-partition-in-nixos)
-  - [1.2. **Windows**](#12-windows)
-    - [1.2.1. Recover /efi/boot for Windows](#121-recover-efiboot-for-windows)
-    - [1.2.2. Move the msr partition \& other partition problems](#122-move-the-msr-partition--other-partition-problems)
-  - [1.3. **Android**](#13-android)
-    - [1.3.1. Root with Magisk (A70)](#131-root-with-magisk-a70)
-    - [1.3.2. Hide root from apps without MagiskHide](#132-hide-root-from-apps-without-magiskhide)
-- [2. Programs](#2-programs)
-  - [2.1. VSC (Visual Studio Code)](#21-vsc-visual-studio-code)
-    - [2.1.1. VSC Extensions](#211-vsc-extensions)
-    - [2.1.2. VSC debugger](#212-vsc-debugger)
-    - [2.1.3. VSC - OSS (Open source Visual Studio `code`)](#213-vsc---oss-open-source-visual-studio-code)
-    - [2.1.4. VSC - Remote Development (with ssh)](#214-vsc---remote-development-with-ssh)
-    - [2.1.5. Fix Live share in Manjaro](#215-fix-live-share-in-manjaro)
-  - [2.2. ssh (in lan)](#22-ssh-in-lan)
-    - [2.2.1. Install in Manjaro](#221-install-in-manjaro)
-    - [2.2.2. Access through another PC](#222-access-through-another-pc)
-    - [2.2.3. Access through phone](#223-access-through-phone)
-    - [2.2.4. ssh without password (public \& private keys)](#224-ssh-without-password-public--private-keys)
-    - [2.2.5. ssh config file (`~/.ssh/config`)](#225-ssh-config-file-sshconfig)
-    - [2.2.6. Forward GUI (X11 forwarding)](#226-forward-gui-x11-forwarding)
-  - [2.3. VMs](#23-vms)
-    - [2.3.1. VirtualBox](#231-virtualbox)
-      - [2.3.1.1. Host Manjaro](#2311-host-manjaro)
-    - [2.3.2. Virtual Machine Manager (comes with KDE)](#232-virtual-machine-manager-comes-with-kde)
-    - [2.3.3. Guest Manjaro](#233-guest-manjaro)
-    - [2.3.4. SSH into Guest Manjaro](#234-ssh-into-guest-manjaro)
-- [3. Coding Languages](#3-coding-languages)
-  - [3.1. MarkDown](#31-markdown)
-    - [3.1.1. MarkDown CheatSheet](#311-markdown-cheatsheet)
-    - [3.1.2. Extensions for md](#312-extensions-for-md)
-    - [3.1.3. Markdown title into an HTML anchor](#313-markdown-title-into-an-html-anchor)
-  - [3.2. LaTeX](#32-latex)
-  - [3.3. Python](#33-python)
-    - [3.3.1. Dependencies](#331-dependencies)
-- [4. Others](#4-others)
-  - [4.1. Camera (EOS 1100D)](#41-camera-eos-1100d)
-    - [4.1.1. Timelapse](#411-timelapse)
-  - [4.2. Programs to Install](#42-programs-to-install)
-    - [4.2.1. Android](#421-android)
-    - [4.2.2. Surface (Windows)](#422-surface-windows)
-      - [4.2.2.1. Installing only some apps of Office](#4221-installing-only-some-apps-of-office)
-    - [4.2.3. Linux](#423-linux)
+- [](#)
+      - [1.1.11. File Systems](#1111-file-systems)
+        - [1.1.11.1. BTRFS](#11111-btrfs)
+      - [1.1.12. Tested in Other Linuxs](#1112-tested-in-other-linuxs)
+        - [1.1.12.1. Add more resolution options (Linux Mint)](#11121-add-more-resolution-options-linux-mint)
+      - [1.1.13. rsync](#1113-rsync)
+      - [1.1.14. Reconfiguring System from scratch](#1114-reconfiguring-system-from-scratch)
+        - [1.1.14.1. KDE Plasma](#11141-kde-plasma)
+        - [1.1.14.2. Grub](#11142-grub)
+      - [1.1.15. Partitioning](#1115-partitioning)
+        - [1.1.15.1. Multiple Directories on same partition](#11151-multiple-directories-on-same-partition)
+      - [1.1.16. Desktop Shortcuts](#1116-desktop-shortcuts)
+        - [1.1.16.1. Shortcuts to a website (webapps / web app)](#11161-shortcuts-to-a-website-webapps--web-app)
+      - [1.1.17. NixOS](#1117-nixos)
+        - [1.1.17.1. Chroot into nixOS btrfs system](#11171-chroot-into-nixos-btrfs-system)
+        - [1.1.17.2. LVM Setup](#11172-lvm-setup)
+          - [1.1.17.2.1. LVM Cache](#111721-lvm-cache)
+        - [1.1.17.3. Update Channels](#11173-update-channels)
+        - [1.1.17.4. Remote Builds](#11174-remote-builds)
+        - [1.1.17.5. Partitioning in nixOS](#11175-partitioning-in-nixos)
+          - [1.1.17.5.1. Multiple Directories on same partition in nixOS](#111751-multiple-directories-on-same-partition-in-nixos)
+    - [1.2. **Windows**](#12-windows)
+      - [1.2.1. Recover /efi/boot for Windows](#121-recover-efiboot-for-windows)
+      - [1.2.2. Move the msr partition \& other partition problems](#122-move-the-msr-partition--other-partition-problems)
+    - [1.3. **Android**](#13-android)
+      - [1.3.1. Root with Magisk (A70)](#131-root-with-magisk-a70)
+      - [1.3.2. Hide root from apps without MagiskHide](#132-hide-root-from-apps-without-magiskhide)
+  - [2. Programs](#2-programs)
+    - [2.1. VSC (Visual Studio Code)](#21-vsc-visual-studio-code)
+      - [2.1.1. VSC Extensions](#211-vsc-extensions)
+      - [2.1.2. VSC debugger](#212-vsc-debugger)
+      - [2.1.3. VSC - OSS (Open source Visual Studio `code`)](#213-vsc---oss-open-source-visual-studio-code)
+      - [2.1.4. VSC - Remote Development (with ssh)](#214-vsc---remote-development-with-ssh)
+      - [2.1.5. Fix Live share in Manjaro](#215-fix-live-share-in-manjaro)
+    - [2.2. ssh (in lan)](#22-ssh-in-lan)
+      - [2.2.1. Install in Manjaro](#221-install-in-manjaro)
+      - [2.2.2. Access through another PC](#222-access-through-another-pc)
+      - [2.2.3. Access through phone](#223-access-through-phone)
+      - [2.2.4. ssh without password (public \& private keys)](#224-ssh-without-password-public--private-keys)
+      - [2.2.5. ssh config file (`~/.ssh/config`)](#225-ssh-config-file-sshconfig)
+      - [2.2.6. Forward GUI (X11 forwarding)](#226-forward-gui-x11-forwarding)
+    - [2.3. VMs](#23-vms)
+      - [2.3.1. VirtualBox](#231-virtualbox)
+        - [2.3.1.1. Host Manjaro](#2311-host-manjaro)
+      - [2.3.2. Virtual Machine Manager (comes with KDE)](#232-virtual-machine-manager-comes-with-kde)
+      - [2.3.3. Guest Manjaro](#233-guest-manjaro)
+      - [2.3.4. SSH into Guest Manjaro](#234-ssh-into-guest-manjaro)
+  - [3. Coding Languages](#3-coding-languages)
+    - [3.1. MarkDown](#31-markdown)
+      - [3.1.1. MarkDown CheatSheet](#311-markdown-cheatsheet)
+      - [3.1.2. Extensions for md](#312-extensions-for-md)
+      - [3.1.3. Markdown title into an HTML anchor](#313-markdown-title-into-an-html-anchor)
+    - [3.2. LaTeX](#32-latex)
+    - [3.3. Python](#33-python)
+      - [3.3.1. Dependencies](#331-dependencies)
+  - [4. Others](#4-others)
+    - [4.1. Camera (EOS 1100D)](#41-camera-eos-1100d)
+      - [4.1.1. Timelapse](#411-timelapse)
+    - [4.2. Programs to Install](#42-programs-to-install)
+      - [4.2.1. Android](#421-android)
+      - [4.2.2. Surface (Windows)](#422-surface-windows)
+        - [4.2.2.1. Installing only some apps of Office](#4221-installing-only-some-apps-of-office)
+      - [4.2.3. Linux](#423-linux)
 
 ## 1. OSs
 
@@ -155,7 +132,7 @@ Its also a bitch
   3. in nixOS, you can run it with something like:  
      `chmod +x ./script.sh && nix-shell -p pdftk --command "sh ./script.sh"`
 
-##### 1.1.2.2. OCR (Manjaro)
+##### 1.1.2.2. OCR
 
 [see the language acronyms](https://tesseract-ocr.github.io/tessdoc/Data-Files-in-different-versions.html)
 
@@ -163,12 +140,15 @@ Its also a bitch
 - `sudo pacman -Sy tesseract`
 - `sudo pacman -Sy tesseract-data-eng`
 - `sudo pacman -Sy tesseract-data-por`
-- `ocrmypdf -l eng+por combined.pdf ok.pdf`
+- `ocrmypdf -l eng+por input.pdf output.pdf`
+- **NixOS:**
+  - `nix-shell -p tesseract -p ocrmypdf --run "ocrmypdf -l eng+por input.pdf output.pdf"`
 
 ##### 1.1.2.3. [Compress](https://unix.stackexchange.com/questions/274428/how-do-i-reduce-the-size-of-a-pdf-file-that-contains-images)
 
 - `gs -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -q -o output.pdf file.pdf`
-- nixOS: `nix-shell -p ghostscript --command "gs -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -q -o output.pdf file.pdf"`
+- **NixOS:**
+  - `nix-shell -p ghostscript --command "gs -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -q -o output.pdf file.pdf"`
 
 #### 1.1.3. Latte Dock
 
@@ -360,15 +340,28 @@ while IFS= read -r img; do
 done
 ```
 
-#### 1.1.11. File Systems
+#### 1.1.11. Video Manipulation (NixOS)
 
-##### 1.1.11.1. BTRFS
+##### 1.1.11.1. FFmpeg
+
+- Trim Video:
+  - `nix-shell -p ffmpeg --run "ffmpeg -i input.mp4 -ss 00:01:00 -to 00:02:10 -c:v copy -c:a copy output2.mp4"`
+
+##### 1.1.11.2. Add Subtitles
+
+Using [openai's whisper](https://github.com/openai/whisper):
+
+- `nix-shell -p openai-whisper --run "whisper ./input.mp4 --language Portuguese"`
+
+#### 1.1.12. File Systems
+
+##### 1.1.12.1. BTRFS
 
 Supports spanning multiple drives with one file system without LVM!!
 
-#### 1.1.12. Tested in Other Linuxs
+#### 1.1.13. Tested in Other Linuxs
 
-##### 1.1.12.1. Add more resolution options (Linux Mint)  
+##### 1.1.13.1. Add more resolution options (Linux Mint)  
 
 (this might not work if you have a NVIDIA card with propriatery drivers)
 
@@ -402,14 +395,14 @@ Supports spanning multiple drives with one file system without LVM!!
      `sudo chmod +x /usr/bin/LGmonitor.bsh`
   4. You are now able to change the resolution in all users from your display application.
 
-#### 1.1.13. rsync
+#### 1.1.14. rsync
 
 - [Command to copy ***Everything***](https://askubuntu.com/questions/117014/what-is-the-easiest-way-to-merge-and-home):
   - `sudo rsync -avz --hard-links --info=progress2 --numeric-ids /mnt/oldhome/ /mnt/root/home`
 
-#### 1.1.14. Reconfiguring System from scratch
+#### 1.1.15. Reconfiguring System from scratch
 
-##### 1.1.14.1. KDE Plasma
+##### 1.1.15.1. KDE Plasma
 
 - Shortcuts:
   - ALT-Space opens the search box for plasma, very handy
@@ -419,7 +412,7 @@ Supports spanning multiple drives with one file system without LVM!!
 - [Make the Windows_Key/Meta open the Application launcher](https://askubuntu.com/questions/246886/how-do-i-open-the-application-launcher-on-kde-with-just-the-meta-windows-key)
 - If Apps are to big, like vivaldi taking too much space, go to Settings > Fonts > Force font DPI, I have it at `96`
 
-##### 1.1.14.2. Grub
+##### 1.1.15.2. Grub
 
 - [Adding reboot and poweroff grub entries](https://daulton.ca/2018/08/reboot-and-shutdown-options-grub/)
   - Edit `nano /etc/grub.d/40_custom`
@@ -455,12 +448,12 @@ Supports spanning multiple drives with one file system without LVM!!
       - Run `update-grub`
     - To set a certain grub entry as default you can change the line `GRUB_DEFAULT=saved` to a number
 
-#### 1.1.15. Partitioning
+#### 1.1.16. Partitioning
 
 - When limited space in ssd, and a devide is needed between ssd and hdd, [read this](https://nickbair.net/2010/10/30/a-good-ssdhdd-partitioning-scheme/).
 - Swap can be also divided, you can have 5Gb in one partition and 5 in another and set their priorities.
 
-##### 1.1.15.1. Multiple Directories on same partition
+##### 1.1.16.1. Multiple Directories on same partition
 
 [You can achieve this in one of 2 ways:](https://unix.stackexchange.com/questions/47222/how-to-mount-multiple-directories-on-the-same-partition)
 
@@ -470,12 +463,12 @@ Supports spanning multiple drives with one file system without LVM!!
 
 Symlinks seem to be better according to [this](https://unix.stackexchange.com/questions/49623/are-there-any-drawbacks-from-using-mount-bind-as-a-substitute-for-symbolic-lin) answer.
 
-#### 1.1.16. Desktop Shortcuts
+#### 1.1.17. Desktop Shortcuts
 
 Local Shortcuts are here:
 - `/home/yeshey/.local/share/applications`
 
-##### 1.1.16.1. Shortcuts to a website (webapps / web app)
+##### 1.1.17.1. Shortcuts to a website (webapps / web app)
 
 - You can use a web app manager, there is [ice](https://github.com/peppermintos/ice) by the peppermint team, and [Webapp Manager](https://github.com/linuxmint/webapp-manager) based on ice by mint (none available in nixOS rn)
 - Manually:
@@ -511,7 +504,7 @@ Local Shortcuts are here:
     '';
   ```
 
-#### 1.1.17. NixOS
+#### 1.1.18. NixOS
 
 - [Installing directly KDE desktop didn't work for me](https://discourse.nixos.org/t/gui-not-starting-after-upgrade-to-22-05/19534)
 - [Mount Internal drive automattically](https://unix.stackexchange.com/questions/533265/how-to-mount-internal-drives-as-a-normal-user-in-nixos)
@@ -519,7 +512,7 @@ Local Shortcuts are here:
 - [Can't control the brightness of external monitors because of NVIDIA driver](https://discourse.nixos.org/t/brightness-control-of-external-monitors-with-ddcci-backlight/8639/9?u=yeshey), using and `xrandr -q | grep " connected"` for it now `xrandr --output HDMI-0 --brightness 0.5`
 - The Stuck on reboot or poweroff problem? [This solves](https://unix.stackexchange.com/questions/577987/graceful-shutdown-with-suspend-job-hanging-in-syscall)
 
-##### 1.1.17.1. [Chroot into nixOS btrfs system](https://nixos.wiki/wiki/Change_root)
+##### 1.1.18.1. [Chroot into nixOS btrfs system](https://nixos.wiki/wiki/Change_root)
 
 ```bash
 sudo mount /dev/nvme0n1p6 /mnt -o subvol=@
@@ -535,12 +528,12 @@ sudo nixos-install --root /mnt # see below
 You will also have to set the user password again when you boot into the system:
   - `passwd yeshey`
 
-##### 1.1.17.2. LVM Setup
+##### 1.1.18.2. LVM Setup
 
 - [Understand](https://askubuntu.com/questions/219881/how-can-i-create-one-logical-volume-over-two-disks-using-lvm) the hierarchy.
 - Create the Physical Volumes with Gparted! Then combining them in a Volume Group and making logical volumes has to be with CLI
 
-###### 1.1.17.2.1. LVM Cache
+###### 1.1.18.2.1. LVM Cache
 
 Serves to have both fast and slow drives and have performance like the fast drive.
 
@@ -586,12 +579,12 @@ You need to select them [without formatting](https://youtu.be/PJilemDeYdo?t=587)
 
 - I actually had to create all the meta swap cache and root LVs and mkfs.ext4 and mkswap and install, go to the installed nixOS, add the kernel modules in the configuration, run sudo nixos-rebuild switch, and only after go back to the LiveCD and make the cache.
 
-##### 1.1.17.3. Update Channels
+##### 1.1.18.3. Update Channels
 
 - `nix-channel --update`
 - To update for a flake, [check this](https://discourse.nixos.org/t/why-nixos-rebuild-wont-use-my-updated-nixpkgs-flake/9578/5) `sudo nix flake update --commit-lock-file`
 
-##### 1.1.17.4. [Remote Builds](https://eno.space/blog/2021/08/nixos-on-underpowered-devices)
+##### 1.1.18.4. [Remote Builds](https://eno.space/blog/2021/08/nixos-on-underpowered-devices)
 
 This might not apply between PCs of different architectures.
 You might need to add `services.openssh.permitRootLogin = "yes";` in both cases
@@ -599,12 +592,12 @@ You might need to add `services.openssh.permitRootLogin = "yes";` in both cases
 - From weak PC: `sudo nixos-rebuild --flake .#surface --build-host root@192.168.1.102 switch`
 - From powerful PC: `sudo nixos-rebuild --flake .#surface --target-host root@192.168.1.115 --build-host localhost switch`
 
-##### 1.1.17.5. Partitioning in nixOS
+##### 1.1.18.5. Partitioning in nixOS
 
 - Note that in nixOS it's a good idea to have the /nix/store in a partition like btrfs due to the large number of inodes used by symlinks, to make sure it doesn't run out of inodes before it runs out of space.
 - You can add multiple swap files in nixOS and set their priority in a ext4 partition [like this](https://rycwo.dev/archive/nixos-series-002-swapfiles/)
 
-###### 1.1.17.5.1. Multiple Directories on same partition in nixOS
+###### 1.1.18.5.1. Multiple Directories on same partition in nixOS
 
 - nixOS `/nix/store` [can't be symlinked](https://discourse.nixos.org/t/getting-around-no-symlink-policy/19712/3), instead, mount with --binds
 
