@@ -2,69 +2,96 @@
 
 <h2> Table Of Contents
 
-- [](#)
-      - [1.1.11. File Systems](#1111-file-systems)
-        - [1.1.11.1. BTRFS](#11111-btrfs)
-      - [1.1.12. Tested in Other Linuxs](#1112-tested-in-other-linuxs)
-        - [1.1.12.1. Add more resolution options (Linux Mint)](#11121-add-more-resolution-options-linux-mint)
-      - [1.1.13. rsync](#1113-rsync)
-      - [1.1.14. Reconfiguring System from scratch](#1114-reconfiguring-system-from-scratch)
-        - [1.1.14.1. KDE Plasma](#11141-kde-plasma)
-        - [1.1.14.2. Grub](#11142-grub)
-      - [1.1.15. Partitioning](#1115-partitioning)
-        - [1.1.15.1. Multiple Directories on same partition](#11151-multiple-directories-on-same-partition)
-      - [1.1.16. Desktop Shortcuts](#1116-desktop-shortcuts)
-        - [1.1.16.1. Shortcuts to a website (webapps / web app)](#11161-shortcuts-to-a-website-webapps--web-app)
-      - [1.1.17. NixOS](#1117-nixos)
-        - [1.1.17.1. Chroot into nixOS btrfs system](#11171-chroot-into-nixos-btrfs-system)
-        - [1.1.17.2. LVM Setup](#11172-lvm-setup)
-          - [1.1.17.2.1. LVM Cache](#111721-lvm-cache)
-        - [1.1.17.3. Update Channels](#11173-update-channels)
-        - [1.1.17.4. Remote Builds](#11174-remote-builds)
-        - [1.1.17.5. Partitioning in nixOS](#11175-partitioning-in-nixos)
-          - [1.1.17.5.1. Multiple Directories on same partition in nixOS](#111751-multiple-directories-on-same-partition-in-nixos)
-    - [1.2. **Windows**](#12-windows)
-      - [1.2.1. Recover /efi/boot for Windows](#121-recover-efiboot-for-windows)
-      - [1.2.2. Move the msr partition \& other partition problems](#122-move-the-msr-partition--other-partition-problems)
-    - [1.3. **Android**](#13-android)
-      - [1.3.1. Root with Magisk (A70)](#131-root-with-magisk-a70)
-      - [1.3.2. Hide root from apps without MagiskHide](#132-hide-root-from-apps-without-magiskhide)
-  - [2. Programs](#2-programs)
-    - [2.1. VSC (Visual Studio Code)](#21-vsc-visual-studio-code)
-      - [2.1.1. VSC Extensions](#211-vsc-extensions)
-      - [2.1.2. VSC debugger](#212-vsc-debugger)
-      - [2.1.3. VSC - OSS (Open source Visual Studio `code`)](#213-vsc---oss-open-source-visual-studio-code)
-      - [2.1.4. VSC - Remote Development (with ssh)](#214-vsc---remote-development-with-ssh)
-      - [2.1.5. Fix Live share in Manjaro](#215-fix-live-share-in-manjaro)
-    - [2.2. ssh (in lan)](#22-ssh-in-lan)
-      - [2.2.1. Install in Manjaro](#221-install-in-manjaro)
-      - [2.2.2. Access through another PC](#222-access-through-another-pc)
-      - [2.2.3. Access through phone](#223-access-through-phone)
-      - [2.2.4. ssh without password (public \& private keys)](#224-ssh-without-password-public--private-keys)
-      - [2.2.5. ssh config file (`~/.ssh/config`)](#225-ssh-config-file-sshconfig)
-      - [2.2.6. Forward GUI (X11 forwarding)](#226-forward-gui-x11-forwarding)
-    - [2.3. VMs](#23-vms)
-      - [2.3.1. VirtualBox](#231-virtualbox)
-        - [2.3.1.1. Host Manjaro](#2311-host-manjaro)
-      - [2.3.2. Virtual Machine Manager (comes with KDE)](#232-virtual-machine-manager-comes-with-kde)
-      - [2.3.3. Guest Manjaro](#233-guest-manjaro)
-      - [2.3.4. SSH into Guest Manjaro](#234-ssh-into-guest-manjaro)
-  - [3. Coding Languages](#3-coding-languages)
-    - [3.1. MarkDown](#31-markdown)
-      - [3.1.1. MarkDown CheatSheet](#311-markdown-cheatsheet)
-      - [3.1.2. Extensions for md](#312-extensions-for-md)
-      - [3.1.3. Markdown title into an HTML anchor](#313-markdown-title-into-an-html-anchor)
-    - [3.2. LaTeX](#32-latex)
-    - [3.3. Python](#33-python)
-      - [3.3.1. Dependencies](#331-dependencies)
-  - [4. Others](#4-others)
-    - [4.1. Camera (EOS 1100D)](#41-camera-eos-1100d)
-      - [4.1.1. Timelapse](#411-timelapse)
-    - [4.2. Programs to Install](#42-programs-to-install)
-      - [4.2.1. Android](#421-android)
-      - [4.2.2. Surface (Windows)](#422-surface-windows)
-        - [4.2.2.1. Installing only some apps of Office](#4221-installing-only-some-apps-of-office)
-      - [4.2.3. Linux](#423-linux)
+- [1. OSs](#1-oss)
+  - [1.1. **Linux** (Manjaro)](#11-linux-manjaro)
+    - [1.1.1. Autostart Tasks](#111-autostart-tasks)
+    - [1.1.2. PDFs](#112-pdfs)
+      - [1.1.2.1. Unite](#1121-unite)
+      - [1.1.2.2. OCR](#1122-ocr)
+      - [1.1.2.3. Compress](#1123-compress)
+    - [1.1.3. Latte Dock](#113-latte-dock)
+    - [1.1.4. Notifications](#114-notifications)
+      - [1.1.4.1. Fix notifications error in latte dock](#1141-fix-notifications-error-in-latte-dock)
+      - [1.1.4.2. Notification badges in electron apps (like discord)](#1142-notification-badges-in-electron-apps-like-discord)
+      - [1.1.4.3. Send linux OS notifications through terminal/console/cli](#1143-send-linux-os-notifications-through-terminalconsolecli)
+    - [1.1.5. Button To Boot into Windows in a dual boot](#115-button-to-boot-into-windows-in-a-dual-boot)
+    - [1.1.6. Ohmy - zsh (instead of bash)](#116-ohmy---zsh-instead-of-bash)
+    - [1.1.7. Use laptop as a second monitor](#117-use-laptop-as-a-second-monitor)
+    - [1.1.8. CLI Tricks](#118-cli-tricks)
+      - [1.1.8.1. Journalctl find logs](#1181-journalctl-find-logs)
+      - [1.1.8.2. CLI Search / find words](#1182-cli-search--find-words)
+    - [1.1.9. Hotspot](#119-hotspot)
+      - [1.1.9.1. linux-wifi-hotspot](#1191-linux-wifi-hotspot)
+    - [1.1.10. Image Manipulation](#1110-image-manipulation)
+      - [1.1.10.1. Changing Metadata](#11101-changing-metadata)
+        - [1.1.10.1.1. Changing DateTime](#111011-changing-datetime)
+      - [1.1.10.2. Overlaying DateTime On top of image](#11102-overlaying-datetime-on-top-of-image)
+    - [1.1.11. Video Manipulation (NixOS)](#1111-video-manipulation-nixos)
+      - [1.1.11.1. FFmpeg](#11111-ffmpeg)
+      - [1.1.11.2. Add Subtitles](#11112-add-subtitles)
+    - [1.1.12. File Systems](#1112-file-systems)
+      - [1.1.12.1. BTRFS](#11121-btrfs)
+    - [1.1.13. Tested in Other Linuxs](#1113-tested-in-other-linuxs)
+      - [1.1.13.1. Add more resolution options (Linux Mint)](#11131-add-more-resolution-options-linux-mint)
+    - [1.1.14. rsync](#1114-rsync)
+    - [1.1.15. Reconfiguring System from scratch](#1115-reconfiguring-system-from-scratch)
+      - [1.1.15.1. KDE Plasma](#11151-kde-plasma)
+      - [1.1.15.2. Grub](#11152-grub)
+    - [1.1.16. Partitioning](#1116-partitioning)
+      - [1.1.16.1. Multiple Directories on same partition](#11161-multiple-directories-on-same-partition)
+    - [1.1.17. Desktop Shortcuts](#1117-desktop-shortcuts)
+      - [1.1.17.1. Shortcuts to a website (webapps / web app)](#11171-shortcuts-to-a-website-webapps--web-app)
+    - [1.1.18. NixOS](#1118-nixos)
+      - [1.1.18.1. Simple configuration.nix to get you started](#11181-simple-configurationnix-to-get-you-started)
+      - [1.1.18.2. Chroot into nixOS btrfs system](#11182-chroot-into-nixos-btrfs-system)
+      - [1.1.18.3. LVM Setup](#11183-lvm-setup)
+        - [1.1.18.3.1. LVM Cache](#111831-lvm-cache)
+      - [1.1.18.4. Update Channels](#11184-update-channels)
+      - [1.1.18.5. Remote Builds](#11185-remote-builds)
+      - [1.1.18.6. Partitioning in nixOS](#11186-partitioning-in-nixos)
+        - [1.1.18.6.1. Multiple Directories on same partition in nixOS](#111861-multiple-directories-on-same-partition-in-nixos)
+  - [1.2. **Windows**](#12-windows)
+    - [1.2.1. Recover /efi/boot for Windows](#121-recover-efiboot-for-windows)
+    - [1.2.2. Move the msr partition \& other partition problems](#122-move-the-msr-partition--other-partition-problems)
+  - [1.3. **Android**](#13-android)
+    - [1.3.1. Root with Magisk (A70)](#131-root-with-magisk-a70)
+    - [1.3.2. Hide root from apps without MagiskHide](#132-hide-root-from-apps-without-magiskhide)
+- [2. Programs](#2-programs)
+  - [2.1. VSC (Visual Studio Code)](#21-vsc-visual-studio-code)
+    - [2.1.1. VSC Extensions](#211-vsc-extensions)
+    - [2.1.2. VSC debugger](#212-vsc-debugger)
+    - [2.1.3. VSC - OSS (Open source Visual Studio `code`)](#213-vsc---oss-open-source-visual-studio-code)
+    - [2.1.4. VSC - Remote Development (with ssh)](#214-vsc---remote-development-with-ssh)
+    - [2.1.5. Fix Live share in Manjaro](#215-fix-live-share-in-manjaro)
+  - [2.2. ssh (in lan)](#22-ssh-in-lan)
+    - [2.2.1. Install in Manjaro](#221-install-in-manjaro)
+    - [2.2.2. Access through another PC](#222-access-through-another-pc)
+    - [2.2.3. Access through phone](#223-access-through-phone)
+    - [2.2.4. ssh without password (public \& private keys)](#224-ssh-without-password-public--private-keys)
+    - [2.2.5. ssh config file (`~/.ssh/config`)](#225-ssh-config-file-sshconfig)
+    - [2.2.6. Forward GUI (X11 forwarding)](#226-forward-gui-x11-forwarding)
+  - [2.3. VMs](#23-vms)
+    - [2.3.1. VirtualBox](#231-virtualbox)
+      - [2.3.1.1. Host Manjaro](#2311-host-manjaro)
+    - [2.3.2. Virtual Machine Manager / virt-manager (comes with KDE)](#232-virtual-machine-manager--virt-manager-comes-with-kde)
+    - [2.3.3. Guest Manjaro](#233-guest-manjaro)
+    - [2.3.4. SSH into Guest Manjaro](#234-ssh-into-guest-manjaro)
+- [3. Coding Languages](#3-coding-languages)
+  - [3.1. MarkDown](#31-markdown)
+    - [3.1.1. MarkDown CheatSheet](#311-markdown-cheatsheet)
+    - [3.1.2. Extensions for md](#312-extensions-for-md)
+    - [3.1.3. Markdown title into an HTML anchor](#313-markdown-title-into-an-html-anchor)
+  - [3.2. LaTeX](#32-latex)
+  - [3.3. Python](#33-python)
+    - [3.3.1. Dependencies](#331-dependencies)
+- [4. Others](#4-others)
+  - [4.1. Camera (EOS 1100D)](#41-camera-eos-1100d)
+    - [4.1.1. Timelapse](#411-timelapse)
+  - [4.2. Programs to Install](#42-programs-to-install)
+    - [4.2.1. Android](#421-android)
+    - [4.2.2. Surface (Windows)](#422-surface-windows)
+      - [4.2.2.1. Installing only some apps of Office](#4221-installing-only-some-apps-of-office)
+    - [4.2.3. Linux](#423-linux)
 
 ## 1. OSs
 
@@ -512,7 +539,214 @@ Local Shortcuts are here:
 - [Can't control the brightness of external monitors because of NVIDIA driver](https://discourse.nixos.org/t/brightness-control-of-external-monitors-with-ddcci-backlight/8639/9?u=yeshey), using and `xrandr -q | grep " connected"` for it now `xrandr --output HDMI-0 --brightness 0.5`
 - The Stuck on reboot or poweroff problem? [This solves](https://unix.stackexchange.com/questions/577987/graceful-shutdown-with-suspend-job-hanging-in-syscall)
 
-##### 1.1.18.1. [Chroot into nixOS btrfs system](https://nixos.wiki/wiki/Change_root)
+##### 1.1.18.1. Simple configuration.nix to get you started
+
+```nix
+# Edit this configuration file to define what should be installed on
+# your system.  Help is available in the configuration.nix(5) man page
+# and in the NixOS manual (accessible by running ‘nixos-help’).
+
+{ config, pkgs, ... }:
+
+{
+  imports =
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+    ];
+
+  # Bootloader.
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/vda";
+  boot.loader.grub.useOSProber = true;
+
+  boot.cleanTmpDir = true;
+  boot.supportedFilesystems = [ "ntfs" ];
+
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
+
+  networking.hostName = "nixos"; # Define your hostname.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  # Enable networking
+  networking.networkmanager.enable = true;
+  networking.resolvconf.dnsExtensionMechanism = false; # fixes internet connectivity problems with some sites (https://discourse.nixos.org/t/domain-name-resolve-problem/885/2)
+
+  # Set your time zone.
+  time.timeZone = "Europe/Lisbon";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "pt_PT.UTF-8";
+    LC_IDENTIFICATION = "pt_PT.UTF-8";
+    LC_MEASUREMENT = "pt_PT.UTF-8";
+    LC_MONETARY = "pt_PT.UTF-8";
+    LC_NAME = "pt_PT.UTF-8";
+    LC_NUMERIC = "pt_PT.UTF-8";
+    LC_PAPER = "pt_PT.UTF-8";
+    LC_TELEPHONE = "pt_PT.UTF-8";
+    LC_TIME = "pt_PT.UTF-8";
+  };
+
+  # Enable the X11 windowing system.
+  services.xserver.enable = true;
+
+  # Enable the GNOME Desktop Environment.
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+
+  # Configure keymap in X11
+  services.xserver = {
+    layout = "pt";
+    xkbVariant = "";
+  };
+
+  services.spice-vdagentd.enable=true; # to enable clipboard sharing in VM
+
+  # Enable the OpenSSH daemon.
+  services.openssh = {
+    enable = true;
+    forwardX11 = true; # forward graphical interfaces through SSH
+    #settings = { # wasn't even working..?
+    #  permitRootLogin = "yes"; # to let surface and Laptop connect to builds for the surface (https://github.com/NixOS/nixpkgs/issues/20718)
+    #};
+  };
+  programs = {
+    ssh = {
+      startAgent = true;
+      forwardX11 = true;
+    };
+
+    # general terminal shell config for all users
+    zsh = {
+      enable = true;
+      shellAliases = {
+        vim = "nvim";
+        # ls = "lsd -l --group-dirs first";
+        #update = "sudo nixos-rebuild switch --flake ${location}#${host}"; # old: "sudo nixos-rebuild switch";
+        #upgrade = "trap \"cd ${location} && git checkout -- flake.lock\" INT ; sudo nixos-rebuild switch --flake ${location}#${host} --upgrade --update-input nixos-hardware --update-input home-manager --update-input nixpkgs || (cd ${location} && git checkout -- flake.lock)"; /*--commit-lock-file*/ #upgrade: upgrade NixOS to the latest version in your chosen channel";
+        update = "sudo nixos-rebuild switch";
+        upgrade = "sudo nixos-rebuild switch --upgrade";
+        clean = "echo \"This will clean all generations, and optimise the store\" ; sudo sh -c 'nix-collect-garbage -d ; nix-store --optimise'";
+        cp = "cp -i";                                   # Confirm before overwriting something
+        df = "df -h";                                   # Human-readable sizes
+        free = "free -m";                               # Show sizes in MB
+        gitu = "git add . && git commit && git push";
+        zshreload = "clear && zsh";
+        zshconfig = "nano ~/.zshrc";
+        # killall latte-dock && latte-dock & && kquitapp5 plasmashell || killall plasmashell && kstart5 plasmashell"
+        re-kde = "nix-shell -p killall --command \"kquitapp5 plasmashell || killall plasmashell && kstart5 plasmashell\""; # Restart gui in KDE
+        mount = "mount|column -t";                      # Pretty mount
+        speedtest = "nix-shell -p python3 --command \"curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -\"";
+        temperature = "watch \"nix-shell -p lm_sensors --command sensors | grep temp1 | awk '{print $2}' | sed 's/+//'\"";
+        rvt = "nix-shell -p ffmpeg --command \"bash <(curl -s https://raw.githubusercontent.com/Yeshey/RecursiveVideoTranscoder/main/RecursiveVideoTranscoder.sh)\"";
+        ping = "ping -c 5";                             # Control output of ping
+        fastping = "ping -c 100 -s 1";
+        ports = "netstat -tulanp";                      # Show Open ports
+        l="ls -l";
+        la="ls -a";
+        lla="ls -la";
+        lt="ls --tree";
+        grep="grep --color=auto";
+        egrep="egrep --color=auto";
+        fgrep="fgrep --color=auto";
+        diff="colordiff";
+        dir="dir --color=auto";
+        vdir="vdir --color=auto";
+        week = "
+          now=$(date '+%V %B %Y');
+          echo \"Week Date:\" $now
+        ";
+        myip = "  
+          echo \"Your external IP address is:\"
+          curl -w '\n' https://ipinfo.io/ip
+        ";
+        chtp = " curl cht.sh/python/\"$1\" ";           # alias to use cht.sh for python help
+        chtc = " curl cht.sh/c/\"$1\" ";                # alias to use cht.sh for c help
+        chtsharp = " curl cht.sh/csharp/\"$1\" ";           # alias to use cht.sh for c# help
+        cht = " curl cht.sh/\"$1\" ";                   # alias to use cht.sh in general
+      };
+      autosuggestions.enable = true;
+      syntaxHighlighting.enable = true;
+      enableCompletion = true;
+      histSize = 100000;
+      ohMyZsh = {
+        enable = true;
+        plugins = [ "git" 
+                    "colored-man-pages" 
+                    "alias-finder" 
+                    "command-not-found" 
+                    #"autojump" 
+                    "urltools" 
+                    "bgnotify"];
+        theme = "agnoster"; # robbyrussell # agnoster # frisk
+      };
+    };
+  };
+
+  # Configure console keymap
+  console.keyMap = "pt-latin1";
+
+  # Enable sound with pipewire.
+  sound.enable = true;
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
+
+  services.xserver.libinput.enable = true;
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.yeshey = {
+    isNormalUser = true;
+    description = "Yeshey";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [
+      firefox
+    ];
+    
+    # needed to make home-manager zsh work with gdm
+    shell = pkgs.zsh;
+    useDefaultShell = false;
+  };
+  users.defaultUserShell = pkgs.zsh;
+
+  # Enable automatic login for the user.
+  services.xserver.displayManager.autoLogin.enable = true;
+  services.xserver.displayManager.autoLogin.user = "yeshey";
+
+  # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
+  systemd.services."getty@tty1".enable = false;
+  systemd.services."autovt@tty1".enable = false;
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  environment.systemPackages = with pkgs; [
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget
+    git
+    gparted
+    vscode
+  ];
+
+  system.stateVersion = "22.11"; # Did you read the comment?
+}
+```
+
+- And then copy the ssh keys into the ssh folder
+- git clone the repository into ~/.setup/
+- and run `sudo nixos-rebuild switch --flake ~/.setup/#vm;` in a terminal window(so it doesn't turn off), in fullscreen in the up part you have a button to send key stroke combinations
+
+##### 1.1.18.2. [Chroot into nixOS btrfs system](https://nixos.wiki/wiki/Change_root)
 
 ```bash
 sudo mount /dev/nvme0n1p6 /mnt -o subvol=@
@@ -528,12 +762,12 @@ sudo nixos-install --root /mnt # see below
 You will also have to set the user password again when you boot into the system:
   - `passwd yeshey`
 
-##### 1.1.18.2. LVM Setup
+##### 1.1.18.3. LVM Setup
 
 - [Understand](https://askubuntu.com/questions/219881/how-can-i-create-one-logical-volume-over-two-disks-using-lvm) the hierarchy.
 - Create the Physical Volumes with Gparted! Then combining them in a Volume Group and making logical volumes has to be with CLI
 
-###### 1.1.18.2.1. LVM Cache
+###### 1.1.18.3.1. LVM Cache
 
 Serves to have both fast and slow drives and have performance like the fast drive.
 
@@ -579,12 +813,12 @@ You need to select them [without formatting](https://youtu.be/PJilemDeYdo?t=587)
 
 - I actually had to create all the meta swap cache and root LVs and mkfs.ext4 and mkswap and install, go to the installed nixOS, add the kernel modules in the configuration, run sudo nixos-rebuild switch, and only after go back to the LiveCD and make the cache.
 
-##### 1.1.18.3. Update Channels
+##### 1.1.18.4. Update Channels
 
 - `nix-channel --update`
 - To update for a flake, [check this](https://discourse.nixos.org/t/why-nixos-rebuild-wont-use-my-updated-nixpkgs-flake/9578/5) `sudo nix flake update --commit-lock-file`
 
-##### 1.1.18.4. [Remote Builds](https://eno.space/blog/2021/08/nixos-on-underpowered-devices)
+##### 1.1.18.5. [Remote Builds](https://eno.space/blog/2021/08/nixos-on-underpowered-devices)
 
 This might not apply between PCs of different architectures.
 You might need to add `services.openssh.permitRootLogin = "yes";` in both cases
@@ -592,12 +826,12 @@ You might need to add `services.openssh.permitRootLogin = "yes";` in both cases
 - From weak PC: `sudo nixos-rebuild --flake .#surface --build-host root@192.168.1.102 switch`
 - From powerful PC: `sudo nixos-rebuild --flake .#surface --target-host root@192.168.1.115 --build-host localhost switch`
 
-##### 1.1.18.5. Partitioning in nixOS
+##### 1.1.18.6. Partitioning in nixOS
 
 - Note that in nixOS it's a good idea to have the /nix/store in a partition like btrfs due to the large number of inodes used by symlinks, to make sure it doesn't run out of inodes before it runs out of space.
 - You can add multiple swap files in nixOS and set their priority in a ext4 partition [like this](https://rycwo.dev/archive/nixos-series-002-swapfiles/)
 
-###### 1.1.18.5.1. Multiple Directories on same partition in nixOS
+###### 1.1.18.6.1. Multiple Directories on same partition in nixOS
 
 - nixOS `/nix/store` [can't be symlinked](https://discourse.nixos.org/t/getting-around-no-symlink-policy/19712/3), instead, mount with --binds
 
@@ -843,7 +1077,7 @@ Will already be able to access after a reboot from any computer.
 
 - [When you install a new VM, it will install with legacy BIOS boot per default, I recomend setting UEFI, specially if you're going to be messing with partitions](https://ostechnix.com/enable-uefi-support-for-kvm-virtual-machines-in-linux/)
 - To [enable USB redirection](https://github.com/NixOS/nixpkgs/issues/106594) you need to add `virtualisation.spiceUSBRedirection.enable = true;` to the host machine in nixOS
-- [For Clipboard sharing](https://www.youtube.com/watch?v=h5IJMJYEj8I), install in the guest system `spice-vdagent`. Or add `services.spice-vdagentd.enable = true;` in nixOS;
+- [For Clipboard sharing & Auto-resize the VM machine](https://www.youtube.com/watch?v=h5IJMJYEj8I), install in the guest system `spice-vdagent`. Or add `services.spice-vdagentd.enable = true;` in nixOS. WIth this you can in virt-manager go to View > Scale-Display > tick Auto resize VM with window to do exactly that.
 - About the error <font color="red"><i>Network "Default" not active in virt-manager</i></font>, you need to start the "Default" network, [do that](https://www.youtube.com/watch?v=dF32UgEPGKE&t=2s) with this command: `sudo virsh net-start default`, you can try to [make it autostart](https://serverfault.com/questions/577209/how-to-automatically-start-virtual-networks-using-virsh) with this: `sudo virsh net-autostart default`(untested) 
 
 
