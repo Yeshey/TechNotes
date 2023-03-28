@@ -839,10 +839,14 @@ Will already be able to access after a reboot from any computer.
   2. Install `virtualbox-ext-oracle` package
   3. Add user to vboxusers: `sudo gpasswd -a $USER vboxusers`
 
-#### 2.3.2. Virtual Machine Manager (comes with KDE)
+#### 2.3.2. Virtual Machine Manager / virt-manager (comes with KDE)
 
 - [When you install a new VM, it will install with legacy BIOS boot per default, I recomend setting UEFI, specially if you're going to be messing with partitions](https://ostechnix.com/enable-uefi-support-for-kvm-virtual-machines-in-linux/)
-- [For Clipboard sharing](https://www.youtube.com/watch?v=h5IJMJYEj8I), install in the guest system `spice-vdagent`. Or add `services.spice.vdagentd.enable = true;` in nixOS;
+- To [enable USB redirection](https://github.com/NixOS/nixpkgs/issues/106594) you need to add `virtualisation.spiceUSBRedirection.enable = true;` to the host machine in nixOS
+- [For Clipboard sharing](https://www.youtube.com/watch?v=h5IJMJYEj8I), install in the guest system `spice-vdagent`. Or add `services.spice-vdagentd.enable = true;` in nixOS;
+- About the error <font color="red"><i>Network "Default" not active in virt-manager</i></font>, you need to start the "Default" network, [do that](https://www.youtube.com/watch?v=dF32UgEPGKE&t=2s) with this command: `sudo virsh net-start default`, you can try to [make it autostart](https://serverfault.com/questions/577209/how-to-automatically-start-virtual-networks-using-virsh) with this: `sudo virsh net-autostart default`(untested) 
+
+
   
 #### 2.3.3. [Guest Manjaro](https://forum.manjaro.org/t/root-tip-virtualbox-installation-usb-shared-folder/1178)
 
