@@ -18,8 +18,9 @@
     - [1.1.6. Ohmy - zsh (instead of bash)](#116-ohmy---zsh-instead-of-bash)
     - [1.1.7. Use laptop as a second monitor](#117-use-laptop-as-a-second-monitor)
     - [1.1.8. CLI Tricks](#118-cli-tricks)
-      - [1.1.8.1. Journalctl find logs](#1181-journalctl-find-logs)
-      - [1.1.8.2. CLI Search / find words](#1182-cli-search--find-words)
+      - [1.1.8.1. Download a file in a flakey internet connection](#1181-download-a-file-in-a-flakey-internet-connection)
+      - [1.1.8.2. Journalctl find logs](#1182-journalctl-find-logs)
+      - [1.1.8.3. CLI Search / find words](#1183-cli-search--find-words)
     - [1.1.9. Hotspot](#119-hotspot)
       - [1.1.9.1. linux-wifi-hotspot](#1191-linux-wifi-hotspot)
     - [1.1.10. Image Manipulation](#1110-image-manipulation)
@@ -279,11 +280,17 @@ Right Click Dock in main screen > Edit Dock > Right Click it AGAIN > Edit/Add Pa
 
 #### 1.1.8. CLI Tricks
 
-##### 1.1.8.1. Journalctl find logs
+##### 1.1.8.1. Download a file in a flakey internet connection
+
+- Downloads to current directory, tries infinite times, and resumes from where it left off:
+- `wget --tries=inf --continue http://speedtest-sgp1.digitalocean.com/5gb.test`
+`
+
+##### 1.1.8.2. Journalctl find logs
 
 - `journalctl --since "1 hour ago" > /home/yeshey/journal.txt`
 
-##### 1.1.8.2. CLI Search / find words
+##### 1.1.8.3. CLI Search / find words
 
 - [Find a files location through its name recursively](https://stackoverflow.com/questions/5905054/how-can-i-recursively-find-all-files-in-current-and-subfolders-based-on-wildcard):
   - `find . 2>/dev/null -print | grep -i 'product.json' 2>/dev/null` (the *2>/dev/null* [hides premission errors](https://stackoverflow.com/questions/762348/))
@@ -554,13 +561,66 @@ Local Shortcuts are here:
       ./hardware-configuration.nix
     ];
 
-  # Bootloader.
+  # Bootloader (For BIOS VMs)
+  /*
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/vda";
   boot.loader.grub.useOSProber = true;
+  */
+
+  # Bootloader (For UEFI VMs)
+  boot.loader = {
+
+    timeout = 2;
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot/efi";
+    };
+    grub = {
+      enable = true;
+      version = 2;
+      efiSupport = true;
+      devices = [ "nodev" ];
+      device = "nodev";
+      useOSProber = true;
+      # default = "saved"; # doesn't work with btrfs :(
+      extraEntries = ''
+        menuentry "Reboot" {
+            reboot
+        }
+
+        menuentry "Shut Down" {
+            halt
+        }
+
+        # Option info from /boot/grub/grub.cfg, technotes "Grub" section for more details
+        menuentry "NixOS - Console" --class nixos --unrestricted {
+        search --set=drive1 --fs-uuid 69e9ba80-fb1f-4c2d-981d-d44e59ff9e21
+        search --set=drive2 --fs-uuid 69e9ba80-fb1f-4c2d-981d-d44e59ff9e21
+          linux ($drive2)/@/nix/store/ll70jpkp1wgh6qdp3spxl684m0rj9ws4-linux-5.15.68/bzImage init=/nix/store/c2mg9sck85ydls81xrn8phh3i1rn8bph-nixos-system-nixos-22.11pre410602.ae1dc133ea5/init loglevel=4 3
+          initrd ($drive2)/@/nix/store/s38fgk7axcjryrp5abkvzqmyhc3m4pd1-initrd-linux-5.15.68/initrd
+        }
+
+      '';
+    };
+  };
 
   boot.cleanTmpDir = true;
   boot.supportedFilesystems = [ "ntfs" ];
+
+  # swap in ext4:
+  swapDevices = [ 
+    {
+      device = "/swapfile";
+      priority = 0; # Higher numbers indicate higher priority.
+      size = 5*1024;
+      options = [ "nofail"];
+    }
+  ];
+  zramSwap = { # zram only made things slwo whenever there were animations when the thermald temperature threshold was set too low (61069)
+    enable = true;
+    algorithm = "zstd";
+  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -610,7 +670,7 @@ Local Shortcuts are here:
     enable = true;
     forwardX11 = true; # forward graphical interfaces through SSH
     #settings = { # wasn't even working..?
-    #  permitRootLogin = "yes"; # to let surface and Laptop connect to builds for the surface (https://github.com/NixOS/nixpkgs/issues/20718)
+    permitRootLogin = "yes"; # to let surface and Laptop connect to builds for the surface (https://github.com/NixOS/nixpkgs/issues/20718)
     #};
   };
   programs = {
@@ -733,6 +793,7 @@ Local Shortcuts are here:
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
+    htop
     git
     gparted
     vscode
@@ -860,7 +921,7 @@ You might need to add `services.openssh.permitRootLogin = "yes";` in both cases
   5. `sudo mv -f` the folder into the new drive, (you could also reboot and do this from a live USB)  
   `sudo mv -f /nix /mnt/ext4MicroSD/`  
   ( or [copy it](https://cs-syd.eu/posts/2019-09-14-nix-on-seperate-device), but doesn't seem to quite work `sudo rsync --recursive --links --info=progress2 /nix /mnt/ext4MicroSD/`)
-      - Note that doing this for `/var` might give `Operation not permitted` even with root. Run `sudo chattr -i var/empty/` and remove now for it to work `sudo rm -vrf var`
+      - Note that doing this for `/var` might give `Operation not permitted` even with root. Run `sudo chattr -i var/empty/` and remove now for it to work `studo rm -vrf var`
   6. Now Reboot and you should be good to go.
 
 - Another way to takle this would be with LVM or btrfs subvolumes or multiple disks support...
@@ -1079,7 +1140,7 @@ Will already be able to access after a reboot from any computer.
 - To [enable USB redirection](https://github.com/NixOS/nixpkgs/issues/106594) you need to add `virtualisation.spiceUSBRedirection.enable = true;` to the host machine in nixOS
 - [For Clipboard sharing & Auto-resize the VM machine](https://www.youtube.com/watch?v=h5IJMJYEj8I), install in the guest system `spice-vdagent`. Or add `services.spice-vdagentd.enable = true;` in nixOS. WIth this you can in virt-manager go to View > Scale-Display > tick Auto resize VM with window to do exactly that.
 - About the error <font color="red"><i>Network "Default" not active in virt-manager</i></font>, you need to start the "Default" network, [do that](https://www.youtube.com/watch?v=dF32UgEPGKE&t=2s) with this command: `sudo virsh net-start default`, you can try to [make it autostart](https://serverfault.com/questions/577209/how-to-automatically-start-virtual-networks-using-virsh) with this: `sudo virsh net-autostart default`(untested) 
-
+- [Check this](https://unix.stackexchange.com/questions/669536/unable-to-get-live-usb-to-boot) to start a virtual machine from virt-manager from a USB device.
 
   
 #### 2.3.3. [Guest Manjaro](https://forum.manjaro.org/t/root-tip-virtualbox-installation-usb-shared-folder/1178)
