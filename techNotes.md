@@ -890,6 +890,10 @@ You might need to add `services.openssh.permitRootLogin = "yes";` in both cases
 - From weak PC: `sudo nixos-rebuild --flake .#surface --build-host root@192.168.1.102 switch`
 - From powerful PC: `sudo nixos-rebuild --flake .#surface --target-host root@192.168.1.115 --build-host localhost switch`
 
+[Here is the official documentation](https://nixos.wiki/wiki/Nixos-rebuild).  
+You [should be able to use](https://github.com/NixOS/nixpkgs/issues/80142) `NIX_SSHOPTS="..."` to pass arguments to the ssh running inside the `nixos-rebuild` command.  
+Use the `--use-remote-sudo` when you're the building machine, and specifying the `--target-host`, and you don't have sudo, so you want to use the sudo of the target machine.
+
 ##### 1.1.18.6. Partitioning in nixOS
 
 - Note that in nixOS it's a good idea to have the /nix/store in a partition like btrfs due to the large number of inodes used by symlinks, to make sure it doesn't run out of inodes before it runs out of space.
