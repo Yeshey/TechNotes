@@ -888,8 +888,8 @@ You need to select them [without formatting](https://youtu.be/PJilemDeYdo?t=587)
 This might not apply between PCs of different architectures.
 You might need to add `services.openssh.permitRootLogin = "yes";` in both cases
 
-- From weak PC: `sudo nixos-rebuild --flake .#surface --build-host root@192.168.1.102 switch`
-- From powerful PC: `sudo nixos-rebuild --flake .#surface --target-host root@192.168.1.115 --build-host localhost switch`
+- From weak PC: `sudo nixos-rebuild --flake ~/.setup#kakariko --build-host root@192.168.1.102 switch --verbose`
+- From powerful PC: `sudo nixos-rebuild --flake ~/.setup#kakariko --target-host root@192.168.1.103 switch --verbose`
 
 [Here is the official documentation](https://nixos.wiki/wiki/Nixos-rebuild).  
 You [should be able to use](https://github.com/NixOS/nixpkgs/issues/80142) `NIX_SSHOPTS="..."` to pass arguments to the ssh running inside the `nixos-rebuild` command.  
