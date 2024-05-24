@@ -830,7 +830,7 @@ You will also have to set the user password again when you boot into the system:
 
 - [Understand](https://askubuntu.com/questions/219881/how-can-i-create-one-logical-volume-over-two-disks-using-lvm) the hierarchy.
 - Create the Physical Volumes with Gparted! Then combining them in a Volume Group and making logical volumes has to be with CLI
-- My guide on [**Windows Dual boot, LUKS on LVM with LVM cache: LV across SSD and HDD/MicroSD, btrfs, nixOS**](guides/LUKS%20on%20LVM%20with%20cache%20on%20nixOS.md)
+- My guide on [**Windows Dual boot, LUKS on LVM with LVM cache, btrfs, nixOS**](guides/LUKS%20on%20LVM%20with%20cache%20on%20nixOS.md)
 
 ###### 1.1.18.3.1. LVM Cache
 
