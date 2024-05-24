@@ -104,7 +104,7 @@ Followed [this](https://fictionbecomesfact.com/nixos-installation-luks) guide.
 ```sh
 sudo mount /dev/disk/by-label/nixos /mnt
 sudo mkdir -p /mnt/boot
-sudo mount /dev/disk/by-label/boot /mnt/boot # avoids world accessible warning
+sudo mount /dev/disk/by-label/SYSTEM /mnt/boot # gert the label of the fat32 partition from gparted
 sudo swapon /dev/mapper/cryptswap
 ```
 Check results and UUIDs with `lsblk --fs`.
