@@ -141,6 +141,7 @@ Add the following configurations to your NixOS configuration file (`/etc/nixos/c
 
   boot.initrd.preLVMCommands = lib.mkOrder 400 "sleep 5"; # in my case I had to wait a bit to let my hardware pick up on my microSD
   boot.initrd.luks.devices = {
+    # Will already attempt to use the same password to decrypt both
     "cryptroot" = {
       device = "/dev/VG/cryptroot";
       allowDiscards = true; # for ssd primary?
