@@ -175,7 +175,13 @@ Add the following configurations to your NixOS configuration file (`/etc/nixos/c
   boot.supportedFilesystems = [ "btrfs" ]; # can read btrfs drives now
 }
 ```
+### Troubleshoot
 
+If you are stuck in stage 1 boot, you can add this to your config:
+```nix
+boot.kernelParams = [ "boot.shell_on_fail" ]; # from https://discourse.nixos.org/t/unable-to-boot-from-a-usb-device-with-a-luks-partition/26516/2
+```
+It will allow you to drop into a shell, you can then use `blkid` to see the available UUIDs, CTRL + ALT + DELETE to reboot
 
 ### Explanation: 
 1. **Physical Volumes and Volume Group** : 
