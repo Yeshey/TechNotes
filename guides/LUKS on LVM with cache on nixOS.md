@@ -15,6 +15,7 @@
 Based on:
 - [ArchWiki guide](https://wiki.archlinux.org/title/Dm-crypt/Encrypting_an_entire_system#LUKSonLVM:~:text=parameters%20for%20details.-,LUKS%20on%20LVM,-To%20use%20encryption)
 - [gabrieljcs' lvm cache on fedora guide](https://gist.github.com/gabrieljcs/805c183753046dcc6131)
+- [LVM cache options explenation](https://blog.delouw.ch/2020/01/29/using-lvm-cache-for-storage-tiering/)
 
 ### Step-by-Step Guide:
 #### 1. Initialize Physical Volumes:
