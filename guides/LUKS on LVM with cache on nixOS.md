@@ -122,32 +122,55 @@ Add the following configurations to your NixOS configuration file (`/etc/nixos/c
 { config, pkgs, ... }:
 
 {
-  boot.initrd.luks.devices = {
-    cryptroot = {
-      device = "/dev/VG/cryptroot";
-      preLVM = true;
-    };
-    cryptswap = {
-      device = "/dev/VG/cryptswap";
-      preLVM = true;
-    };
+  boot.loader.systemd-boot = {
+    enable = true;
+    configurationLimit = 5; # You can leave it null for no limit, but it is not recommended, as it can fill your boot partition.
   };
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+
+  fileSystems."/boot/efi" =
+    { device = "/dev/disk/by-uuid/84A9-3C95";
+      fsType = "vfat";
+      #options = [ "fmask=0022" "dmask=0022" ]; 
+      # ⚠️ fix the security issue ⚠️
+      # https://github.com/NixOS/nixpkgs/issues/279362#issuecomment-1883970541
+      options = [ "uid=0" "gid=0" "fmask=0077" "dmask=0077" ];
+    };
+
+  boot.initrd.preLVMCommands = lib.mkOrder 400 "sleep 5"; # in my case I had to wait a bit to let my hardware pick up on my microSD
+  boot.initrd.luks.devices = {
+    "cryptroot" = {
+      device = "/dev/VG/cryptroot";
+      allowDiscards = true; # for ssd primary?
+      preLVM = false; # informs that its LUKS on LVM and not LVM on LUKS
+    };
+    "cryptswap" = {
+      device = "/dev/VG/cryptswap";
+      allowDiscards = true; # for ssd primary?
+      preLVM = false; # informs that its LUKS on LVM and not LVM on LUKS
+    };
+  }; 
+
+  fileSystems."/" =
+    { #device = "/dev/disk/by-uuid/6e60cc35-882f-45bf-8402-719a14a74a74";
+      device = "/dev/mapper/cryptroot";
+      fsType = "btrfs";
+      options = [ "compress=zstd" ];
+    };
+  swapDevices =
+    [ 
+      { device = "/dev/mapper/cryptswap"; }
+    ];
 
   boot.initrd.lvm.enable = true;
-  boot.kernelModules = [ "dm_mod" "dm_crypt" ];
-
-  fileSystems."/" = {
-    device = "/dev/mapper/cryptroot";
-    fsType = "btrfs";
-  };
-
-  swapDevices = [
-    {
-      device = "/dev/mapper/cryptswap";
-    }
+  boot.kernelModules = [ 
+    "dm_mod" # For LVM
+    "dm-cache" "dm-cache-smq" "dm-writecache" # for cache
+    "dm_crypt" # for encryption
   ];
 
-  boot.supportedFilesystems = [ "btrfs" ];
+  boot.supportedFilesystems = [ "btrfs" ]; # can read btrfs drives now
 }
 ```
 
