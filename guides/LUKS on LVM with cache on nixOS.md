@@ -296,7 +296,10 @@ sudo cryptsetup resize cryptroot  # Replace cryptroot with your LUKS mapping nam
 Finally, resize the filesystem inside the LUKS container. For a `btrfs` filesystem, you would use:
 
 ```sh
-sudo btrfs filesystem resize max /dev/mapper/cryptroot  # Replace /dev/mapper/cryptroot with your mapped device
+sudo mount /dev/mapper/cryptroot /mnt
+sudo btrfs filesystem resize max /mnt
+df -h /mnt # to check it worked
+sudo umount /mnt
 ```
 
 
