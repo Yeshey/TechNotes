@@ -139,7 +139,7 @@ Add the following configurations to your NixOS configuration file (`/etc/nixos/c
       options = [ "uid=0" "gid=0" "fmask=0077" "dmask=0077" ];
     };
 
-  boot.initrd.preLVMCommands = lib.mkOrder 400 "sleep 5"; # in my case I had to wait a bit to let my hardware pick up on my microSD
+  boot.initrd.preLVMCommands = lib.mkOrder 400 "sleep 3"; # in my case I had to wait a bit to let my hardware pick up on my microSD
   boot.initrd.luks.devices = {
     # Will already attempt to use the same password to decrypt both
     "cryptroot" = {
@@ -175,6 +175,54 @@ Add the following configurations to your NixOS configuration file (`/etc/nixos/c
   boot.supportedFilesystems = [ "btrfs" ]; # can read btrfs drives now
 }
 ```
+
+For integration with tpm and possibly passing the password to the loginm, you can also do this with `boot.initrd.systemd.enable`:
+```nix
+  boot.loader.systemd-boot = {
+    enable = true;
+    configurationLimit = 10; # You can leave it null for no limit, but it is not recommended, as it can fill your boot partition.
+  };
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+
+  boot.initrd.systemd.enable = true;
+  #boot.initrd.systemd.emergencyAccess = true; # might need for debugging
+  boot.initrd.luks.devices.cryptroot = {
+    device = "/dev/VG/cryptroot";
+  };
+  boot.initrd.luks.devices.cryptswap = {
+    device = "/dev/VG/cryptswap";
+  };
+
+  # make tpm work maybe?
+  #boot.initrd.systemd.enableTpm2 = true;
+  #security.tpm2.enable = true;
+  #security.tpm2.pkcs11.enable = true;  # expose /run/current-system/sw/lib/libtpm2_pkcs11.so
+  #security.tpm2.tctiEnvironment.enable = true;  # TPM2TOOLS_TCTI and TPM2_PKCS11_TCTI env variables
+
+  fileSystems."/boot/efi" =
+    { device = "/dev/disk/by-uuid/84A9-3C95";
+      fsType = "vfat";
+      #options = [ "fmask=0022" "dmask=0022" ]; 
+      # ⚠️ fix the security issue ⚠️
+      # https://github.com/NixOS/nixpkgs/issues/279362#issuecomment-1883970541
+      options = [ "uid=0" "gid=0" "fmask=0077" "dmask=0077" ];
+    };
+
+  fileSystems."/" =
+    { #device = "/dev/disk/by-uuid/6e60cc35-882f-45bf-8402-719a14a74a74"; # or
+      device = "/dev/disk/by-label/nixos";
+      fsType = "btrfs";
+      options = [ "compress=zstd" ];
+    };
+  swapDevices =
+    [ 
+      { #device = "/dev/disk/by-uuid/aea2ed46-641d-4fe5-8551-880c8a8a034f"; # or 
+        device = "/dev/disk/by-label/swap";
+      }
+    ];
+```
+
 ### Troubleshoot
 
 If you are stuck in stage 1 boot, you can add this to your config:
@@ -182,30 +230,6 @@ If you are stuck in stage 1 boot, you can add this to your config:
 boot.kernelParams = [ "boot.shell_on_fail" ]; # from https://discourse.nixos.org/t/unable-to-boot-from-a-usb-device-with-a-luks-partition/26516/2
 ```
 It will allow you to drop into a shell, you can then use `blkid` to see the available UUIDs, CTRL + ALT + DELETE to reboot
-
-### Explanation: 
-1. **Physical Volumes and Volume Group** : 
-- `pvcreate` initializes the physical volumes on `/dev/nvme0n1p5` and `/dev/sdb1`. 
-- `vgcreate` creates a volume group `VG` combining these physical volumes. 
-2. **Logical Volumes** : 
-- `lvcreate` creates a 6GB logical volume for swap on the SSD (`/dev/nvme0n1p5`) and uses the remaining space for the root filesystem on the microSD (`/dev/sdb1`). 
-3. **LUKS Encryption** : 
-- `cryptsetup luksFormat` sets up LUKS encryption on both logical volumes. 
-- `cryptsetup open` opens these encrypted volumes, making them available as `/dev/mapper/cryptswap` and `/dev/mapper/cryptroot`. 
-4. **Formatting** : 
-- `mkswap` initializes the swap area. 
-- `mkfs.btrfs` formats the root logical volume with `btrfs`. 
-5. **Caching** : 
-- `lvcreate` commands create cache metadata and cache data logical volumes on the SSD. 
-- `lvconvert` combines these into a cache pool and then converts the root logical volume to use this cache pool. 
-6. **NixOS Configuration** : 
-- Configurations are added to `/etc/nixos/configuration.nix` to ensure NixOS recognizes and properly mounts the encrypted and cached volumes at boot.
-
-After making these changes, run `sudo nixos-rebuild switch` to apply the configurations.
-### Final Notes:
-- Make sure you replace any placeholder values with the actual UUIDs or device names as needed.
-- You may need to adjust the sizes and configurations based on your specific setup and requirements.
-- Ensure you have backups and have tested the setup in a safe environment to avoid data loss.
 
 ## Resize
 
