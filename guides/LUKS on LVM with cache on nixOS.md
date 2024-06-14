@@ -223,6 +223,11 @@ For integration with tpm and possibly passing the password to the loginm, you ca
     ];
 ```
 
+The install with
+```sh
+sudo nixos-install
+```
+
 ### Troubleshoot
 
 If you are stuck in stage 1 boot, you can add this to your config:
