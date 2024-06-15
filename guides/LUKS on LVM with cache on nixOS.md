@@ -128,9 +128,9 @@ Add the following configurations to your NixOS configuration file (`/etc/nixos/c
     configurationLimit = 5; # You can leave it null for no limit, but it is not recommended, as it can fill your boot partition.
   };
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot.loader.efi.efiSysMountPoint = "/boot";
 
-  fileSystems."/boot/efi" =
+  fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/84A9-3C95";
       fsType = "vfat";
       #options = [ "fmask=0022" "dmask=0022" ]; 
@@ -139,7 +139,7 @@ Add the following configurations to your NixOS configuration file (`/etc/nixos/c
       options = [ "uid=0" "gid=0" "fmask=0077" "dmask=0077" ];
     };
 
-  boot.initrd.preLVMCommands = lib.mkOrder 400 "sleep 3"; # in my case I had to wait a bit to let my hardware pick up on my microSD
+  boot.initrd.preLVMCommands = lib.mkOrder 400 "sleep 6"; # in my case I had to wait a bit to let my hardware pick up on my microSD
   boot.initrd.luks.devices = {
     # Will already attempt to use the same password to decrypt both
     "cryptroot" = {
@@ -165,7 +165,8 @@ Add the following configurations to your NixOS configuration file (`/etc/nixos/c
       { device = "/dev/mapper/cryptswap"; }
     ];
 
-  boot.initrd.lvm.enable = true;
+  # boot.initrd.lvm.enable = true;
+  boot.initrd.kernelModules = [ "dm-cache" "dm-cache-smq" "dm-cache-mq" "dm-cache-cleaner" ];
   boot.kernelModules = [ 
     "dm_mod" # For LVM
     "dm-cache" "dm-cache-smq" "dm-writecache" # for cache
@@ -183,7 +184,7 @@ For integration with tpm and possibly passing the password to the loginm, you ca
     configurationLimit = 10; # You can leave it null for no limit, but it is not recommended, as it can fill your boot partition.
   };
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot.loader.efi.efiSysMountPoint = "/boot";
 
   boot.initrd.systemd.enable = true;
   #boot.initrd.systemd.emergencyAccess = true; # might need for debugging
@@ -193,6 +194,14 @@ For integration with tpm and possibly passing the password to the loginm, you ca
   boot.initrd.luks.devices.cryptswap = {
     device = "/dev/VG/cryptswap";
   };
+  boot.supportedFilesystems = [ "btrfs" ]; # can read btrfs drives now
+
+  boot.initrd.kernelModules = [ "dm-cache" "dm-cache-smq" "dm-cache-mq" "dm-cache-cleaner" ];
+  boot.kernelModules = [ 
+    "dm_mod" # For LVM
+    "dm-cache" "dm-cache-smq" "dm-writecache" # for cache
+    "dm_crypt" # for encryption
+  ];
 
   # make tpm work maybe?
   #boot.initrd.systemd.enableTpm2 = true;
