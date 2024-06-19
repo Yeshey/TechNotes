@@ -32,6 +32,8 @@
       - [1.1.11.2. Add Subtitles](#11112-add-subtitles)
     - [1.1.12. File Systems](#1112-file-systems)
       - [1.1.12.1. BTRFS](#11121-btrfs)
+        - [compression:](#compression)
+        - [ntfs2btrfs:](#ntfs2btrfs)
     - [1.1.13. Tested in Other Linuxs](#1113-tested-in-other-linuxs)
       - [1.1.13.1. Add more resolution options (Linux Mint)](#11131-add-more-resolution-options-linux-mint)
     - [1.1.14. rsync](#1114-rsync)
@@ -394,7 +396,36 @@ Using [openai's whisper](https://github.com/openai/whisper):
 
 ##### 1.1.12.1. BTRFS
 
-Supports spanning multiple drives with one file system without LVM!!
+- Supports spanning multiple drives with one file system without LVM!!
+
+- Mount options:
+```bash
+    "defaults"
+    "nofail" # boots anyways if can't find the disk 
+    "users" # any user can mount
+    "x-gvfs-show" # show in gnome disks
+    "noatime" # doesn't write access time to files
+    "compress-force=zstd:5" # compression level 5, good for slow drives. forces compression of every file even if fails to compress first segment of the file
+    "ssd" # optimize for an ssd
+    "nosuid" "nodev" # for security (https://serverfault.com/questions/547237/explanation-of-nodev-and-nosuid-in-fstab)
+```
+- check mount options of mounted btrfs file systems:
+  ```bash
+    sudo findmnt -t btrfs
+  ```
+###### compression:
+
+- `"compress-force=zstd:5"`: default is level 3, higher is more compression, i use 5 in slower drives, because in those the bottleneck is IO
+- check how much is being saved by compression: `nix-shell -p compsize --run "sudo compsize /mnt/btrfsMicroSD-DataDisk"`
+- tell btrfs to compress everything according to current flags: `sudo btrfs filesystem defragment -r -czstd /mnt/btrfsMicroSD-DataDisk`
+
+###### ntfs2btrfs:
+
+- it will have `space_cache=v1`, you can check what you're using with `sudo findmnt -t btrfs` change it to v2 by:
+1. Unmounting the partition 
+2. Removing the v1 cache: `sudo btrfs rescue clear-space-cache v1 /dev/sda2`
+3. Remounting with `"space_cache=v2"`, or at least `defaults` (not sure if needed)
+
 
 #### 1.1.13. Tested in Other Linuxs
 
