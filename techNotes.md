@@ -970,22 +970,26 @@ Use the `--use-remote-sudo` when you're the building machine, and specifying the
 
 - **NTFS**
   ```nix
+  # MY MOUNTS (works for wine gaming)
   fileSystems."/mnt/DataDisk" = {
     device = "/dev/disk/by-label/DataDisk";
-    fsType = "auto";
+    fsType = "lowntfs-3g";
     options = [
+      "uid=1000" "gid=1000" "rw" "exec" "umask=000" # "user"
+      # gaming options as per valve: https://github.com/ValveSoftware/Proton/wiki/Using-a-NTFS-disk-with-Linux-and-Windows
+      "ignore_case" # only lowntfs-3g 
+      #"windows_names" # makes games not work
+      "nofail"
+      /*
       "defaults"
-      "nosuid"
-      "nodev"
+      # "nosuid" "nodev" # security, probably should
       "nofail"
       "x-gvfs-show"
       "windows_names"
       "big_writes"
-      "streams_interface=windows"
-      "nls=utf8" 
-      #"users" # these two make stuff like python environments not work
-      #"umask=000" "dmask=027" "fmask=137" "uid=1000" "gid=1000"
-    ]; # x-systemd.device-timeout=3s
+      "streams_interface=windows" # only ntfs-3g 
+      "nls=utf8" */
+    ];
   };
   ```
 - **BTRFS**
