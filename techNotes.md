@@ -970,10 +970,6 @@ Use the `--use-remote-sudo` when you're the building machine, and specifying the
 
 - **NTFS**
   ```nix
-    fileSystems."/mnt/hdd-ntfs" = {
-    device = "/dev/disk/by-label/hdd-ntfs";
-    fsType = "auto";
-    options = [
   fileSystems."/mnt/DataDisk" = {
     device = "/dev/disk/by-label/DataDisk";
     fsType = "auto";
@@ -990,8 +986,6 @@ Use the `--use-remote-sudo` when you're the building machine, and specifying the
       #"users" # these two make stuff like python environments not work
       #"umask=000" "dmask=027" "fmask=137" "uid=1000" "gid=1000"
     ]; # x-systemd.device-timeout=3s
-  };
-    ];
   };
   ```
 - **BTRFS**
