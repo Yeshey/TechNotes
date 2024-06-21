@@ -53,6 +53,7 @@
       - [1.1.18.5. Remote Builds](#11185-remote-builds)
       - [1.1.18.6. Partitioning in nixOS](#11186-partitioning-in-nixos)
         - [1.1.18.6.1. Multiple Directories on same partition in nixOS](#111861-multiple-directories-on-same-partition-in-nixos)
+    - [1.1.19. Mount options in linux](#1119-mount-options-in-linux)
   - [1.2. **Windows**](#12-windows)
     - [1.2.1. Recover /efi/boot for Windows](#121-recover-efiboot-for-windows)
     - [1.2.2. Move the msr partition \& other partition problems](#122-move-the-msr-partition--other-partition-problems)
@@ -964,6 +965,46 @@ Use the `--use-remote-sudo` when you're the building machine, and specifying the
   6. Now Reboot and you should be good to go.
 
 - Another way to takle this would be with LVM or btrfs subvolumes or multiple disks support...
+
+#### 1.1.19. Mount options in linux
+
+- **NTFS**
+  ```nix
+    fileSystems."/mnt/hdd-ntfs" = {
+    device = "/dev/disk/by-label/hdd-ntfs";
+    fsType = "auto";
+    options = [
+      "nosuid"
+      "nodev"
+      "nofail"
+      "x-gvfs-show"
+      "defaults"
+      "users"
+      "windows_names"
+      "big_writes"
+      "streams_interface=windows"
+      "nls=utf8"
+      "umask=000" "dmask=027" "fmask=137" "uid=1000" "gid=1000"
+    ];
+  };
+  ```
+- **BTRFS**
+  ```nix
+  fileSystems."${config.mySystem.dataStoragePath}" = {
+    device = "/dev/disk/by-label/btrfsMicroSD-DataDisk";
+    fsType = "btrfs";
+    options = [ # check mount options of mounted btrfs fs: sudo findmnt -t btrfs
+      "defaults"
+      "nofail" # boots anyways if can't find the disk 
+      # "users" # don't use, drive became invisible in steam because of this! (any user can mount)
+      "x-gvfs-show" # show in gnome disks
+      "noatime" # doesn't write access time to files
+      "compress-force=zstd:5" # compression level 5, good for slow drives. forces compression of every file even if fails to compress first segment of the file
+      # "ssd" # optimize for an ssd
+      # security "nosuid" "nodev" (https://serverfault.com/questions/547237/explanation-of-nodev-and-nosuid-in-fstab)
+    ];
+  };
+  ```
 
 ---
 
