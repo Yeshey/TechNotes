@@ -974,17 +974,23 @@ Use the `--use-remote-sudo` when you're the building machine, and specifying the
     device = "/dev/disk/by-label/hdd-ntfs";
     fsType = "auto";
     options = [
+  fileSystems."/mnt/DataDisk" = {
+    device = "/dev/disk/by-label/DataDisk";
+    fsType = "auto";
+    options = [
+      "defaults"
       "nosuid"
       "nodev"
       "nofail"
       "x-gvfs-show"
-      "defaults"
-      "users"
       "windows_names"
       "big_writes"
       "streams_interface=windows"
-      "nls=utf8"
-      "umask=000" "dmask=027" "fmask=137" "uid=1000" "gid=1000"
+      "nls=utf8" 
+      #"users" # these two make stuff like python environments not work
+      #"umask=000" "dmask=027" "fmask=137" "uid=1000" "gid=1000"
+    ]; # x-systemd.device-timeout=3s
+  };
     ];
   };
   ```
