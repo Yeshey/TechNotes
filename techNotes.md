@@ -418,7 +418,7 @@ Using [openai's whisper](https://github.com/openai/whisper):
 
 - `"compress-force=zstd:5"`: default is level 3, higher is more compression, i use 5 in slower drives, because in those the bottleneck is IO
 - check how much is being saved by compression: `nix-shell -p compsize --run "sudo compsize /mnt/btrfsMicroSD-DataDisk"`
-- tell btrfs to compress everything according to current flags: `sudo btrfs filesystem defragment -r -czstd /mnt/btrfsMicroSD-DataDisk`
+- tell btrfs to compress everything according to current flags: `sudo btrfs filesystem defragment -v -r -czstd /mnt/btrfsMicroSD-DataDisk`
 
 ###### ntfs2btrfs:
 
