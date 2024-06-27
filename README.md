@@ -977,7 +977,7 @@ Use the `--use-remote-sudo` when you're the building machine, and specifying the
     options = [
       "uid=1000" "gid=1000" "rw" "exec" "umask=000" # "user"
       # gaming options as per valve: https://github.com/ValveSoftware/Proton/wiki/Using-a-NTFS-disk-with-Linux-and-Windows
-      "ignore_case" # only lowntfs-3g 
+      # "ignore_case" # prevents you from making any file or directory with any upper case letter... only lowntfs-3g 
       #"windows_names" # makes games not work
       "nofail"
       /*
