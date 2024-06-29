@@ -18,6 +18,6 @@ sudo mkdir -p /mnt/nix /mnt/persistent
 sudo mount -o subvol=@nix /dev/mapper/cryptroot /mnt/nix
 sudo mount -o subvol=@persistent /dev/mapper/cryptroot /mnt/persistent
 sudo nixos-generate-config --root /mnt
-nix-shell -p vscode --run "code /mnt/etc/nixos/"
+NIXPKGS_ALLOW_UNFREE=1 nix-shell -p vscode --run "code /mnt/etc/nixos/"
 
 ```
