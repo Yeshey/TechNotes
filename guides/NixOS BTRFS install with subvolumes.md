@@ -19,5 +19,6 @@ sudo mount -o subvol=@nix /dev/mapper/cryptroot /mnt/nix
 sudo mount -o subvol=@persistent /dev/mapper/cryptroot /mnt/persistent
 sudo nixos-generate-config --root /mnt
 NIXPKGS_ALLOW_UNFREE=1 nix-shell -p vscode --run "sudo code /mnt/etc/nixos/ --no-sandbox --user-data-dir /tmp"
+sudo nixos-install
 
 ```
