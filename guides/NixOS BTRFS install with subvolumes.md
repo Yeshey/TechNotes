@@ -5,7 +5,7 @@ sudo vgchange -ay VG
 sudo cryptsetup open /dev/VG/cryptroot cryptroot
 sudo cryptsetup open /dev/VG/cryptswap cryptswap
 
-# mkfs.btrfs -f /dev/mapper/cryptroot # reformats partition
+# mkfs.btrfs -L nixos -f /dev/mapper/cryptroot # reformats partition
 # Mount and create subvolumes
 sudo mount /dev/mapper/cryptroot /mnt
 sudo btrfs subvolume create /mnt/@
