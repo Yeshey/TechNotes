@@ -320,7 +320,7 @@ script = ''
     { #device = "/dev/disk/by-uuid/6fcc0524-bd74-44b9-ac07-c91d2ffe6121";
       device = "/dev/disk/by-label/nixos";
       fsType = "btrfs";
-      options = [ "subvol=root" "compress-force=zstd:3" ];
+      options = [ "subvol=@" "compress-force=zstd:3" ];
     };
 
   boot.initrd.luks.devices.cryptroot = {
@@ -336,14 +336,14 @@ script = ''
     { #device = "/dev/disk/by-uuid/6fcc0524-bd74-44b9-ac07-c91d2ffe6121";
       device = "/dev/disk/by-label/nixos";
       fsType = "btrfs";
-      options = [ "subvol=nix" "compress-force=zstd:3" ];
+      options = [ "subvol=@nix" "compress-force=zstd:3" ];
     };
 
   fileSystems."/persist" =
     { #device = "/dev/disk/by-uuid/6fcc0524-bd74-44b9-ac07-c91d2ffe6121";
       device = "/dev/disk/by-label/nixos";
       fsType = "btrfs";
-      options = [ "subvol=persist" "compress-force=zstd:3" ];
+      options = [ "subvol=@persist" "compress-force=zstd:3" ];
     };
 
   fileSystems."/boot" =
