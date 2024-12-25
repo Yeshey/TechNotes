@@ -596,6 +596,14 @@ Local Shortcuts are here:
       ./hardware-configuration.nix
     ];
 
+  # Use the systemd-boot EFI boot loader.
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot";
+  boot.loader.systemd-boot = {
+    enable = true;
+    configurationLimit = 10; # You can leave it null for no limit, but it is not recommended, as it can fill your boot partition.
+  };
+
   # Bootloader (For BIOS VMs)
   /*
   boot.loader.grub.enable = true;
@@ -604,6 +612,7 @@ Local Shortcuts are here:
   */
 
   # Bootloader (For UEFI VMs)
+  /*
   boot.loader = {
 
     timeout = 2;
@@ -639,23 +648,12 @@ Local Shortcuts are here:
       '';
     };
   };
+  */
 
-  boot.cleanTmpDir = true;
-  boot.supportedFilesystems = [ "ntfs" ];
+  boot.tmp.cleanOnBoot = true;
+  boot.supportedFilesystems = [ "ntfs" "bcachefs" ];
 
-  # swap in ext4:
-  swapDevices = [ 
-    {
-      device = "/swapfile";
-      priority = 0; # Higher numbers indicate higher priority.
-      size = 5*1024;
-      options = [ "nofail"];
-    }
-  ];
-  zramSwap = { # zram only made things slwo whenever there were animations when the thermald temperature threshold was set too low (61069)
-    enable = true;
-    algorithm = "zstd";
-  };
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -694,8 +692,8 @@ Local Shortcuts are here:
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "pt";
-    xkbVariant = "";
+    xkb.layout = "pt";
+    xkb.variant = "";
   };
 
   services.spice-vdagentd.enable=true; # to enable clipboard sharing in VM
@@ -703,9 +701,9 @@ Local Shortcuts are here:
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
-    forwardX11 = true; # forward graphical interfaces through SSH
+    settings.X11Forwarding = true; # forward graphical interfaces through SSH
     #settings = { # wasn't even working..?
-    permitRootLogin = "yes"; # to let surface and Laptop connect to builds for the surface (https://github.com/NixOS/nixpkgs/issues/20718)
+    settings.PermitRootLogin = "yes"; # to let surface and Laptop connect to builds for the surface (https://github.com/NixOS/nixpkgs/issues/20718)
     #};
   };
   programs = {
@@ -785,7 +783,6 @@ Local Shortcuts are here:
   console.keyMap = "pt-latin1";
 
   # Enable sound with pipewire.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -795,7 +792,7 @@ Local Shortcuts are here:
     pulse.enable = true;
   };
 
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.yeshey = {
@@ -813,8 +810,8 @@ Local Shortcuts are here:
   users.defaultUserShell = pkgs.zsh;
 
   # Enable automatic login for the user.
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "yeshey";
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "yeshey";
 
   # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
   systemd.services."getty@tty1".enable = false;
@@ -832,9 +829,11 @@ Local Shortcuts are here:
     git
     gparted
     vscode
+    bcachefs-tools
+    tmux
   ];
 
-  system.stateVersion = "22.11"; # Did you read the comment?
+  system.stateVersion = "24.11"; # Did you read the comment?
 }
 ```
 
