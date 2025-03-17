@@ -51,6 +51,8 @@
         - [1.1.18.3.1. LVM Cache](#111831-lvm-cache)
       - [1.1.18.4. Update Channels](#11184-update-channels)
       - [1.1.18.5. Remote Builds](#11185-remote-builds)
+        - [For nixos-rebuild](#for-nixos-rebuild)
+        - [For flakes and nix develop](#for-flakes-and-nix-develop)
       - [1.1.18.6. Partitioning in nixOS](#11186-partitioning-in-nixos)
         - [1.1.18.6.1. Multiple Directories on same partition in nixOS](#111861-multiple-directories-on-same-partition-in-nixos)
     - [1.1.19. Mount options in linux](#1119-mount-options-in-linux)
@@ -916,6 +918,8 @@ You need to select them [without formatting](https://youtu.be/PJilemDeYdo?t=587)
 
 ##### 1.1.18.5. [Remote Builds](https://eno.space/blog/2021/08/nixos-on-underpowered-devices)
 
+###### For nixos-rebuild
+
 This might not apply between PCs of different architectures.
 You might need to add `services.openssh.permitRootLogin = "yes";` in both cases
 
@@ -925,6 +929,13 @@ You might need to add `services.openssh.permitRootLogin = "yes";` in both cases
 [Here is the official documentation](https://nixos.wiki/wiki/Nixos-rebuild).  
 You [should be able to use](https://github.com/NixOS/nixpkgs/issues/80142) `NIX_SSHOPTS="..."` to pass arguments to the ssh running inside the `nixos-rebuild` command.  
 Use the `--use-remote-sudo` when you're the building machine, and specifying the `--target-host`, and you don't have sudo, so you want to use the sudo of the target machine.
+
+###### For flakes and nix develop
+
+From the weaker PC: 
+```sh
+IP="10.19.12.17"; NIX_CONFIG="builders = ssh://root@${IP} x86_64-linux - 1 1 big-parallel"; nix develop --option builders "ssh://root@${IP} x86_64-linux - 1 1 big-parallel" --max-jobs 0 -v
+```
 
 ##### 1.1.18.6. Partitioning in nixOS
 
