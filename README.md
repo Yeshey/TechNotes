@@ -45,6 +45,8 @@
     - [1.1.17. Desktop Shortcuts](#1117-desktop-shortcuts)
       - [1.1.17.1. Shortcuts to a website (webapps / web app)](#11171-shortcuts-to-a-website-webapps--web-app)
     - [1.1.18. NixOS](#1118-nixos)
+      - [1.1.18.x. Making environment](#1118x-making-environment)
+        - [1.1.18.x.1 Python](#1118x1-python)
       - [1.1.18.1. Simple configuration.nix to get you started](#11181-simple-configurationnix-to-get-you-started)
       - [1.1.18.2. Chroot into nixOS btrfs system](#11182-chroot-into-nixos-btrfs-system)
       - [1.1.18.3. LVM Setup](#11183-lvm-setup)
@@ -582,6 +584,121 @@ Local Shortcuts are here:
 - Give up on plasma configuration
 - [Can't control the brightness of external monitors because of NVIDIA driver](https://discourse.nixos.org/t/brightness-control-of-external-monitors-with-ddcci-backlight/8639/9?u=yeshey), using and `xrandr -q | grep " connected"` for it now `xrandr --output HDMI-0 --brightness 0.5`
 - The Stuck on reboot or poweroff problem? [This solves](https://unix.stackexchange.com/questions/577987/graceful-shutdown-with-suspend-job-hanging-in-syscall)
+
+##### 1.1.18.x. Making environment 
+
+###### 1.1.18.x.1 Python
+
+**Virtual Env**:
+
+See [this project](https://github.com/RICADINHO/ProjetoIAA). But you can use these files:
+
+- In NixOS, you should have flakes, activate the environment (nix develop or direnv allow) and run sh venvnix.sh. Using venv from inside python can and does yeild problems with some packages!
+
+
+```nix
+# https://github.com/nix-community/dream2nix/tree/main
+
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    systems.url = "github:nix-systems/default";
+  };
+
+  outputs = { systems, nixpkgs, ... } @ inputs:
+  let
+    eachSystem = f:
+      nixpkgs.lib.genAttrs (import systems) (
+        system:
+          f nixpkgs.legacyPackages.${system}
+      );
+  in {
+    devShells = eachSystem (pkgs: 
+    let
+      #lt = pkgs.python311Packages.buildPythonPackage {
+      #  pname = "lt_core_news_sm";
+      #  version = "3.7.0";
+      #  src = pkgs.fetchurl {
+      #    url = "https://github.com/explosion/spacy-models/releases/download/pt_core_news_sm-3.7.0/pt_core_news_sm-3.7.0.tar.gz";
+      #    hash = "sha256-uG0vywIrvh3/qGkoUskJRZHpPQKZtlxb35L3lArixHw=";
+      #  };
+      #  buildInputs = with pkgs.python311Packages; [ pipBuildHook ];
+      #  dependencies = with pkgs.python311Packages; [ spacy ];
+      #};
+      #dontCheckPython = drv: drv.overridePythonAttrs (old: { doCheck = false; });
+    in {
+      default = pkgs.mkShell {
+        packages = [
+          #pkgs.jupyter-all
+          (pkgs.python312.withPackages (python-pkgs: with python-pkgs; [
+            tensorflow
+            pytorch
+            keras
+            pandas
+            numpy
+            jupyter
+            matplotlib
+            nltk # (NLP processing)
+            spacy # (NLP processing)
+            # lt
+            progressbar
+            transformers
+            datasets
+
+            #torch
+
+            # Add version overrides for conflicting dependencies
+            #(protobuf.overridePythonAttrs (old: { version = "4.25.3"; }))
+            #(typing-extensions.overridePythonAttrs (old: { version = "4.9.0"; }))
+            #(numpy.override { blas = pkgs.openblasCompat; })
+          ]))
+          pkgs.virtualenv
+        ];
+
+        shellHook = ''
+          echo "Development shell ready!"
+          echo "Run with > jupyter notebook"
+
+          echo "when running if you see this on the browser: http://127.0.0.1:8890/tree?token=6c86ed65bba3efd8ebd779bb4263094bbaaa4d9c28a648f4, that means that if you want to use the jupyternotebook server as a kernel for VSC, you need to use 6c86ed65bba3efd8ebd779bb4263094bbaaa4d9c28a648f4 as the password"
+
+          # jupyter notebook
+        '';
+      };
+    });
+  };
+}
+```
+
+```bash
+# venvnix.sh
+# https://acalustra.com/optimizing-python-development-virtualenv-kernels-with-nix-and-jupyter.html
+echo "Creating venv $1"
+# VENV_FOLDER="$HOME/venvs/$1"
+VENV_FOLDER=".venv"
+
+if test -d "$VENV_FOLDER"; then
+    echo "${VENV_FOLDER} is already created"
+    nix shell github:GuillaumeDesforges/fix-python --command fix-python --venv "$VENV_FOLDER"
+    exit 0
+fi
+
+echo "creating venv $1 on folder $VENV_FOLDER"
+virtualenv "$VENV_FOLDER"
+
+# Upgrade pip and install requirements in the new venv
+"$VENV_FOLDER/bin/pip" install --upgrade pip
+"$VENV_FOLDER/bin/pip" install -r requirements.txt
+
+"$VENV_FOLDER/bin/pip" install ipykernel
+
+nix shell github:GuillaumeDesforges/fix-python --command fix-python --venv "$VENV_FOLDER"
+"$VENV_FOLDER/bin/python" -m ipykernel install --prefix="$HOME/.local/share" --name "venv-$1"
+jupyter kernelspec install --user "$HOME/.local/share/share/jupyter/kernels/venv-$1"
+```
+
+**With poetry and poetry2nix and nix run**
+
+You can see [this project](https://github.com/Yeshey/invert-pdf-colors-cli).
 
 ##### 1.1.18.1. Simple configuration.nix to get you started
 
