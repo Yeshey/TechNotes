@@ -733,7 +733,7 @@ Here is a rundown:
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
@@ -965,6 +965,53 @@ Here is a rundown:
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  nix = let
+    substitutersList = [
+      "cachenixosorg"
+      "numtidecachixorg"
+      "nrdxpcachixorg"
+      "nixcommunitycachixorg"
+    ];
+
+    substitutersMap = {
+      cachenixosorg = {
+        url = "https://cache.nixos.org";
+        key = "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=";
+      };
+      numtidecachixorg = {
+        url = "https://numtide.cachix.org";
+        key = "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE=";
+      };
+      nrdxpcachixorg = {
+        url = "https://nrdxp.cachix.org";
+        key = "nrdxp.cachix.org-1:Fc5PSqY2Jm1TrWfm88l6cvGWwz3s93c6IOifQWnhNW4=";
+      };
+      nixcommunitycachixorg = {
+        url = "https://nix-community.cachix.org";
+        key = "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
+      };
+    };
+  in {
+    enable = true;
+    package = pkgs.nix;
+    extraOptions = ''
+      !include ./extra.conf
+    '';
+    settings = lib.mkMerge [
+      {
+        experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
+        nix-path = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+        substituters = map (x: substitutersMap.${x}.url) substitutersList;
+        trusted-public-keys = map (x: substitutersMap.${x}.key) substitutersList;
+      }
+      {
+        trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
+        substituters = lib.mkAfter [ "https://cache.nixos.org/" ];
+      }
+    ];
+  };
+
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -978,7 +1025,7 @@ Here is a rundown:
     tmux
   ];
 
-  system.stateVersion = "24.11"; # Did you read the comment?
+  system.stateVersion = "25.05"; # Did you read the comment?
 }
 ```
 
