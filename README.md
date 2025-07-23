@@ -728,6 +728,8 @@ Here is a rundown:
 
 ##### 1.1.18.1. Simple configuration.nix to get you started
 
+Activate with `sudo nixos-rebuild --flake ~/.setup#hyrulecastle --option cores 6 --option max-jobs 3 boot && reboot` after changing the partitions properly
+
 ```nix
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
