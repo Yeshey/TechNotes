@@ -584,6 +584,7 @@ Local Shortcuts are here:
 - Give up on plasma configuration
 - [Can't control the brightness of external monitors because of NVIDIA driver](https://discourse.nixos.org/t/brightness-control-of-external-monitors-with-ddcci-backlight/8639/9?u=yeshey), using and `xrandr -q | grep " connected"` for it now `xrandr --output HDMI-0 --brightness 0.5`
 - The Stuck on reboot or poweroff problem? [This solves](https://unix.stackexchange.com/questions/577987/graceful-shutdown-with-suspend-job-hanging-in-syscall)
+- When Installing in oracle VM server, use [this guide](https://mtlynch.io/notes/nix-oracle-cloud/) and this command for netboot `fs0:EFI\netboot.efi`
 
 ##### 1.1.18.x. Making environment 
 
