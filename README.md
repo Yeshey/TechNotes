@@ -65,6 +65,7 @@
     - [1.3.1. Root with Magisk (A70)](#131-root-with-magisk-a70)
     - [1.3.2. Hide root from apps without MagiskHide](#132-hide-root-from-apps-without-magiskhide)
 - [2. Programs](#2-programs)
+  - [2.0. Stremio](#20-stremio)
   - [2.1. VSC (Visual Studio Code)](#21-vsc-visual-studio-code)
     - [2.1.1. VSC Extensions](#211-vsc-extensions)
     - [2.1.2. VSC debugger](#212-vsc-debugger)
@@ -1250,6 +1251,16 @@ On a dual boot system if you can't boot into windows anymore, do this:
 - YOu need to pass safety net, wich is google's method to detect root on android devices. [Follow this guide](https://www.droidwin.com/how-to-pass-safetynet-on-rooted-android-12/)
 
 ## 2. Programs
+
+### 2.0. Stremio
+
+You need to get Addon's to scrape torrents from everywhere!
+
+This is the best one available: https://torrentio.strem.fun/configure. Github: https://github.com/TheBeastLT/torrentio-scraper. But this one blocks traffick from your oracle server when u connect with the VPN.
+
+This is a free public instance that is a fork of torrentio, but has much less providers: https://torrentio.araec.com/configure
+
+This is the best one I think: https://stremthru.13377001.xyz/stremio/torz/configure. But you have to select in the store name: P2P, and then click install, and then with the link that it gives you, paste in stremio addons url bar to immidiatley install it, and it will work!!
 
 ### 2.1. VSC (Visual Studio Code)
 
