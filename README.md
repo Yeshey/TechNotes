@@ -140,30 +140,59 @@ Its also a bitch
   2. Put this script in an .sh executable file in the same folder as  all the pdfs and run it:
 
   ```bash
-  #!/bin/bash
-
+  #!/usr/bin/env bash
+  
   out_file="combined.pdf"
   bookmarks_file="/tmp/bookmarks.txt"
-  bookmarks_fmt="BookmarkBegin
-  BookmarkTitle: %s
-  BookmarkLevel: 1
-  BookmarkPageNumber: %d
-  "
-
+  
   rm -f "$bookmarks_file" "$out_file"
-
+  
   declare -a files=(*.pdf)
   page_counter=1
-
-  # Generate bookmarks file.
+  
+  # Generate bookmarks file with nested structure
   for f in "${files[@]}"; do
       title="${f%.*}"
-      printf "$bookmarks_fmt" "$title" "$page_counter" >> "$bookmarks_file"
-      num_pages="$(pdftk "$f" dump_data | grep NumberOfPages | awk '{print $2}')"
+      
+      # Add parent bookmark for the PDF file
+      cat >> "$bookmarks_file" << EOF
+  BookmarkBegin
+  BookmarkTitle: $title
+  BookmarkLevel: 1
+  BookmarkPageNumber: $page_counter
+  EOF
+      
+      # Extract existing bookmarks from the PDF
+      existing_bookmarks=$(pdftk "$f" dump_data)
+      
+      # Parse and add existing bookmarks as children (level 2)
+      echo "$existing_bookmarks" | awk -v offset=$((page_counter - 1)) '
+          /^BookmarkBegin/ { in_bookmark=1; bookmark="" }
+          in_bookmark {
+              if ($0 ~ /^BookmarkTitle:/) {
+                  title = substr($0, index($0, ":") + 2)
+              }
+              else if ($0 ~ /^BookmarkLevel:/) {
+                  level = $2
+              }
+              else if ($0 ~ /^BookmarkPageNumber:/) {
+                  page = $2 + offset
+                  # Increment level by 1 to nest under parent
+                  print "BookmarkBegin"
+                  print "BookmarkTitle: " title
+                  print "BookmarkLevel: " (level + 1)
+                  print "BookmarkPageNumber: " page
+                  in_bookmark=0
+              }
+          }
+      ' >> "$bookmarks_file"
+      
+      # Get number of pages and update counter
+      num_pages=$(echo "$existing_bookmarks" | grep NumberOfPages | awk '{print $2}')
       page_counter=$((page_counter + num_pages))
   done
-
-  # Combine PDFs and embed the generated bookmarks file.
+  
+  # Combine PDFs and embed the generated bookmarks file
   pdftk "${files[@]}" cat output - | \
       pdftk - update_info "$bookmarks_file" output "$out_file"
   ```
