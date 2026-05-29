@@ -2061,6 +2061,19 @@ So, [this link to section 2.2.4](#224-ssh-without-password-public--private-keys)
 
 #### 4.2.1. Android
 
+**Termux Clean dirty segments urgent garbage collector**
+Put inside .shortcuts:
+```
+#!/data/data/com.termux/files/usr/bin/bash
+sudo sh -c 'echo 1 > /sys/fs/f2fs/dm-33/gc_urgent; exec watch -n 5 "
+echo \"=== F2FS Emergency GC ACTIVE ===\"
+echo \"Reboot reverts this. Safe to close Termux.\"
+echo \"\"
+printf \"free_segments: \"; cat /sys/fs/f2fs/dm-33/free_segments
+printf \"dirty_segments: \"; cat /sys/fs/f2fs/dm-33/dirty_segments
+"'
+```
+
 - Entertainment:
   - Tachiyomi (install from F-droid | manga reader)
   - (Old Manga sites: [Solo Leveling](https://www.mangago.me/read-manga/solo_leveling/?rmgU), https://www.mangago.me/, https://mangakakalot.com/)
