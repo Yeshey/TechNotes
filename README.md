@@ -1270,6 +1270,14 @@ On a dual boot system if you can't boot into windows anymore, do this:
 
 ### 1.3. **Android**
 
+#### Progressive Web Apps
+
+Don't use Firefox in Android, it is not optimized, you can have it installed and frozen with [Essencials](https://github.com/sameerasw/essentials). I suggest Brave Browser.
+PWAs:
+- Youtube (Works with background play! But you have to prevent it from redirecting to m.youtube.com. As of 21, June, 2026, you can use the link: https://www.youtube.com/?app=desktop&persist_app=1, then in brave select add to Home Screen and Install it)
+- Telegram
+- X.com
+
 #### 1.3.1. Root with Magisk (A70)
 
 - [This guy knows his shit](https://forum.xda-developers.com/t/recovery-unofficial-root-twrp-for-galaxy-a70.3955984/)
